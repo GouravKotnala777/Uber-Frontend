@@ -1,0 +1,55 @@
+.home_page_bg{
+    //border: 2px solid red;
+    .bg_image_cont{
+        //border: 1px solid violet;
+        height: 75vh;
+        position: relative;
+        .logo{
+            //border: 2px solid white;
+            position: absolute;
+            width: 23%;
+            top: 2rem;
+            left: 2rem;
+        }
+        .bg_img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .continue_cont{
+        background-color: white;
+        height: 25vh;
+        .heading{
+            //border: 2px solid white;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .continue_btn{
+            //border: 2px solid indigo;
+            font-size: 3rem;
+            margin: 1.6rem;
+
+
+            button{
+                //border: 2px solid greenyellow;
+                font-size: 2.2rem;
+                display: flex;
+                width: 100%;
+                //justify-content: ;
+                align-items: center;
+                //text-align: center;
+                background-color: black;
+                padding:1.2rem;
+                border-radius: 1rem;
+                span{
+                    //border: 1px solid white;
+                    flex: 1;
+                }
+                .BiRightArrow{
+                    font-size: 3rem;
+                    //margin-left: auto;
+                }
+            }
+        }
+    }
+}
