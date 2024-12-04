@@ -1,57 +1,66 @@
-.home_page_bg{
+
+
+.home_page_background{
     //border: 2px solid red;
-    .bg_image_cont{
-        //border: 1px solid violet;
-        height: 75vh;
-        position: relative;
-        .logo{
-            //border: 2px solid white;
-            position: absolute;
-            width: 23%;
-            top: 1.2rem;
-            left: 1.6rem;
-        }
-        .bg_img{
+    height: 100vh;
+    //box-sizing: border-box;
+    //position: relative;
+    transition: 0.3s;
+    overflow-y: hidden;
+    .logo{
+        position: absolute;
+        width: 23%;
+        top: 0;
+        left: 1.6rem;
+    }
+    .map_cont{
+        //border: 2px solid violet;
+        height: 70%;
+        img{
             width: 100%;
             height: 100%;
         }
     }
-    .continue_cont{
+    .form_cont{
+        //border: 2px solid indigo;
+        height: 30%;
+        padding: 10px;
+        box-sizing: border-box;
+        transition: 0.3s;
+        //transform: translate(0, -70vh);
         background-color: white;
-        height: 25vh;
-        .heading{
-            //border: 2px solid white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: left;
-            padding: 0 14px;
-        }
-        .continue_btn{
-            //border: 2px solid indigo;
-            //font-size: 3rem;
-            margin: 12px;
-
-
-            button{
-                //border: 2px solid greenyellow;
-                font-size: 0.9rem;
+        form{
+            .form_heading{
+                //border: 2px solid red;
+                font-size: 1.2rem;
+                font-weight: 500;
                 display: flex;
-                width: 100%;
-                //justify-content: ;
+                justify-content: space-between;
                 align-items: center;
-                //text-align: center;
-                background-color: black;
-                padding:1rem;
-                border-radius: 1rem;
-                span{
-                    //border: 1px solid white;
-                    flex: 1;
-                }
-                .BiRightArrow{
-                    font-size: 0.9rem;
-                    //margin-left: auto;
-                }
+            }
+            input{
+                background-color: #e3e3e3;
+                padding: 10px 15px;
+                border-radius: 8px;
+                width: 100%;
+                box-sizing: border-box;
+                outline: none;
+                border: none;
+                margin-top: 10px;
+                color: #515151;
+            }
+            .destination_inp{
+                margin-top: 10px;
             }
         }
+    }
+    .suggestion_list_cont{
+        border: 2px solid greenyellow;
+        height: 70%;
+        width: 100%;
+        //transform: translate(0, -70vh);
+        z-index: -1;
+        transition: 0.3s;
+        background-color: rgb(255, 138, 138);
     }
 }
