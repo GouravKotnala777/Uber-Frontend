@@ -1,0 +1,57 @@
+.start_page_bg{
+    //border: 2px solid red;
+    .bg_image_cont{
+        //border: 1px solid violet;
+        height: 75vh;
+        position: relative;
+        .logo{
+            //border: 2px solid white;
+            position: absolute;
+            width: 23%;
+            top: 1.2rem;
+            left: 1.6rem;
+        }
+        .bg_img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .continue_cont{
+        background-color: white;
+        height: 25vh;
+        .heading{
+            //border: 2px solid white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: left;
+            padding: 0 14px;
+        }
+        .continue_btn{
+            //border: 2px solid indigo;
+            //font-size: 3rem;
+            margin: 12px;
+
+
+            button{
+                //border: 2px solid greenyellow;
+                font-size: 0.9rem;
+                display: flex;
+                width: 100%;
+                //justify-content: ;
+                align-items: center;
+                //text-align: center;
+                background-color: black;
+                padding:1rem;
+                border-radius: 1rem;
+                span{
+                    //border: 1px solid white;
+                    flex: 1;
+                }
+                .BiRightArrow{
+                    font-size: 0.9rem;
+                    //margin-left: auto;
+                }
+            }
+        }
+    }
+}
