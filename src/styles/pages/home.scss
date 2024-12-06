@@ -55,12 +55,459 @@
         }
     }
     .suggestion_list_cont{
-        border: 2px solid greenyellow;
+        //border: 2px solid greenyellow;
         height: 70%;
         width: 100%;
         //transform: translate(0, -70vh);
         z-index: -1;
         transition: 0.3s;
-        background-color: rgb(255, 138, 138);
+        background-color: rgb(255, 237, 237);
+        overflow-y: scroll;
+        .searched_pickup_location_cont{
+            //border: 1px solid red;
+            display: flex;
+            padding: 10px 0;
+            text-decoration: none;
+            .location_icon{
+                //border: 1px solid indigo;
+                padding: 10px;
+                color: black;
+            }
+            .location_detaile{
+                //border: 1px solid blue;
+                font-size: 0.8rem;
+                padding: 0 5px;
+                color: #212121;
+            }
+        }
+    }
+    .rides_list_cont{
+        //border: 2px solid red;
+        height: 40%;
+        transition: 0.3s;
+        background-color: rgb(255, 230, 230);
+        .BiDownArrow{
+            //border: 1px solid blue;
+            width: 100%;
+            height: 10%;
+            color: #919191;
+        }
+        .rides_list{
+            overflow-y: scroll;
+            //border: 2px solid green;
+            height: 90%;
+        }
+    }
+    .selected_rides_detail_cont{
+        //border: 2px solid red;
+        height: 80%;
+        transition: 0.3s;
+        background-color: rgb(255, 230, 230);
+        .BiDownArrow{
+            //border: 1px solid blue;
+            width: 100%;
+            height: 4%;
+            color: #919191;
+        }
+        .selected_ride{
+            //border: 2px solid green;
+            overflow-y: scroll;
+            height: 90%;
+            padding: 10px;
+            .panel_heading{
+                font-weight: 700;
+            }
+            .car_icon_cont{
+                //border: 1px solid violet;
+                text-align: center;
+                img{
+                    //border: 1px solid red;
+                    width: 80%;
+                }
+            }
+            .ride_details{
+                .pickup_location_details_cont{
+                    //border: 1px solid green;
+                    display: flex;
+                    justify-content: space-between;
+                    //align-items: ;
+                    border-bottom: 1px solid #919191;
+                    .CiLocationOn{
+                        margin-top: 15px;
+                        margin-left: 15px;
+                    }
+                    .pickup_location_details{
+                        //border: 1px solid blue;
+                        margin-left: 15px;
+                        padding: 10px;
+                        width: 85%;
+                        .highlight_info{
+                            font-weight: 600;
+                        }
+                        .full_info{
+                            font-size: 0.7rem;
+                        }
+                    }
+
+                }
+                .dropoff_location_details_cont{
+                    //border: 1px solid indigo;
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px solid #919191;
+                    .CiLocationOff{
+                        //border: 1px solid violet;
+                        margin-top: 15px;
+                        margin-left: 15px;
+                    }
+                    .dropoff_location_details{
+                        //border: 1px solid blue;
+                        margin-left: 15px;
+                        padding: 10px;
+                        width: 85%;
+                        .highlight_info{
+                            font-weight: 600;
+                        }
+                        .full_info{
+                            font-size: 0.7rem;
+                        }
+                    }
+                }
+                .price_cont{
+                    //border: 1px solid red;
+                    display: flex;
+                    align-items: center;
+                    .BsCash{
+                        //border: 1px solid violet;
+                        margin-left: 15px;
+                    }
+                    .price{
+                        //border: 1px solid blue;
+                        padding: 10px;
+                        margin-left: 15px;
+                    }
+                }
+            }
+            .confirm_ride{
+                padding: 10px;
+                width: 100%;
+                font-size: 1rem;
+                background-color: green;
+                border: none;
+                outline: none;
+                border-radius: 8px;
+                cursor: pointer;
+                margin: 10px 0;
+            }
+        }
+    }
+    .waiting_for_driver_cont{
+        //border: 2px solid red;
+        height: 80%;
+        transition: 0.3s;
+        background-color: rgb(255, 230, 230);
+        .BiDownArrow{
+            //border: 1px solid blue;
+            width: 100%;
+            height: 4%;
+            color: #919191;
+        }
+        .selected_ride{
+            //border: 2px solid green;
+            overflow-y: scroll;
+            height: 90%;
+            padding: 10px;
+            .panel_heading{
+                font-weight: 700;
+            }
+            .car_icon_cont{
+                //border: 1px solid violet;
+                text-align: center;
+                img{
+                    //border: 1px solid red;
+                    width: 80%;
+                }
+            }
+            .ride_details{
+                .pickup_location_details_cont{
+                    //border: 1px solid green;
+                    display: flex;
+                    justify-content: space-between;
+                    //align-items: ;
+                    border-bottom: 1px solid #919191;
+                    .CiLocationOn{
+                        margin-top: 15px;
+                        margin-left: 15px;
+                    }
+                    .pickup_location_details{
+                        //border: 1px solid blue;
+                        margin-left: 15px;
+                        padding: 10px;
+                        width: 85%;
+                        .highlight_info{
+                            font-weight: 600;
+                        }
+                        .full_info{
+                            font-size: 0.7rem;
+                        }
+                    }
+
+                }
+                .dropoff_location_details_cont{
+                    //border: 1px solid indigo;
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px solid #919191;
+                    .CiLocationOff{
+                        //border: 1px solid violet;
+                        margin-top: 15px;
+                        margin-left: 15px;
+                    }
+                    .dropoff_location_details{
+                        //border: 1px solid blue;
+                        margin-left: 15px;
+                        padding: 10px;
+                        width: 85%;
+                        .highlight_info{
+                            font-weight: 600;
+                        }
+                        .full_info{
+                            font-size: 0.7rem;
+                        }
+                    }
+                }
+                .price_cont{
+                    //border: 1px solid red;
+                    display: flex;
+                    align-items: center;
+                    .BsCash{
+                        //border: 1px solid violet;
+                        margin-left: 15px;
+                    }
+                    .price{
+                        //border: 1px solid blue;
+                        padding: 10px;
+                        margin-left: 15px;
+                    }
+                }
+            }
+            .confirm_ride{
+                padding: 10px;
+                width: 100%;
+                font-size: 1rem;
+                background-color: green;
+                border: none;
+                outline: none;
+                border-radius: 8px;
+                cursor: pointer;
+                margin: 10px 0;
+            }
+        }
+    }
+    .meet_at_pickup_point_cont{
+        //border: 2px solid red;
+        height: 80%;
+        transition: 0.3s;
+        background-color: rgb(255, 230, 230);
+        .selected_ride{
+            //border: 2px solid violet;
+            overflow-y: scroll;
+            height: 90%;
+            padding: 10px;
+            .first_part{
+                //border: 2px solid indigo;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .panel_heading{
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                }
+                .timer{
+                    //border: 1px solid black;
+                    text-align: center;
+                    padding: 0 10px;
+                    background-color: black;
+                    color: white;
+                    .value{
+
+                    }
+                    .unit{
+
+                    }
+                }
+            }
+            .second_part{
+                //border: 2px solid blue;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: 15px 0;
+                border-top: 1px solid #919191;
+                .driver_photo{
+                    //border: 2px solid green;
+                    width: 80px;
+                    height: 80px;
+                    img{
+                        width: 100%;
+                        border-radius: 50%;
+                    }
+                }
+                .driver_details{
+                    //border: 2px solid red;
+                    text-align: right;
+                    color: #717171;
+                    font-size: 0.8rem;
+                    .driver_name{}
+                    .vehicle_number{
+                        color:black;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                    }
+                    .vehicle_color{}
+                    .vehicle_model{}
+                    .driver_ratings{
+                        display: flex;
+                        justify-content: flex-end;
+                        align-items: center;
+                        .BsStarFill{
+                            color: #313131;
+                        }
+                        .value{
+
+                        }
+                    }
+                }
+            }
+            .third_part{
+                //border: 2px solid green;
+                margin: 15px 0;
+                .input_cont{
+                    //border: 2px solid red;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    background-color: #e3e3e3;
+                    border-radius: 8px;
+                    .message_inp{
+                        //border: 2px solid blue;
+                        padding: 10px;
+                        flex: 1;
+                        background-color: transparent;
+                        border: none;
+                        outline: none;  
+                        color: #313131;
+                        font-size: 1.1rem;                      
+                    }
+                    .send_message_btn{
+                        //border: 2px solid orange;
+                        padding: 6px;
+                        border-radius: 6px;
+                        border: none;
+                        outline: none;
+                        .BiSend{
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+            .fourth_part{
+                //border: 2px solid rgb(0, 255, 98);
+                display: flex;
+                justify-content: space-around;
+                margin: 15px 0;
+                .safety_cont{
+                    //border:1px solid rgb(8, 0, 255);
+                    display: grid;
+                    place-items: center;
+                    .safety_icon{
+                        //border:1px solid red;
+                        padding:10px;
+                        width:1.4rem;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: #e3e3e3;
+                        .MdSafetyCheck{
+
+                        }
+                    }
+                    .safety_heading{
+                        font-size:0.8rem;
+                        font-weight:600;
+                    }
+                }
+                .share_my_trip_cont{
+                    //border:1px solid rgb(8, 0, 255);
+                    display: grid;
+                    place-items: center;
+                    .share_my_trip_icon{
+                        //border:1px solid red;
+                        padding:10px;
+                        width:1.4rem;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: #e3e3e3;
+                        .FaLocationPin{
+
+                        }
+                    }
+                    .share_my_trip_heading{
+                        font-size:0.8rem;
+                        font-weight:600;
+                    }
+                }
+                .call_driver_cont{
+                    //border:1px solid rgb(8, 0, 255);
+                    display: grid;
+                    place-items: center;
+                    .call_driver_icon{
+                        //border:1px solid red;
+                        padding:10px;
+                        width:1.4rem;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: #e3e3e3;
+                        .IoCall{
+
+                        }
+                    }
+                    .call_driver_heading{
+                        font-size:0.8rem;
+                        font-weight:600;
+                    }
+                }
+                
+            }
+            .fifth_part{
+                //border: 2px solid orange;
+                padding: 15px 0;
+                border-top: 1px solid #919191;
+                .pickup_location_details_cont{
+                    //border: 1px solid green;
+                    display: flex;
+                    justify-content: space-between;
+                    //align-items: ;
+                    //border-top: 1px solid #919191;
+                    .CiLocationOn{
+                        margin-top: 15px;
+                        margin-left: 15px;
+                    }
+                    .pickup_location_details{
+                        //border: 1px solid blue;
+                        margin-left: 15px;
+                        padding: 10px;
+                        width: 85%;
+                        .highlight_info{
+                            font-weight: 600;
+                        }
+                        .full_info{
+                            font-size: 0.7rem;
+                        }
+                    }
+
+                }
+            }
+        }
     }
 }
