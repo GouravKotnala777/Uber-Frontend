@@ -2,7 +2,7 @@ import "../styles/pages/login.scss";
 import logo from "../../public/uber-logo-1.png";
 import { Link } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { RegisterBodyTypes, UserTypes } from "../utils/types";
+import { RegisterBodyTypes } from "../utils/types";
 import { login } from "../api";
 
 const Login = () => {
@@ -25,7 +25,7 @@ const Login = () => {
             </div>
             <div className="form_cont">
                 <label>What's your email</label>
-                <input type="text" name="fullName" placeholder="Email" onChange={(e) => onChangeHandler(e)} />
+                <input type="text" name="email" placeholder="Email" onChange={(e) => onChangeHandler(e)} />
                 <label>Enter your password</label>
                 <input type="text" name="password" placeholder="Password" onChange={(e) => onChangeHandler(e)} />
                 <button className="register_btn" onClick={onClickHandler}>Login</button>
