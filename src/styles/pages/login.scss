@@ -52,6 +52,23 @@
                 width: 47%;
             }
         }
+        .gender_select{
+            box-sizing: border-box;
+            padding: 15px;
+            margin-top: 10px;
+            //padding-left: 10px;
+            font-size: 1.3rem;
+            background-color: #e1e1e1;
+            outline: none;
+            border: none;
+            color: #515151;
+            //margin: 1rem;
+            width: 100%;
+            border-radius: 8px;
+            option{
+                font-size: 0.9rem;
+            }
+        }
         .register_btn{
             padding: 15px;
             //padding-left: 10px;
