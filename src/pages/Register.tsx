@@ -6,8 +6,7 @@ import { RegisterBodyTypes, UserTypes } from "../utils/types";
 import { register } from "../api";
 
 const Register = () => {
-    const [registerFormData, setRegisterFormData] = useState<RegisterBodyTypes>({firstName:"", lastName:"", email:"", password:"", mobile:"", gender:"male"})
-    const [test, setTest] = useState<UserTypes|null>(null);
+    const [registerFormData, setRegisterFormData] = useState<RegisterBodyTypes>({firstName:"", lastName:"", email:"", password:"", mobile:"", gender:"male"});
     
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
@@ -15,13 +14,12 @@ const Register = () => {
     };
 
     const onClickHandler = async() => {
-        const registerD = await register(registerFormData);
-        setTest(registerD.jsonData);
+        const res = await register(registerFormData);
+        console.log(res);
     };
 
     return(
         <div className="register_page_bg">
-            <pre>{JSON.stringify(test, null, `\t`)}</pre>
             <div className="logo_cont">
                 <img src={logo} alt={logo} />
             </div>
