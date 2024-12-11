@@ -3,7 +3,7 @@ import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
 import car from "../../public/car1.png";
 import vite from "../../public/vite.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiDownArrow, BiSend } from "react-icons/bi";
 import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
@@ -11,6 +11,8 @@ import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { BsCash, BsStarFill } from "react-icons/bs";
 import { MdSafetyCheck } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
+import { getSuggestions, myProfile } from "../api";
+import { UserTypes } from "../utils/types";
 
 const Home = () => {
     const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(false);
@@ -18,9 +20,58 @@ const Home = () => {
     const [isSelectedRidePanelActive, setIsSelectedRidePanelActive] = useState<boolean>(false);
     const [isWaitingPanelActive, setIsWaitingPanelActive] = useState<boolean>(false);
     const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
+    const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
+    const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
+    const [pickupLocation, setPickupLocation] = useState<string>("");
+    const [dropoffLocation, setDropoffLocation] = useState<string>("");
+    const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<string[]>([]);
+    const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<string[]>([]);
+
+
+    useEffect(() => {
+        const aa = setTimeout(() => {
+            setPickupLocation("");
+            getSuggestions(pickupLocationInp)
+            .then((res) => {
+                if (res.success) {                    
+                    setPickupLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }, 2000);
+
+        return () => {clearTimeout(aa)}
+    }, [pickupLocationInp]);
+    useEffect(() => {        
+        const aa = setTimeout(() => {
+            setDropoffLocation("");
+            getSuggestions(dropoffLocationInp)
+            .then((res) => {
+                if (res.success) {                    
+                    setDropoffLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }, 2000);
+
+        return () => {clearTimeout(aa)}
+    }, [dropoffLocationInp]);
+
+    useEffect(() => {
+        myProfile()
+        .then((res) => {
+        }).catch((err) => {
+        });
+    }, []);
 
     return(
         <div className="home_page_background">
+            {/*<pre>{JSON.stringify(pickupLocation, null, `\t`)}</pre>
+            <pre>{JSON.stringify(dropoffLocation, null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
             <div className="map_cont">
                 <img src={map} alt={map} />
@@ -28,19 +79,40 @@ const Home = () => {
             <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -70vh)":"translate(0, 0vh)"}}>
                 <form>
                     <div className="form_heading">Find a trip <BiDownArrow onClick={() => setIsLocationPanelActive(false)} style={{display:isLocationPanelActive?"block":"none"}} /></div>
-                    <input type="text" placeholder="Add a pickup location" onClick={() => setIsLocationPanelActive(true)} />
-                    <input type="text" className="destination_inp" placeholder="Enter your destination" />
+                    <input type="text" placeholder="Add a pickup location" onChange={(e) => setPickupLocationInp(e.target.value)} onClick={() => setIsLocationPanelActive(true)} />
+                    <input type="text" className="destination_inp" placeholder="Enter your destination" onChange={(e) => setDropoffLocationInp(e.target.value)} onClick={() => setIsLocationPanelActive(true)} />
                 </form>
             </div>
             <div className="suggestion_list_cont" style={{transform:isLocationPanelActive?"translate(0, -70vh)":"translate(0, 0vh)", zIndex:isLocationPanelActive?"1":"-1"}}>
                 {
-                    [0,1,2,3,4,5,6].map((item) => (
-                        <div className="searched_pickup_location_cont" key={item} onClick={() => {setIsLocationPanelActive(false); setIsRidesPanelActive(true);}}>
+                    !pickupLocation&&pickupLocationSuggestions.map((item) => (
+                        <div className="searched_pickup_location_cont" key={item} onClick={() => {
+                            //if(pickupLocation && dropoffLocation){
+                            //}
+                            setIsLocationPanelActive(false);
+                            setIsRidesPanelActive(true);
+                            setPickupLocation(item);
+                            }}>
                             <div className="location_icon"><FaLocationDot /></div>
-                            <div className="location_detaile">Ho.No.371, Gali No. near lal mandir, new bhoor colony, sec-29, old faridabad</div>
+                            <div className="location_detaile">{item}</div>
                         </div>
                     ))
                 }
+                {
+                    !dropoffLocation&&dropoffLocationSuggestions.map((item) => (
+                        <div className="searched_pickup_location_cont" key={item} onClick={() => {
+                            //if(pickupLocation && dropoffLocation){
+                            //}
+                            setIsLocationPanelActive(false);
+                            setIsRidesPanelActive(true);
+                            setDropoffLocation(item);
+                            }}>
+                            <div className="location_icon"><FaLocationDot /></div>
+                            <div className="location_detaile">{item}</div>
+                        </div>
+                    ))
+                }
+
             </div>
             <div className="rides_list_cont" style={{transform:isRidesPanelActive?"translate(0, -110vh)":"translate(0, 0vh)", zIndex:isRidesPanelActive?"1":"-1"}}>
                 <BiDownArrow className="BiDownArrow" onClick={() => setIsRidesPanelActive(false)} style={{display:isRidesPanelActive?"block":"none"}} />
