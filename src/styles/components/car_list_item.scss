@@ -1,0 +1,49 @@
+
+.list_item{
+    //border: 1px solid red;
+    display: flex;
+    padding: 6px 0;
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+    border-radius: 15px;
+    border: 2px solid #d1d1d1;
+    margin-top: 10px;
+    &:hover{
+        border: 2px solid black;
+    }
+    .car_icon_cont{
+        //border: 1px solid blue;
+        width: 25%;
+        img{
+            width: 100%;
+        }
+    }
+    .details_cont{
+        //border: 1px solid indigo;
+        width: 55%;
+        .name{
+            //border: 1px solid blue;
+            font-weight: 500;
+            .passengers_capacity{
+                font-size: 0.7rem;
+                display: inline;
+                margin-left: 10px;
+            }                   
+        }
+        .away{
+            //border: 1px solid green;
+            font-size: 0.8rem;
+            color: #616161;
+        }
+        .away1{
+            //border: 1px solid greenyellow;
+            font-size: 0.8rem;
+            color: #919191;
+        }
+    }
+    .price_cont{
+        //border: 1px solid orange;
+        width: 20%;
+    }
+}
