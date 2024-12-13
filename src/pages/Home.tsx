@@ -3,7 +3,7 @@ import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
 import car from "../../public/car1.png";
 import vite from "../../public/vite.svg";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BiDownArrow, BiSend } from "react-icons/bi";
 import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
@@ -11,8 +11,11 @@ import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { BsCash, BsStarFill } from "react-icons/bs";
 import { MdSafetyCheck } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
-import { getSuggestions, myProfile } from "../api";
-import { UserTypes } from "../utils/types";
+import { allNearbyDrivers, createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
+import { DriverTypes, LocationTypes, VehicleTypeTypes } from "../utils/types";
+import DriverContext, { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
+import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
+
 
 const Home = () => {
     const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(false);
@@ -22,40 +25,77 @@ const Home = () => {
     const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
-    const [pickupLocation, setPickupLocation] = useState<string>("");
-    const [dropoffLocation, setDropoffLocation] = useState<string>("");
+    const [pickupLocation, setPickupLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
+    const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
     const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<string[]>([]);
     const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<string[]>([]);
+    const [allNearByDrivers, setAllNearByDrivers] = useState<DriverTypes[]>([]);
+    const [allFare, setAllFare] = useState<{auto:number; car:number; motorcycle:number;}>({auto:0, car:0, motorcycle:0});
+    const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("car");
+    const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
+    const userContext = useContext<UserContextTypes|null>(UserDataContext);
 
 
+    if (!driverContext) {
+        // Handle the case where the context is null
+        throw new Error("DriverDataContext is not provided!");
+    }
+    if (!userContext) {
+        // Handle the case where the context is null
+        throw new Error("UserDataContext is not provided!");
+    }
+
+    //const { driver, setDriver, updateDriver } = driverContext;
+    const {user, setUser, updateUser} = userContext;
+
+    const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
+        const res = await getCoordinates({address});
+
+        console.log("====================== (1)");
+        console.log({res});
+        console.log("====================== (2)");
+        return res.jsonData;
+    };
     useEffect(() => {
         const aa = setTimeout(() => {
-            setPickupLocation("");
-            getSuggestions(pickupLocationInp)
-            .then((res) => {
-                if (res.success) {                    
-                    setPickupLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+            setPickupLocation({address:"", latitude:0, longitude:0});
+            //if (pickupLocation) {
+                getSuggestions(pickupLocationInp)
+                .then((res) => {
+                    if (res.success) {                    
+                        setPickupLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                        allNearbyDrivers({radius:"10", address:"Sector 29, Faridabad, Haryana, India"})
+                        .then((allNearDriversRes) => {
+                            setAllNearByDrivers(allNearDriversRes.jsonData);
+                        })
+                        .catch((err) => {
+                            setAllNearByDrivers(err);
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            //}
         }, 2000);
 
         return () => {clearTimeout(aa)}
     }, [pickupLocationInp]);
-    useEffect(() => {        
+    useEffect(() => {
+        
         const aa = setTimeout(() => {
-            setDropoffLocation("");
-            getSuggestions(dropoffLocationInp)
-            .then((res) => {
-                if (res.success) {                    
+            setDropoffLocation({address:"", latitude:0, longitude:0});
+            //if (dropoffLocationInp) {
+                getSuggestions(dropoffLocationInp)
+                .then((res) => {
+                    if (res.success) {                    
                     setDropoffLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
                 }
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            //}
         }, 2000);
 
         return () => {clearTimeout(aa)}
@@ -64,69 +104,100 @@ const Home = () => {
     useEffect(() => {
         myProfile()
         .then((res) => {
+            setUser(res.jsonData);
         }).catch((err) => {
         });
     }, []);
 
     return(
         <div className="home_page_background">
-            {/*<pre>{JSON.stringify(pickupLocation, null, `\t`)}</pre>
-            <pre>{JSON.stringify(dropoffLocation, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(pickupLocation, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(dropoffLocation, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(user, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(allNearByDrivers.map((item) => item.vehicleDetailes.vehicleType), null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
             <div className="map_cont">
                 <img src={map} alt={map} />
             </div>
-            <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -70vh)":"translate(0, 0vh)"}}>
+            <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -60vh)":"translate(0, 0vh)"}}>
                 <form>
                     <div className="form_heading">Find a trip <BiDownArrow onClick={() => setIsLocationPanelActive(false)} style={{display:isLocationPanelActive?"block":"none"}} /></div>
                     <input type="text" placeholder="Add a pickup location" onChange={(e) => setPickupLocationInp(e.target.value)} onClick={() => setIsLocationPanelActive(true)} />
                     <input type="text" className="destination_inp" placeholder="Enter your destination" onChange={(e) => setDropoffLocationInp(e.target.value)} onClick={() => setIsLocationPanelActive(true)} />
+                    <button className="create_ride_btn" onClick={(e) => {
+                        e.preventDefault();
+                        setIsLocationPanelActive(false);
+                        setIsRidesPanelActive(true);
+                        getFareOfTrip({pickupLocation:pickupLocation.address, dropoffLocation:dropoffLocation.address})
+                        .then((res) => {
+                            setAllFare(res.jsonData);
+                        })
+                        .catch((err) => {
+                        });
+                    }}>Create Ride</button>
                 </form>
             </div>
             <div className="suggestion_list_cont" style={{transform:isLocationPanelActive?"translate(0, -70vh)":"translate(0, 0vh)", zIndex:isLocationPanelActive?"1":"-1"}}>
                 {
-                    !pickupLocation&&pickupLocationSuggestions.map((item) => (
-                        <div className="searched_pickup_location_cont" key={item} onClick={() => {
+                    !pickupLocation.address&&pickupLocationSuggestions.map((address) => (
+                        <div className="searched_pickup_location_cont" key={address} onClick={async() => {
                             //if(pickupLocation && dropoffLocation){
                             //}
-                            setIsLocationPanelActive(false);
-                            setIsRidesPanelActive(true);
-                            setPickupLocation(item);
+                            //setIsLocationPanelActive(false);
+                            //setIsRidesPanelActive(true);
+                            const {ltd, lng} = await getCoordinatesByAddress({address});
+                            setPickupLocation({latitude:ltd, longitude:lng, address});
                             }}>
                             <div className="location_icon"><FaLocationDot /></div>
-                            <div className="location_detaile">{item}</div>
+                            <div className="location_detaile">{address}</div>
                         </div>
                     ))
                 }
                 {
-                    !dropoffLocation&&dropoffLocationSuggestions.map((item) => (
-                        <div className="searched_pickup_location_cont" key={item} onClick={() => {
+                    !dropoffLocation.address&&dropoffLocationSuggestions.map((address) => (
+                        <div className="searched_pickup_location_cont" key={address} onClick={async() => {
                             //if(pickupLocation && dropoffLocation){
                             //}
-                            setIsLocationPanelActive(false);
-                            setIsRidesPanelActive(true);
-                            setDropoffLocation(item);
+                            const {ltd, lng} = await getCoordinatesByAddress({address});
+                            setDropoffLocation({latitude:ltd, longitude:lng, address});
                             }}>
                             <div className="location_icon"><FaLocationDot /></div>
-                            <div className="location_detaile">{item}</div>
+                            <div className="location_detaile">{address}</div>
                         </div>
                     ))
                 }
 
             </div>
-            <div className="rides_list_cont" style={{transform:isRidesPanelActive?"translate(0, -110vh)":"translate(0, 0vh)", zIndex:isRidesPanelActive?"1":"-1"}}>
+            <div className="rides_list_cont" style={{transform:isRidesPanelActive?"translate(0, -130vh)":"translate(0, 0vh)", zIndex:isRidesPanelActive?"1":"-1"}}>
                 <BiDownArrow className="BiDownArrow" onClick={() => setIsRidesPanelActive(false)} style={{display:isRidesPanelActive?"block":"none"}} />
                 <div className="rides_list">
                     {
-                        [0,1,2,3,4,5,6].map((item) => (
-                            <div className="car_list_item_outer" onClick={() => {setIsRidesPanelActive(false); setIsSelectedRidePanelActive(true);}}>
-                                <CarListItem key={item} name="Uber CarGo" passengersCapacity={item} away="2 minutes away 15.24" feature="affordable compact" price={193.2} />
+                        (["car", "auto", "motorcycle"] as VehicleTypeTypes[]).map((item) => (
+                            <div className="car_list_item_outer" onClick={() => {
+                                setIsRidesPanelActive(false);
+                                setIsSelectedRidePanelActive(true);
+                                setSelectedVehicleType(item);
+                            }}>
+                                <CarListItem vehicleType={item} allFare={allFare} />
+                                {/*<CarListItem vehicleDetails={item} allFare={allFare} />*/}
                             </div>
                         ))
                     }
+                    {
+                        //allNearByDrivers.map((item) => (
+                        //    <div className="car_list_item_outer" onClick={() => {
+                        //        setIsRidesPanelActive(false);
+                        //        setIsSelectedRidePanelActive(true);
+                        //        setSsss(item);
+                        //        setDriver(item);
+                        //    }}>
+                        //        <CarListItem vehicleDetails={item} allFare={allFare} />
+                        //    </div>
+                        //))
+                    }
                 </div>
             </div>
-            <div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -190vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>
+            <div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>
                 <BiDownArrow className="BiDownArrow" onClick={() => setIsSelectedRidePanelActive(false)} style={{display:isSelectedRidePanelActive?"block":"none"}} />
                 <div className="selected_ride">
                     <div className="panel_heading">Confirm your Ride</div>
@@ -136,24 +207,28 @@ const Home = () => {
                             <CiLocationOn className="CiLocationOn" />
                             <div className="pickup_location_details">
                                 <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">Kankariya talab, Bhopal</div>
+                                <div className="full_info">{pickupLocation.address}</div>
                             </div>
                         </div>
                         <div className="dropoff_location_details_cont">
                             <CiLocationOff className="CiLocationOff" />
                             <div className="dropoff_location_details">
                                 <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">Ho.No.371, near lal mandir, new bhoor colony, sec-29, old faridabad</div>
+                                <div className="full_info">{dropoffLocation.address}</div>
                             </div>
                         </div>
                         <div className="price_cont">
                             <BsCash className="BsCash" />
                             <div className="price">
-                                ₹ 193.20
+                                ₹ {}
                             </div>
                         </div>
                     </div>
-                    <button className="confirm_ride" onClick={() => {setIsSelectedRidePanelActive(false); setIsWaitingPanelActive(true);}}>Confirm</button>
+                    <button className="confirm_ride" onClick={() => {
+                        setIsSelectedRidePanelActive(false);
+                        setIsWaitingPanelActive(true);
+                        createRideRequest({passengerID:user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});
+                        }}>Confirm</button>
                 </div>
             </div>
             <div className="waiting_for_driver_cont" style={{transform:isWaitingPanelActive?"translate(0, -270vh)":"translate(0, 0vh)", zIndex:isWaitingPanelActive?"1":"-1"}}>
