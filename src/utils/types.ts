@@ -37,6 +37,32 @@ export interface RegisterDriverBodyTypes extends Pick<DriverTypes, "licenseNumbe
     vehicleType:VehicleTypeTypes;
     password:string;
 };
+export type RideStatusTypes = "requested"|"accepted"|"in-progress"|"completed"|"cancelled";
+export interface LocationTypes {
+    latitude:number;
+    longitude:number;
+    address:string;
+};
+export interface RideTypes {
+    _id:string;
+    driverID:string;
+    passengerID:string;
+    pickupLocation:LocationTypes;
+    dropoffLocation:LocationTypes;
+    distance:number;
+    fare:number;
+    duration:number;
+    status:RideStatusTypes;
+    paymentID:string;
+    orderID:string;
+    signature:string;
+    otp:string;
+    createdAt:Date;
+    updatedAt:Date;
+};
+export interface CreateRideRequestBodyTypes extends Pick<RideTypes, "passengerID"|"pickupLocation"|"dropoffLocation"> {
+    vehicleType:VehicleTypeTypes;
+};
 export interface ResponseType<J> {
     success:boolean;
     message:string;
