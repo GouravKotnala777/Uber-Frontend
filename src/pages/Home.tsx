@@ -64,6 +64,7 @@ const Home = () => {
                 .then((res) => {
                     if (res.success) {                    
                         setPickupLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                        setPickupLocationInp("");
                         //allNearbyDrivers({radius:"10", address:"Sector 29, Faridabad, Haryana, India"})
                         //.then((allNearDriversRes) => {
                         //    setAllNearByDrivers(allNearDriversRes.jsonData);
@@ -90,6 +91,7 @@ const Home = () => {
                 .then((res) => {
                     if (res.success) {                    
                     setDropoffLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                    setDropoffLocationInp("");
                 }
                 })
                 .catch((err) => {
@@ -231,7 +233,7 @@ const Home = () => {
                         }}>Confirm</button>
                 </div>
             </div>
-            <div className="waiting_for_driver_cont" style={{transform:isWaitingPanelActive?"translate(0, -270vh)":"translate(0, 0vh)", zIndex:isWaitingPanelActive?"1":"-1"}}>
+            <div className="waiting_for_driver_cont" style={{transform:isWaitingPanelActive?"translate(0, -290vh)":"translate(0, 0vh)", zIndex:isWaitingPanelActive?"1":"-1"}}>
                 <BiDownArrow className="BiDownArrow" onClick={() => setIsWaitingPanelActive(false)} style={{display:isWaitingPanelActive?"block":"none"}} />
                 <div className="selected_ride">
                     <div className="panel_heading">Looking For Nearby Drivers...</div>
@@ -260,7 +262,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className="meet_at_pickup_point_cont" style={{transform:isMeetAtPickupPanelActive?"translate(0, -350vh)":"translate(0, 0vh)", zIndex:isMeetAtPickupPanelActive?"1":"-1"}}>
+            <div className="meet_at_pickup_point_cont" style={{transform:isMeetAtPickupPanelActive?"translate(0, -370vh)":"translate(0, 0vh)", zIndex:isMeetAtPickupPanelActive?"1":"-1"}}>
                 <div className="selected_ride">
                     <div className="first_part">
                         <div className="panel_heading">Meet At The Pickup Point</div>
@@ -304,7 +306,7 @@ const Home = () => {
                             <CiLocationOn className="CiLocationOn" />
                             <div className="pickup_location_details">
                                 <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">Kankariya talab, Bhopal</div>
+                                <div className="full_info">{pickupLocation.address}</div>
                             </div>
                         </div>
                     </div>
