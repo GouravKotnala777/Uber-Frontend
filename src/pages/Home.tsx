@@ -59,24 +59,24 @@ const Home = () => {
     useEffect(() => {
         const aa = setTimeout(() => {
             setPickupLocation({address:"", latitude:0, longitude:0});
-            //if (pickupLocation) {
+            if (pickupLocationInp.trim() !== "") {                
                 getSuggestions(pickupLocationInp)
                 .then((res) => {
                     if (res.success) {                    
                         setPickupLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
-                        allNearbyDrivers({radius:"10", address:"Sector 29, Faridabad, Haryana, India"})
-                        .then((allNearDriversRes) => {
-                            setAllNearByDrivers(allNearDriversRes.jsonData);
-                        })
-                        .catch((err) => {
-                            setAllNearByDrivers(err);
-                        });
+                        //allNearbyDrivers({radius:"10", address:"Sector 29, Faridabad, Haryana, India"})
+                        //.then((allNearDriversRes) => {
+                        //    setAllNearByDrivers(allNearDriversRes.jsonData);
+                        //})
+                        //.catch((err) => {
+                        //    setAllNearByDrivers(err);
+                        //});
                     }
                 })
                 .catch((err) => {
                     console.log(err);
                 })
-            //}
+            }
         }, 2000);
 
         return () => {clearTimeout(aa)}
@@ -85,7 +85,7 @@ const Home = () => {
         
         const aa = setTimeout(() => {
             setDropoffLocation({address:"", latitude:0, longitude:0});
-            //if (dropoffLocationInp) {
+            if (dropoffLocationInp.trim() !== "") {
                 getSuggestions(dropoffLocationInp)
                 .then((res) => {
                     if (res.success) {                    
@@ -95,7 +95,7 @@ const Home = () => {
                 .catch((err) => {
                     console.log(err);
                 })
-            //}
+            }
         }, 2000);
 
         return () => {clearTimeout(aa)}
