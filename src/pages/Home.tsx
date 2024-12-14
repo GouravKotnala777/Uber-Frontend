@@ -15,6 +15,7 @@ import { allNearbyDrivers, createRideRequest, getCoordinates, getFareOfTrip, get
 import { DriverTypes, LocationTypes, VehicleTypeTypes } from "../utils/types";
 import DriverContext, { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
+import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
 
 const Home = () => {
@@ -34,6 +35,7 @@ const Home = () => {
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("car");
     const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
+    const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
 
 
     if (!driverContext) {
@@ -44,9 +46,14 @@ const Home = () => {
         // Handle the case where the context is null
         throw new Error("UserDataContext is not provided!");
     }
+    if (!socketContext) {
+        // Handle the case where the context is null
+        throw new Error("SocketDataContext is not provided!");
+    }
 
     //const { driver, setDriver, updateDriver } = driverContext;
     const {user, setUser, updateUser} = userContext;
+    const {sendMessage, receiveMessage} = socketContext;
 
     const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
         const res = await getCoordinates({address});
@@ -110,6 +117,9 @@ const Home = () => {
         }).catch((err) => {
         });
     }, []);
+    useEffect(() => {
+        sendMessage("join", {userID:user?._id as string, userType:user?.role as "user"|"driver"|"admin"})
+    }, [user]);
 
     return(
         <div className="home_page_background">
