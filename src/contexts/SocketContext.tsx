@@ -1,8 +1,8 @@
-import React, {createContext, ReactNode, useEffect} from "react";
+import {createContext, ReactNode, useEffect} from "react";
 import {io} from "socket.io-client";
 
 export interface SocketContextTypes {
-    sendMessage:(eventName:string, message:{userType:"user"|"driver"|"admin"; userID:string;}) => void;
+    sendMessage:(eventName:string, message:string|Record<string, unknown>) => void;
     receiveMessage:(eventName:string, callback:() => void) => void;
 }
 
@@ -25,7 +25,7 @@ const SocketContext = ({children}:{children:ReactNode}) => {
         //}
     }, []);
 
-    const sendMessage = (eventName:string, message:{userType:"user"|"driver"|"admin"; userID:string;}) => {
+    const sendMessage = (eventName:string, message:string|Record<string, unknown>):void => {
         socket.emit(eventName, message);
     };
 
