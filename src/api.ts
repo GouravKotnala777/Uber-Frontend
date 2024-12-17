@@ -1,4 +1,4 @@
-import { CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, VehicleTypeTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, VehicleTypeTypes } from "./utils/types";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
@@ -214,7 +214,31 @@ export const createRideRequest = async(createRideRequestFormData:CreateRideReque
         return error as ResponseType<typeof error>;
     }
 };
-// Function for create ride request
+// Function for accept ride request
+export const acceptRideRequest = async(acceptRideRequestFormData:AcceptRideRequestBodyTypes) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/accept`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify(acceptRideRequestFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for get fare of trip
 export const getFareOfTrip = async(getFareFormData:{dropoffLocation:string; pickupLocation:string;}) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/get-fare`, {
