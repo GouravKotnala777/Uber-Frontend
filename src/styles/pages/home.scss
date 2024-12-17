@@ -355,11 +355,19 @@
                 border-top: 1px solid #919191;
                 .driver_photo{
                     //border: 2px solid green;
-                    width: 80px;
-                    height: 80px;
+                    width: 120px;
                     img{
+                        //border: 2px solid red;
                         width: 100%;
                         border-radius: 50%;
+                    }
+                    .otp{
+                        //border: 2px solid blue;
+                        height: 20%;
+                        display: flex;
+                        .value{
+                            font-weight: 600;
+                        }
                     }
                 }
                 .driver_details{

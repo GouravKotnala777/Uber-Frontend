@@ -12,11 +12,27 @@ import { BsCash, BsStarFill } from "react-icons/bs";
 import { MdSafetyCheck } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
 import { allNearbyDrivers, createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
-import { DriverTypes, LocationTypes, VehicleTypeTypes } from "../utils/types";
+import { DriverTypes, LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
 import DriverContext, { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
+interface RideAcceptedEventMessageType {
+    status:RideStatusTypes;
+    otp:string;
+    driverName:string;
+    driverEmail:string;
+    driverMobile:string;
+    driverGender:"male"|"female"|"other";
+    licenseNumber:string;
+    vehicleDetailes:{
+        vehicleType:VehicleTypeTypes;
+        vehicleModel:string;
+        vehicleNumber:string;
+        vehicleColor:string;
+    };
+    rating:string;
+};
 
 const Home = () => {
     const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(false);
@@ -26,13 +42,24 @@ const Home = () => {
     const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
-    const [pickupLocation, setPickupLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
-    const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
+    const [pickupLocation, setPickupLocation] = useState<LocationTypes>({
+        latitude: 28.4339049,
+        longitude: 77.3223915,
+        address: "Sector 29, Faridabad, Haryana, India"
+    });
+    const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({
+        latitude:28.4354267,
+        longitude:77.3143303,
+        address:"Sector 28, Faridabad, Haryana, India"
+    });
+    //const [pickupLocation, setPickupLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
+    //const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
     const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<string[]>([]);
     const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<string[]>([]);
     const [allNearByDrivers, setAllNearByDrivers] = useState<DriverTypes[]>([]);
     const [allFare, setAllFare] = useState<{auto:number; car:number; motorcycle:number;}>({auto:0, car:0, motorcycle:0});
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("car");
+    const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
     const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
@@ -65,7 +92,7 @@ const Home = () => {
     };
     useEffect(() => {
         const aa = setTimeout(() => {
-            setPickupLocation({address:"", latitude:0, longitude:0});
+            //---------------------------------------setPickupLocation({address:"", latitude:0, longitude:0});
             if (pickupLocationInp.trim() !== "") {                
                 getSuggestions(pickupLocationInp)
                 .then((res) => {
@@ -92,7 +119,7 @@ const Home = () => {
     useEffect(() => {
         
         const aa = setTimeout(() => {
-            setDropoffLocation({address:"", latitude:0, longitude:0});
+            //-------------------------------------------setDropoffLocation({address:"", latitude:0, longitude:0});
             if (dropoffLocationInp.trim() !== "") {
                 getSuggestions(dropoffLocationInp)
                 .then((res) => {
@@ -118,14 +145,33 @@ const Home = () => {
         });
     }, []);
     useEffect(() => {
-        sendMessage("join", {userID:user?._id as string, userType:user?.role as "user"|"driver"|"admin"})
+        if (user) {
+            sendMessage("join", {userID:user?._id as string, userType:user?.role as "user"|"driver"|"admin"});
+        }
     }, [user]);
+    useEffect(() => {
+        receiveMessage("send-location-to-passenger", (data) => {
+            console.log("SSSSSSSSSSSSSSSSSSSSSSSS (1)");
+            console.log(data);
+            console.log("SSSSSSSSSSSSSSSSSSSSSSSS (2)");
+        });
+    }, []);
+    useEffect(() => {
+        receiveMessage("ride-accepted", (data) => {
+            console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (1)");
+            console.log(data);
+            setActiveDriver(data as RideAcceptedEventMessageType);
+            setIsWaitingPanelActive(false);
+            setIsMeetAtPickupPanelActive(true);
+            console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (2)");
+        });
+    }, []);
 
     return(
         <div className="home_page_background">
             {/*<pre>{JSON.stringify(pickupLocation, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(dropoffLocation, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(user, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(allNearByDrivers.map((item) => item.vehicleDetailes.vehicleType), null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
             <div className="map_cont">
@@ -142,7 +188,7 @@ const Home = () => {
                         setIsRidesPanelActive(true);
                         getFareOfTrip({pickupLocation:pickupLocation.address, dropoffLocation:dropoffLocation.address})
                         .then((res) => {
-                            setAllFare(res.jsonData);
+                            setAllFare(res.jsonData.fare);
                         })
                         .catch((err) => {
                         });
@@ -232,7 +278,7 @@ const Home = () => {
                         <div className="price_cont">
                             <BsCash className="BsCash" />
                             <div className="price">
-                                ₹ {}
+                                ₹ {allFare[selectedVehicleType]}
                             </div>
                         </div>
                     </div>
@@ -253,20 +299,20 @@ const Home = () => {
                             <CiLocationOn className="CiLocationOn" />
                             <div className="pickup_location_details">
                                 <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">Kankariya talab, Bhopal</div>
+                                <div className="full_info">{pickupLocation.address}</div>
                             </div>
                         </div>
                         <div className="dropoff_location_details_cont">
                             <CiLocationOff className="CiLocationOff" />
                             <div className="dropoff_location_details">
                                 <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">Ho.No.371, near lal mandir, new bhoor colony, sec-29, old faridabad</div>
+                                <div className="full_info">{dropoffLocation.address}</div>
                             </div>
                         </div>
                         <div className="price_cont">
                             <BsCash className="BsCash" />
-                            <div className="price" onClick={() => {setIsWaitingPanelActive(false); setIsMeetAtPickupPanelActive(true);}}>
-                                ₹ 193.20
+                            <div className="price">
+                                ₹ {allFare[selectedVehicleType]}
                             </div>
                         </div>
                     </div>
@@ -282,13 +328,19 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="second_part">
-                        <div className="driver_photo"><img src={vite} alt={vite} /></div>
+                        <div className="driver_photo">
+                            <img src={vite} alt={vite} />
+                            <div className="otp">
+                                <div className="heading">OTP :</div>
+                                <div className="value">&nbsp;{activeDriver?.otp}</div>
+                            </div>
+                        </div>
                         <div className="driver_details">
-                            <div className="driver_name">SANTH</div>
-                            <div className="vehicle_number">KA15AK00-0</div>
-                            <div className="vehicle_color">White</div>
-                            <div className="vehicle_model">Suzuki S-Presso </div>
-                            <div className="driver_ratings"><BsStarFill className="BsStarFill" /><div className="value">4.9</div></div>
+                            <div className="driver_name">{activeDriver?.driverName}</div>
+                            <div className="vehicle_number">{activeDriver?.vehicleDetailes.vehicleNumber}</div>
+                            <div className="vehicle_color">{activeDriver?.vehicleDetailes.vehicleColor}</div>
+                            <div className="vehicle_model">{activeDriver?.vehicleDetailes.vehicleModel}</div>
+                            <div className="driver_ratings"><BsStarFill className="BsStarFill" /><div className="value">{activeDriver?.rating}</div></div>
                         </div>
                     </div>
                     <div className="third_part">
