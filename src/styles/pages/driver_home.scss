@@ -22,7 +22,7 @@
         //border: 1px solid red;
         position: relative;
         transition: 0.3s;
-        height: 60%;
+        height: 65%;
         .show_location_btn{
             //border: 2px solid red;
             position: absolute;
@@ -47,7 +47,7 @@
         .passenger_request_panel_cont{
             //border: 2px solid indigo;
             height: 100%;
-            padding: 10px;
+            padding: 0 10px;
             box-sizing: border-box;
             transition: 0.3s;
             //transform: translate(0, -70vh);
@@ -58,7 +58,7 @@
                 display: flex;
                 justify-content: space-between;
                 border-bottom: 1px solid #919191;
-                margin-top:5px;
+                margin-top:15px;
                 padding-bottom:10px;
                 .passenger_image{
                     //border: 1px solid red;
@@ -116,6 +116,39 @@
                 }
             }
             .second_part{
+                //border: 2px solid red;
+                margin-top: 15px;
+                .input_cont{
+                    //border: 2px solid red;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    background-color: #e3e3e3;
+                    border-radius: 8px;
+                    .message_inp{
+                        //border: 2px solid blue;
+                        padding: 10px;
+                        flex: 1;
+                        background-color: transparent;
+                        border: none;
+                        outline: none;  
+                        color: #313131;
+                        font-size: 1.1rem;                      
+                    }
+                    .send_message_btn{
+                        //border: 2px solid orange;
+                        padding: 6px;
+                        border-radius: 6px;
+                        border: none;
+                        outline: none;
+                        .BiSend{
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+            .third_part{
                 //border: 2px solid green;
                 .pickup_location_details_cont{
                     //border: 1px solid green;
@@ -143,7 +176,7 @@
     
                 }
             }
-            .third_part{
+            .fourth_part{
                 .dropoff_location_details_cont{
                     //border: 1px solid indigo;
                     display: flex;
@@ -169,7 +202,7 @@
                     }
                 }
             }
-            .fourth_part{
+            .fifth_part{
                 display: flex;
                 justify-content: flex-end;
                 gap: 10px;

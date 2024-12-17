@@ -4,9 +4,8 @@ import logo from "../../public/uber-logo-1.png";
 import vite from "../../public/vite.svg";
 import { useContext, useEffect, useState } from "react";
 import { CiLocationOff, CiLocationOn } from "react-icons/ci";
-import { BiStopwatch } from "react-icons/bi";
+import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
-import { SiLetterboxd } from "react-icons/si";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { acceptRideRequest, myDriverProfile } from "../api";
@@ -33,10 +32,11 @@ export interface NewRideNotificationTypes {
 
 const DriverHome = () => {
     //const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(true);
-    const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<boolean>(true);
+    const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<boolean>(false);
     const [hasRideAccepted, setHasRideAccepted] = useState<boolean>(false);
     const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
     const [activePassenger, setActivePassenger] = useState<Pick<UserTypes, "name"|"email"|"mobile"|"socketID">|null>(null);
+    const [acceptedRide, setAcceptedRide] = useState<NewRideNotificationTypes|null>(null);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
@@ -46,7 +46,7 @@ const DriverHome = () => {
     if (!userContext) throw Error("userDataContext not provided");
     if (!driverContext) throw Error("driverContext not provided");
 
-    const {user, setUser, updateUser} = userContext;
+    //const {user, setUser, updateUser} = userContext;
     const {driver, setDriver, updateDriver} = driverContext;
     const {sendMessage, receiveMessage} = socketContext;
 
@@ -79,39 +79,55 @@ const DriverHome = () => {
     useEffect(() => {
 
         const updateLocation = () => {
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
             navigator.geolocation.getCurrentPosition(p => {
                 console.log(p.coords);
             })
-            
-            
             if (navigator.geolocation) {
-                console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+                console.log({
+                    passengerSocketID:activePassenger?.socketID,
+                    driverID:driver?._id as string,
+                    eventName:"send-location-to-passenger",
+                    location:{
+                        ltd:1.2345,
+                        lng:2.2345
+                    }});
                 
-                navigator.geolocation.getCurrentPosition(position => 
-                    sendMessage("update-driver-location", {
-                        message:{
-                            passengerSocketID:activePassenger?.socketID,
-                            driverID:user?._id as string,
-                            eventName:"ride-accepted",
-                            location:{
-                                ltd:position.coords.latitude,
-                                lng:position.coords.longitude
-                            }
+                sendMessage("update-driver-location", {
+                    message:{
+                        passengerSocketID:activePassenger?.socketID,
+                        driverID:driver?._id as string,
+                        eventName:"send-location-to-passenger",
+                        location:{
+                            ltd:1.2345,
+                            lng:2.2345
                         }
-                    })
-                )
+                    }
+                })
+                
+                //navigator.geolocation.getCurrentPosition(position => 
+                //    //sendMessage("update-driver-location", {
+                //    //    message:{
+                //    //        passengerSocketID:activePassenger?.socketID,
+                //    //        driverID:user?._id as string,
+                //    //        eventName:"ride-accepted",
+                //    //        location:{
+                //    //            ltd:position.coords.latitude,
+                //    //            lng:position.coords.longitude
+                //    //        }
+                //    //    }
+                //    //})
+                //)
             }
         };
 
         const locationInterval = setInterval(updateLocation, 20000);
 
         return () => clearInterval(locationInterval);
-    }, []);
+    }, [driver, activePassenger]);
     return(
         <div className="driver_home_page_bg">
             {/*<pre>{JSON.stringify(driver?.userID._id, null, `\t`)}</pre>*/}
-            <pre>{JSON.stringify(activePassenger, null, `\t`)}</pre>
+            {/*<pre>{JSON.stringify(activePassenger, null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
             <div className="map_cont">
                 <img src={map} alt={map} />
@@ -149,7 +165,7 @@ const DriverHome = () => {
             </div>
 
             
-            <div className="passenger_request_panel_cont_outer" style={{transform:isRideRequestPoppedUp?"translate(0, -210%)":"translate(0, 50%)"}}>
+            <div className="passenger_request_panel_cont_outer" style={{transform:isRideRequestPoppedUp?"translate(0, -195%)":"translate(0, 50%)"}}>
                 <button className="show_location_btn" style={{
                     top:isRideRequestPoppedUp?"-20%":"-90%"
                 }} onClick={() => setIsRideRequestPoppedUp(!isRideRequestPoppedUp)}><CiLocationOn className="CiLocationOn" /></button>
@@ -170,7 +186,7 @@ const DriverHome = () => {
                                     <div className="distance">{Math.ceil(requestPopup.distance/1000)}km</div>
                                 </div>
                             </div>
-                            <div className="second_part">
+                            <div className="third_part">
                                 <div className="pickup_location_details_cont">
                                     <CiLocationOn className="CiLocationOn" />
                                     <div className="pickup_location_details">
@@ -179,7 +195,7 @@ const DriverHome = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="third_part">
+                            <div className="fourth_part">
                                 <div className="dropoff_location_details_cont">
                                     <CiLocationOff className="CiLocationOff" />
                                     <div className="dropoff_location_details">
@@ -188,18 +204,22 @@ const DriverHome = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="fourth_part">
+                            <div className="fifth_part">
                                 <button className="ignore_btn" onClick={() => setIsRideRequestPoppedUp(false)}>Ignore</button>
                                 <button className="accept_btn" onClick={() => {
                                     setIsRideRequestPoppedUp(false);
                                     setHasRideAccepted(true);
-                                    acceptRideRequest({rideID:requestPopup._id, driverID:driver?._id as string, status:"accepted"});
+                                    acceptRideRequest({
+                                        rideID:requestPopup._id,
+                                        driverID:driver?._id as string,
+                                        status:"accepted"});
                                     setActivePassenger({
                                         name:requestPopup.passengerName,
                                         email:requestPopup.passengerEmail,
                                         mobile:requestPopup.passengerMobile,
                                         socketID:requestPopup.passengerSocketID
                                     });
+                                    setAcceptedRide(requestPopup);
                                 }}>Accept</button>
                             </div>
                         </div>
@@ -207,7 +227,7 @@ const DriverHome = () => {
                 }
 
             </div>
-            <div className="passenger_request_panel_cont_outer" style={{transform:hasRideAccepted?"translate(0, -200%)":"translate(0, 50%)"}}>
+            <div className="passenger_request_panel_cont_outer" style={{transform:hasRideAccepted?"translate(0, -295%)":"translate(0, 50%)"}}>
                 <button className="show_location_btn" style={{
                     top:hasRideAccepted?"-20%":"-90%"
                 }}><CiLocationOn className="CiLocationOn" /></button>
@@ -215,36 +235,42 @@ const DriverHome = () => {
                     <div className="first_part">
                         <div className="passenger_image"><img src={vite} alt={vite} /></div>
                         <div className="name">
-                            <div className="value">Esther Berry</div>
+                            <div className="value">{activePassenger?.name}</div>
                             <div className="btns">
                                 <button className="apple_pay_btn">ApplePay</button>
                                 <button className="discount_btn">Discount</button>
                             </div>
                         </div>
                         <div className="price">
-                            <div className="value">₹25.00</div>
-                            <div className="distance">2.2km</div>
+                            <div className="value">₹{acceptedRide?.fare}.00</div>
+                            <div className="distance">{acceptedRide?.distance}km</div>
                         </div>
                     </div>
                     <div className="second_part">
+                        <div className="input_cont">
+                            <input type="text" className="message_inp" placeholder="Enter passenger OTP" />
+                            <button className="send_message_btn"><BiSend className="BiSend" /></button>
+                        </div>
+                    </div>
+                    <div className="third_part">
                         <div className="pickup_location_details_cont">
                             <CiLocationOn className="CiLocationOn" />
                             <div className="pickup_location_details">
                                 <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">Kankariya talab, Bhopal</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="third_part">
-                        <div className="dropoff_location_details_cont">
-                            <CiLocationOff className="CiLocationOff" />
-                            <div className="dropoff_location_details">
-                                <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">Ho.No.371, near lal mandir, new bhoor colony, sec-29, old faridabad</div>
+                                <div className="full_info">{acceptedRide?.pickupLocation.address}</div>
                             </div>
                         </div>
                     </div>
                     <div className="fourth_part">
+                        <div className="dropoff_location_details_cont">
+                            <CiLocationOff className="CiLocationOff" />
+                            <div className="dropoff_location_details">
+                                <div className="highlight_info">Ho.No.371</div>
+                                <div className="full_info">{acceptedRide?.dropoffLocation.address}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="fifth_part">
                         <button className="cancel_btn">Cancel</button>
                         <button className="confirm_btn" onClick={() => navigate("/driver/singleRide")}>Confirm</button>
                     </div>
