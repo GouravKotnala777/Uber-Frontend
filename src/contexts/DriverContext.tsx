@@ -1,11 +1,11 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
-import { DriverTypes } from "../utils/types";
+import { DriverTypesPopulated } from "../utils/types";
 
 // Define the shape of the context value
 export interface DriverContextTypes {
-  driver: DriverTypes | null;
-  setDriver: Dispatch<SetStateAction<DriverTypes | null>>;
-  updateDriver: (driverPayload: DriverTypes | null) => void;
+  driver: DriverTypesPopulated | null;
+  setDriver: Dispatch<SetStateAction<DriverTypesPopulated | null>>;
+  updateDriver: (driverPayload: DriverTypesPopulated | null) => void;
 }
 
 // Create the context with the correct type
@@ -16,9 +16,9 @@ interface DriverContextProps {
 }
 
 const DriverContext: React.FC<DriverContextProps> = ({ children }) => {
-  const [driver, setDriver] = useState<DriverTypes | null>(null);
+  const [driver, setDriver] = useState<DriverTypesPopulated | null>(null);
 
-  const updateDriver = (driverPayload: DriverTypes | null) => {
+  const updateDriver = (driverPayload: DriverTypesPopulated | null) => {
     setDriver(driverPayload);
   };
 
