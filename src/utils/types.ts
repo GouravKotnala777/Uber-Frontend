@@ -7,11 +7,27 @@ export interface UserTypes {
     mobile:string;
     gender:"male"|"female"|"other";
     role:"user"|"admin";
+    socketID:string;
 };
 export type VehicleTypeTypes = "car"|"motorcycle"|"auto";
 export interface DriverTypes {
     _id:string;
-    userID:string;
+    userID:UserTypes;
+    licenseNumber:string;
+    vehicleDetailes:{
+        vehicleType:VehicleTypeTypes;
+        vehicleModel:string;
+        vehicleNumber:string;
+        vehicleColor:string;
+    },
+    availabilityStatus:boolean;
+    rating:number;
+    createdAt:Date;
+    updatedAt:Date;
+};
+export interface DriverTypesPopulated {
+    _id:string;
+    userID:Pick<UserTypes, "_id"|"name"|"email"|"gender"|"mobile"|"role"|"socketID">;
     licenseNumber:string;
     vehicleDetailes:{
         vehicleType:VehicleTypeTypes;
@@ -62,6 +78,9 @@ export interface RideTypes {
 };
 export interface CreateRideRequestBodyTypes extends Pick<RideTypes, "passengerID"|"pickupLocation"|"dropoffLocation"> {
     vehicleType:VehicleTypeTypes;
+};
+export interface AcceptRideRequestBodyTypes extends Pick<RideTypes, "status"|"driverID"> {
+    rideID:string;
 };
 export interface ResponseType<J> {
     success:boolean;
