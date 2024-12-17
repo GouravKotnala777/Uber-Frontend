@@ -3,7 +3,7 @@ import {io} from "socket.io-client";
 
 export interface SocketContextTypes {
     sendMessage:(eventName:string, message:string|Record<string, unknown>) => void;
-    receiveMessage:(eventName:string, callback:() => void) => void;
+    receiveMessage:(eventName:string, callback:<T>(data:T) => void) => void;
 }
 
 export const SocketDataContext = createContext<SocketContextTypes|null>(null);
@@ -29,7 +29,7 @@ const SocketContext = ({children}:{children:ReactNode}) => {
         socket.emit(eventName, message);
     };
 
-    const receiveMessage = (eventName:string, callback:() => void) => {
+    const receiveMessage = <T extends unknown>(eventName:string, callback:(data:T) => void) => {
         socket.on(eventName, callback);
     };
 
