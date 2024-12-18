@@ -1,0 +1,292 @@
+
+.single_ride_page_bg{
+    //border: 2px solid red;
+    height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
+    .nav_btn_cont{
+        //border: 2px solid blue;
+        height: 10%;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        .back_btn{
+            height: 100%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            .FaArrowLeftLong{
+                width: 25px;
+                height: 25px;
+                color: black;
+            }
+        }
+    }
+    .single_ride_page_scrollable{
+        //border: 2px solid green;
+        height: 90%;
+        overflow-y: scroll;
+        .first_part{
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #919191;
+            margin-top:15px;
+            padding-bottom:10px;
+            .passenger_image{
+                //border: 1px solid red;
+                width: 70px;
+                height: 70px;
+                img{
+                    width: 100%;
+                    border-radius: 50%;
+                }
+            }
+            .name{
+                .value{
+                    font-weight: 600;
+                    font-size: 1.1rem;
+                }
+                .btns{
+                    .apple_pay_btn{
+                        background-color: gold;
+                        border: none;
+                        outline: none;
+                        border-radius: 8px;
+                        color: black;
+                        padding: 6px 8px;
+                        font-size: 0.7rem;
+                        cursor: pointer;
+                        &:hover{
+                            background-color:rgba(255, 215, 0, 0.7);
+                        }  
+                    }
+                    .discount_btn{
+                        background-color: gold;
+                        border: none;
+                        outline: none;
+                        border-radius: 8px;
+                        color: black;
+                        padding: 6px 8px;
+                        margin-left: 6px;
+                        font-size: 0.7rem;
+                        cursor: pointer;
+                        &:hover{
+                            background-color:rgba(255, 215, 0, 0.7);
+                        }    
+                    }
+                }
+            }
+            .price{
+                .value{
+                    font-weight: 700;
+                    font-size: 1.1rem;
+                }
+                .distance{
+                    color: #919191;
+                    text-align: right;
+                }
+            }
+        }
+        .second_part{
+            border-bottom: 1px solid #919191;
+            margin-top:15px;
+            .pickup_location_details_cont{
+                //border: 1px solid green;
+                display: flex;
+                justify-content: space-between;
+                //align-items: ;
+                .CiLocationOn{
+                    margin-top: 15px;
+                    margin-left: 15px;
+                }
+                .pickup_location_details{
+                    //border: 1px solid blue;
+                    margin-left: 15px;
+                    padding: 10px;
+                    width: 85%;
+                    .highlight_info{
+                        font-weight: 600;
+                    }
+                    .full_info{
+                        font-size: 0.7rem;
+                    }
+                }
+    
+            }
+        }
+        .third_part{
+            border-bottom: 1px solid #919191;
+            margin-top:15px;
+            .dropoff_location_details_cont{
+                //border: 1px solid indigo;
+                display: flex;
+                justify-content: space-between;
+                .CiLocationOff{
+                    //border: 1px solid violet;
+                    margin-top: 15px;
+                    margin-left: 15px;
+                }
+                .dropoff_location_details{
+                    //border: 1px solid blue;
+                    margin-left: 15px;
+                    padding: 10px;
+                    width: 85%;
+                    .highlight_info{
+                        font-weight: 600;
+                    }
+                    .full_info{
+                        font-size: 0.7rem;
+                    }
+                }
+            }
+        }
+        .fourth_part{
+            //border: 1px solid violet;
+            border-bottom: 1px solid #919191;
+            margin-top:15px;
+            padding-bottom: 15px;
+            .heading{
+                font-size: 0.9rem;
+                color: #919191;
+            }
+            .value{
+                font-weight: 500;
+            }
+        }
+        .fifth_part{
+            //border: 1px solid violet;
+            margin-top:15px;
+            padding-bottom: 15px;
+            .heading{
+                font-size: 0.9rem;
+                color: #919191;
+            }
+            .payment_detail{
+                //border: 1px solid orange;
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: black;
+                .heading{
+                    color: black;
+                    
+                }
+                .value{
+                    color: black;
+                    
+                }
+            }
+            //.discount{
+            //    border: 1px solid orange;
+            //    .heading{
+                    
+            //    }
+            //    .value{
+                    
+            //    }
+            //}
+            //.paid_amount{
+            //    border: 1px solid orange;
+            //    .heading{
+    
+            //    }
+            //    .value{
+    
+            //    }
+            //}
+        }
+        .sixth_part{
+            //border: 2px solid rgb(0, 255, 98);
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            .safety_cont{
+                //border:1px solid rgb(8, 0, 255);
+                display: grid;
+                place-items: center;
+                .safety_icon{
+                    //border:1px solid red;
+                    padding:10px;
+                    width:1.4rem;
+                    text-align: center;
+                    border-radius: 50%;
+                    background-color: rgb(121, 255, 121);
+                    cursor: pointer;
+                    .MdSafetyCheck{
+    
+                    }
+                }
+                .safety_heading{
+                    font-size:0.8rem;
+                    font-weight:600;
+                }
+            }
+            .share_my_trip_cont{
+                //border:1px solid rgb(8, 0, 255);
+                display: grid;
+                place-items: center;
+                .share_my_trip_icon{
+                    //border:1px solid red;
+                    padding:10px;
+                    width:1.4rem;
+                    text-align: center;
+                    border-radius: 50%;
+                    background-color: rgb(153, 153, 255);
+                    cursor: pointer;
+                    .FaLocationPin{
+    
+                    }
+                }
+                .share_my_trip_heading{
+                    font-size:0.8rem;
+                    font-weight:600;
+                }
+            }
+            .call_driver_cont{
+                //border:1px solid rgb(8, 0, 255);
+                display: grid;
+                place-items: center;
+                .call_driver_icon{
+                    //border:1px solid red;
+                    padding:10px;
+                    width:1.4rem;
+                    text-align: center;
+                    border-radius: 50%;
+                    background-color: #e3e3e3;
+                    cursor: pointer;
+                    .IoCall{
+    
+                    }
+                }
+                .call_driver_heading{
+                    font-size:0.8rem;
+                    font-weight:600;
+                    color: red;
+                }
+            }
+        }
+        .seventh_part{
+            //border: 2px solid red;
+            text-align: center;
+            margin-top: 15px;
+            .go_to_pick_up{
+                //border: 2px solid green;
+                color: black;
+                font-weight: 600;
+                border: none;
+                outline: none;
+                font-size: 1.1rem;
+                background-color: gold;
+                width: 100%;
+                padding: 20px;
+                border-radius: 8px;
+                cursor: pointer;
+                &:hover{
+                    background-color:rgba(255, 215, 0, 0.7);
+                }
+            }
+        }
+    }
+}
