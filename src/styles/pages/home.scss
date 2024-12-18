@@ -23,7 +23,7 @@
     }
     .form_cont{
         //border: 2px solid indigo;
-        height: 40%;
+        height: 50%;
         padding: 10px;
         box-sizing: border-box;
         transition: 0.3s;
@@ -32,15 +32,15 @@
         form{
             .form_heading{
                 //border: 2px solid red;
-                font-size: 1.2rem;
-                font-weight: 500;
+                font-size: 1.3rem;
+                font-weight: 600;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
             input{
                 background-color: #e3e3e3;
-                padding: 10px 15px;
+                padding: 15px 10px;
                 border-radius: 8px;
                 width: 100%;
                 box-sizing: border-box;
@@ -55,22 +55,24 @@
             }
             .create_ride_btn{
                 width: 100%;
-                padding: 10px;
+                padding: 15px 10px;
                 font-size: 1.1rem;
                 margin-top: 10px;
                 border-radius: 8px;
                 background-color: black;
+                border: none;
             }
         }
     }
     .suggestion_list_cont{
         //border: 2px solid greenyellow;
-        height: 70%;
+        height: 60%;
         width: 100%;
         //transform: translate(0, -70vh);
         z-index: -1;
         transition: 0.3s;
-        background-color: rgb(255, 237, 237);
+        //background-color: rgb(255, 237, 237);
+        background-color: white;
         overflow-y: scroll;
         .searched_pickup_location_cont{
             //border: 1px solid red;
@@ -94,7 +96,9 @@
         //border: 2px solid red;
         height: 60%;
         transition: 0.3s;
-        background-color: rgb(255, 230, 230);
+        //background-color: rgb(255, 230, 230);
+        background-color: white;
+        border-radius: 20px 20px 0 0;
         .BiDownArrow{
             //border: 1px solid blue;
             width: 100%;
@@ -111,7 +115,9 @@
         //border: 2px solid red;
         height: 80%;
         transition: 0.3s;
-        background-color: rgb(255, 230, 230);
+        //background-color: rgb(255, 230, 230);
+        background-color: rgb(247, 247, 247);
+        border-radius: 20px 20px 0 0;
         .BiDownArrow{
             //border: 1px solid blue;
             width: 100%;
@@ -125,13 +131,14 @@
             padding: 10px;
             .panel_heading{
                 font-weight: 700;
+                font-size: 1.3rem;
             }
             .car_icon_cont{
                 //border: 1px solid violet;
                 text-align: center;
                 img{
                     //border: 1px solid red;
-                    width: 80%;
+                    width: 60%;
                 }
             }
             .ride_details{
@@ -214,7 +221,9 @@
         //border: 2px solid red;
         height: 80%;
         transition: 0.3s;
-        background-color: rgb(255, 230, 230);
+        //background-color: rgb(255, 230, 230);
+        background-color: rgb(247, 247, 247);
+        border-radius: 20px 20px 0 0;
         .BiDownArrow{
             //border: 1px solid blue;
             width: 100%;
@@ -228,13 +237,14 @@
             padding: 10px;
             .panel_heading{
                 font-weight: 700;
+                font-size: 1.3rem;
             }
             .car_icon_cont{
                 //border: 1px solid violet;
                 text-align: center;
                 img{
                     //border: 1px solid red;
-                    width: 80%;
+                    width: 60%;
                 }
             }
             .ride_details{
