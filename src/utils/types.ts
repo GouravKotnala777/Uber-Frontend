@@ -9,7 +9,7 @@ export interface UserTypes {
     role:"user"|"admin";
     socketID:string;
 };
-export type VehicleTypeTypes = "car"|"motorcycle"|"auto";
+export type VehicleTypeTypes = "uberAuto"|"uberX"|"uberMoto"|"uberScooty"|"uberComfort"|"uberHCV"|"uberPool"|"uberXL";
 export interface DriverTypes {
     _id:string;
     userID:UserTypes;

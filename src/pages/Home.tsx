@@ -17,6 +17,17 @@ import DriverContext, { DriverContextTypes, DriverDataContext } from "../context
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
+import uberX from "../../public/uber-x.png";
+import uberAuto from "../../public/uber-tuktuk.png";
+import uberScooty from "../../public/uber-scooty.png";
+import uberMoto from "../../public/uber-moto.png";
+import uberComfort from "../../public/uber-comfort.png";
+import uberHCV from "../../public/uber-hcv.png";
+import uberPool from "../../public/uber-pool.png";
+import uberXL from "../../public/uber-xl.png";
+
+
+
 interface RideAcceptedEventMessageType {
     status:RideStatusTypes;
     otp:string;
@@ -33,6 +44,19 @@ interface RideAcceptedEventMessageType {
     };
     rating:string;
 };
+
+const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
+const vehicleDescription = { uberAuto: "Affordable three-wheeler",
+    uberX: "Affordable compact",
+    uberScooty: "Quick and economical two-wheeler",
+    uberMoto: "Convenient and fast bike ride",
+    uberComfort: "Premium comfort and space",
+    uberHCV: "Heavy commercial vehicle for goods",
+    uberPool: "Shared ride for lower cost",
+    uberXL: "Spacious ride for groups or large luggage"
+};
+const vehicleCapacity = {uberAuto:5, uberX:3, uberMoto:1, uberScooty:1, uberComfort:3, uberHCV:5, uberPool:3, uberXL:4};
+
 
 const Home = () => {
     const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(false);
@@ -57,8 +81,8 @@ const Home = () => {
     const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<string[]>([]);
     const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<string[]>([]);
     const [allNearByDrivers, setAllNearByDrivers] = useState<DriverTypes[]>([]);
-    const [allFare, setAllFare] = useState<{auto:number; car:number; motorcycle:number;}>({auto:0, car:0, motorcycle:0});
-    const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("car");
+    const [allFare, setAllFare] = useState<{[P in VehicleTypeTypes]:number;}>({uberAuto:0 ,uberX:0 ,uberMoto:0 ,uberScooty:0 ,uberComfort:0 ,uberHCV:0 ,uberPool:0 , uberXL:0});
+    const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
     const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
@@ -230,13 +254,13 @@ const Home = () => {
                 <BiDownArrow className="BiDownArrow" onClick={() => setIsRidesPanelActive(false)} style={{display:isRidesPanelActive?"block":"none"}} />
                 <div className="rides_list">
                     {
-                        (["car", "auto", "motorcycle"] as VehicleTypeTypes[]).map((item) => (
+                        (["uberX", "uberComfort", "uberXL", "uberPool", "uberMoto", "uberScooty","uberAuto", "uberHCV"] as VehicleTypeTypes[]).map((item) => (
                             <div className="car_list_item_outer" onClick={() => {
                                 setIsRidesPanelActive(false);
                                 setIsSelectedRidePanelActive(true);
                                 setSelectedVehicleType(item);
                             }}>
-                                <CarListItem vehicleType={item} allFare={allFare} />
+                                <CarListItem vehicleType={item} allFare={allFare} vehicleDescription={vehicleDescription[item]} vehicleCapacity={vehicleCapacity[item]} vehicleImg={vehicleImages[item]} />
                                 {/*<CarListItem vehicleDetails={item} allFare={allFare} />*/}
                             </div>
                         ))
@@ -256,10 +280,10 @@ const Home = () => {
                 </div>
             </div>
             <div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>
-                <BiDownArrow className="BiDownArrow" onClick={() => setIsSelectedRidePanelActive(false)} style={{display:isSelectedRidePanelActive?"block":"none"}} />
+                <BiDownArrow className="BiDownArrow" onClick={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} style={{display:isSelectedRidePanelActive?"block":"none"}} />
                 <div className="selected_ride">
                     <div className="panel_heading">Confirm your Ride</div>
-                    <div className="car_icon_cont"><img src={car} alt={car} /></div>
+                    <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
                     <div className="ride_details">
                         <div className="pickup_location_details_cont">
                             <CiLocationOn className="CiLocationOn" />
@@ -286,14 +310,14 @@ const Home = () => {
                         setIsSelectedRidePanelActive(false);
                         setIsWaitingPanelActive(true);
                         createRideRequest({passengerID:user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});
-                        }}>Confirm</button>
+                        }}>Confirm with {selectedVehicleType}</button>
                 </div>
             </div>
             <div className="waiting_for_driver_cont" style={{transform:isWaitingPanelActive?"translate(0, -290vh)":"translate(0, 0vh)", zIndex:isWaitingPanelActive?"1":"-1"}}>
                 <BiDownArrow className="BiDownArrow" onClick={() => setIsWaitingPanelActive(false)} style={{display:isWaitingPanelActive?"block":"none"}} />
                 <div className="selected_ride">
                     <div className="panel_heading">Looking For Nearby Drivers...</div>
-                    <div className="car_icon_cont"><img src={car} alt={car} /></div>
+                    <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
                     <div className="ride_details">
                         <div className="pickup_location_details_cont">
                             <CiLocationOn className="CiLocationOn" />
