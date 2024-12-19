@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, VehicleTypeTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, VehicleTypeTypes } from "./utils/types";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
@@ -224,6 +224,30 @@ export const acceptRideRequest = async(acceptRideRequestFormData:AcceptRideReque
             },
             credentials:"include",
             body:JSON.stringify(acceptRideRequestFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for start ride by filling OTP by driver
+export const startRide = async(startRideFormData:StartRideBodyTypes) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/start`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify(startRideFormData)
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");
