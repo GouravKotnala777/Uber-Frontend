@@ -204,9 +204,9 @@
             }
             .fifth_part{
                 display: flex;
-                justify-content: flex-end;
+                flex-direction: column;
                 gap: 10px;
-                margin-top: 15px;
+                margin: 15px 0;
                 .ignore_btn{
                     background-color: transparent;
                     color: #919191;

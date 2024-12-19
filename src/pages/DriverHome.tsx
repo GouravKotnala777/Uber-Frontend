@@ -8,7 +8,7 @@ import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { acceptRideRequest, myDriverProfile } from "../api";
+import { acceptRideRequest, myDriverProfile, startRide } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
@@ -37,6 +37,8 @@ const DriverHome = () => {
     const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
     const [activePassenger, setActivePassenger] = useState<Pick<UserTypes, "name"|"email"|"mobile"|"socketID">|null>(null);
     const [acceptedRide, setAcceptedRide] = useState<NewRideNotificationTypes|null>(null);
+    const [otpInp, setOtpInp] = useState<string>("");
+    const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
@@ -205,7 +207,6 @@ const DriverHome = () => {
                                 </div>
                             </div>
                             <div className="fifth_part">
-                                <button className="ignore_btn" onClick={() => setIsRideRequestPoppedUp(false)}>Ignore</button>
                                 <button className="accept_btn" onClick={() => {
                                     setIsRideRequestPoppedUp(false);
                                     setHasRideAccepted(true);
@@ -221,6 +222,7 @@ const DriverHome = () => {
                                     });
                                     setAcceptedRide(requestPopup);
                                 }}>Accept</button>
+                                <button className="ignore_btn" onClick={() => setIsRideRequestPoppedUp(false)}>Ignore</button>
                             </div>
                         </div>
                     ))
@@ -248,8 +250,14 @@ const DriverHome = () => {
                     </div>
                     <div className="second_part">
                         <div className="input_cont">
-                            <input type="text" className="message_inp" placeholder="Enter passenger OTP" />
-                            <button className="send_message_btn"><BiSend className="BiSend" /></button>
+                            <input type="text" className="message_inp" placeholder="Enter passenger OTP" onChange={(e) => setOtpInp(e.target.value)} />
+                            <button className="send_message_btn" onClick={async() => {
+                                const startedRide = await startRide({rideID:acceptedRide?._id as string, otp:otpInp});
+
+                                if (startedRide.success) {
+                                    setIsOtpValid(true);
+                                }
+                            }}><BiSend className="BiSend" /></button>
                         </div>
                     </div>
                     <div className="third_part">
@@ -270,10 +278,13 @@ const DriverHome = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="fifth_part">
-                        <button className="cancel_btn">Cancel</button>
-                        <button className="confirm_btn" onClick={() => navigate("/driver/singleRide")}>Confirm</button>
-                    </div>
+                    {
+                        isOtpValid &&
+                            <div className="fifth_part">
+                                <button className="confirm_btn" onClick={() => navigate("/driver/riding")}>Confirm</button>
+                                <button className="cancel_btn">Cancel</button>
+                            </div>
+                    }
                 </div>
             </div>
 
