@@ -1,6 +1,5 @@
-import { BsStarFill } from "react-icons/bs";
+import { BsArrowDown, BsStarFill } from "react-icons/bs";
 import "../styles/pages/riding.scss";
-import { BiSend } from "react-icons/bi";
 import { MdSafetyCheck } from "react-icons/md";
 import { FaLocationPin } from "react-icons/fa6";
 import { IoCall } from "react-icons/io5";
@@ -11,22 +10,6 @@ import { RideAcceptedEventMessageType } from "./Home";
 import { useLocation } from "react-router-dom";
 import { LocationTypes } from "../utils/types";
 
-const activeRide:RideAcceptedEventMessageType = {
-    driverEmail:"driver@gmail.com",
-    driverGender:"male",
-    driverName:"Driver Name",
-    driverMobile:"9958780321",
-    licenseNumber:"license1234",
-    otp:"",
-    rating:"0",
-    status:"in-progress",
-    vehicleDetailes:{
-        vehicleColor:"red",
-        vehicleModel:"model12",
-        vehicleNumber:"HR14D1234",
-        vehicleType:"uberX"
-    }
-};
 
 const Riding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(false);
@@ -37,9 +20,8 @@ const Riding = () => {
             {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
             <div className="map_cont">map</div>
             <div className="another_cont">aa</div>
-            <div className="meet_at_pickup_point_cont" 
-            style={{top:isRideDetailsHide?"100%":"20%", zIndex:isRideDetailsHide?"-1":"1"}}
-            >
+            <div className="meet_at_pickup_point_cont" style={{top:isRideDetailsHide?"100%":"20%", zIndex:isRideDetailsHide?"-1":"1"}}>
+                <div className="hide_panel_cont"><BsArrowDown onClick={() => setisRideDetailsHide(true)} /></div>
                 <div className="selected_ride">
                     <div className="first_part">
                         <div className="panel_heading">You are currently riding...</div>

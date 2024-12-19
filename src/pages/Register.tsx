@@ -2,7 +2,7 @@ import "../styles/pages/login.scss";
 import logo from "../../public/uber-logo-1.png";
 import { Link } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { RegisterBodyTypes, UserTypes } from "../utils/types";
+import { RegisterBodyTypes } from "../utils/types";
 import { register } from "../api";
 
 const Register = () => {

@@ -1,8 +1,8 @@
 import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import "../styles/pages/single_ride.scss";
 import vite from "../../public/vite.svg";
-import { MdDelete, MdSafetyCheck } from "react-icons/md";
-import { FaArrowLeftLong, FaLocationPin } from "react-icons/fa6";
+import { MdDelete } from "react-icons/md";
+import { FaArrowLeftLong } from "react-icons/fa6";
 import { IoCall } from "react-icons/io5";
 import { BiMessage } from "react-icons/bi";
 

@@ -1,7 +1,6 @@
 import "../styles/pages/home.scss";
 import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
-import car from "../../public/car1.png";
 import vite from "../../public/vite.svg";
 import { useContext, useEffect, useState } from "react";
 import { BiDownArrow, BiSend } from "react-icons/bi";
@@ -11,9 +10,9 @@ import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { BsCash, BsStarFill } from "react-icons/bs";
 import { MdSafetyCheck } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
-import { allNearbyDrivers, createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
-import { DriverTypes, LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
-import DriverContext, { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
+import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
+import { LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
+import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
@@ -81,7 +80,6 @@ const Home = () => {
     //const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
     const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<string[]>([]);
     const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<string[]>([]);
-    const [allNearByDrivers, setAllNearByDrivers] = useState<DriverTypes[]>([]);
     const [allFare, setAllFare] = useState<{[P in VehicleTypeTypes]:number;}>({uberAuto:0 ,uberX:0 ,uberMoto:0 ,uberScooty:0 ,uberComfort:0 ,uberHCV:0 ,uberPool:0 , uberXL:0});
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
@@ -105,7 +103,7 @@ const Home = () => {
     }
 
     //const { driver, setDriver, updateDriver } = driverContext;
-    const {user, setUser, updateUser} = userContext;
+    const {user, setUser} = userContext;
     const {sendMessage, receiveMessage} = socketContext;
 
     const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
@@ -168,6 +166,7 @@ const Home = () => {
         .then((res) => {
             setUser(res.jsonData);
         }).catch((err) => {
+            console.log(err);
         });
     }, []);
     useEffect(() => {
@@ -227,6 +226,7 @@ const Home = () => {
                             setAllFare(res.jsonData.fare);
                         })
                         .catch((err) => {
+                            console.log(err);
                         });
                     }}>Create Ride</button>
                 </form>

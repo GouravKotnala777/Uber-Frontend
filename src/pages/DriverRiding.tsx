@@ -2,7 +2,6 @@ import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import "../styles/pages/driver_riding.scss";
 import { useState } from "react";
 import vite from "../../public/vite.svg";
-import { BiSend } from "react-icons/bi";
 import { NewRideNotificationTypes } from "./DriverHome";
 import { BsArrowDownSquare, BsArrowUp } from "react-icons/bs";
 
