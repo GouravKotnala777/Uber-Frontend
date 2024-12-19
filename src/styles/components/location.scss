@@ -1,0 +1,25 @@
+
+.pickup_location_details_cont{
+    //border: 1px solid green;
+    display: flex;
+    justify-content: space-between;
+    //align-items: ;
+    border-bottom: 1px solid #919191;
+    .CiLocationOn{
+        margin-top: 15px;
+        margin-left: 15px;
+    }
+    .pickup_location_details{
+        //border: 1px solid blue;
+        margin-left: 15px;
+        padding: 10px;
+        width: 85%;
+        .highlight_info{
+            font-weight: 600;
+        }
+        .full_info{
+            font-size: 0.7rem;
+        }
+    }
+
+}

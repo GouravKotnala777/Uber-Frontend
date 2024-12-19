@@ -99,68 +99,6 @@
             //transform: translate(0, -70vh);
             background-color: white;
             overflow-y: scroll;
-            .first_part{
-                //border: 2px solid red;
-                display: flex;
-                justify-content: space-between;
-                border-bottom: 1px solid #919191;
-                margin-top:15px;
-                padding-bottom:10px;
-                .passenger_image{
-                    //border: 1px solid red;
-                    width: 70px;
-                    height: 70px;
-                    img{
-                        width: 100%;
-                        border-radius: 50%;
-                    }
-                }
-                .name{
-                    .value{
-                        font-weight: 600;
-                        font-size: 1.2rem;
-                    }
-                    .btns{
-                        .apple_pay_btn{
-                            background-color: gold;
-                            border: none;
-                            outline: none;
-                            border-radius: 8px;
-                            color: black;
-                            padding: 6px 8px;
-                            font-size: 0.7rem;
-                            cursor: pointer;
-                            &:hover{
-                                background-color:rgba(255, 215, 0, 0.7);
-                            }  
-                        }
-                        .discount_btn{
-                            background-color: gold;
-                            border: none;
-                            outline: none;
-                            border-radius: 8px;
-                            color: black;
-                            padding: 6px 8px;
-                            margin-left: 6px;
-                            font-size: 0.7rem;
-                            cursor: pointer;
-                            &:hover{
-                                background-color:rgba(255, 215, 0, 0.7);
-                            }    
-                        }
-                    }
-                }
-                .price{
-                    .value{
-                        font-weight: 700;
-                        font-size: 1.1rem;
-                    }
-                    .distance{
-                        color: #919191;
-                        text-align: right;
-                    }
-                }
-            }
             .third_part{
                 //border: 2px solid green;
                 .pickup_location_details_cont{

@@ -142,67 +142,7 @@
                 }
             }
             .ride_details{
-                .pickup_location_details_cont{
-                    //border: 1px solid green;
-                    display: flex;
-                    justify-content: space-between;
-                    //align-items: ;
-                    border-bottom: 1px solid #919191;
-                    .CiLocationOn{
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .pickup_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                        }
-                    }
-
-                }
-                .dropoff_location_details_cont{
-                    //border: 1px solid indigo;
-                    display: flex;
-                    justify-content: space-between;
-                    border-bottom: 1px solid #919191;
-                    .CiLocationOff{
-                        //border: 1px solid violet;
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .dropoff_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                        }
-                    }
-                }
-                .price_cont{
-                    //border: 1px solid red;
-                    display: flex;
-                    align-items: center;
-                    .BsCash{
-                        //border: 1px solid violet;
-                        margin-left: 15px;
-                    }
-                    .price{
-                        //border: 1px solid blue;
-                        padding: 10px;
-                        margin-left: 15px;
-                    }
-                }
+                // modulated
             }
             .confirm_ride{
                 padding: 10px;
@@ -248,67 +188,7 @@
                 }
             }
             .ride_details{
-                .pickup_location_details_cont{
-                    //border: 1px solid green;
-                    display: flex;
-                    justify-content: space-between;
-                    //align-items: ;
-                    border-bottom: 1px solid #919191;
-                    .CiLocationOn{
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .pickup_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                        }
-                    }
-
-                }
-                .dropoff_location_details_cont{
-                    //border: 1px solid indigo;
-                    display: flex;
-                    justify-content: space-between;
-                    border-bottom: 1px solid #919191;
-                    .CiLocationOff{
-                        //border: 1px solid violet;
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .dropoff_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                        }
-                    }
-                }
-                .price_cont{
-                    //border: 1px solid red;
-                    display: flex;
-                    align-items: center;
-                    .BsCash{
-                        //border: 1px solid violet;
-                        margin-left: 15px;
-                    }
-                    .price{
-                        //border: 1px solid blue;
-                        padding: 10px;
-                        margin-left: 15px;
-                    }
-                }
+                // modulated
             }
             .confirm_ride{
                 padding: 10px;
@@ -353,56 +233,6 @@
                     }
                     .unit{
 
-                    }
-                }
-            }
-            .second_part{
-                //border: 2px solid blue;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin: 15px 0;
-                border-top: 1px solid #919191;
-                .driver_photo{
-                    //border: 2px solid green;
-                    width: 120px;
-                    img{
-                        //border: 2px solid red;
-                        width: 100%;
-                        border-radius: 50%;
-                    }
-                    .otp{
-                        //border: 2px solid blue;
-                        height: 20%;
-                        display: flex;
-                        .value{
-                            font-weight: 600;
-                        }
-                    }
-                }
-                .driver_details{
-                    //border: 2px solid red;
-                    text-align: right;
-                    color: #717171;
-                    font-size: 0.8rem;
-                    .driver_name{}
-                    .vehicle_number{
-                        color:black;
-                        font-weight: 600;
-                        font-size: 1.1rem;
-                    }
-                    .vehicle_color{}
-                    .vehicle_model{}
-                    .driver_ratings{
-                        display: flex;
-                        justify-content: flex-end;
-                        align-items: center;
-                        .BsStarFill{
-                            color: #313131;
-                        }
-                        .value{
-
-                        }
                     }
                 }
             }
@@ -505,35 +335,6 @@
                     }
                 }
                 
-            }
-            .fifth_part{
-                //border: 2px solid orange;
-                padding: 15px 0;
-                border-top: 1px solid #919191;
-                .pickup_location_details_cont{
-                    //border: 1px solid green;
-                    display: flex;
-                    justify-content: space-between;
-                    //align-items: ;
-                    //border-top: 1px solid #919191;
-                    .CiLocationOn{
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .pickup_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                        }
-                    }
-
-                }
             }
         }
     }

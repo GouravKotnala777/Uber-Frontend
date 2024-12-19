@@ -47,48 +47,6 @@
                     }
                 }
             }
-            .second_part{
-                //border: 2px solid blue;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin: 15px 0;
-                border-top: 1px solid #919191;
-                .driver_photo{
-                    //border: 2px solid green;
-                    width: 120px;
-                    img{
-                        //border: 2px solid red;
-                        width: 100%;
-                        border-radius: 50%;
-                    }
-                }
-                .driver_details{
-                    //border: 2px solid red;
-                    text-align: right;
-                    color: #717171;
-                    font-size: 0.8rem;
-                    .driver_name{}
-                    .vehicle_number{
-                        color:black;
-                        font-weight: 600;
-                        font-size: 1.1rem;
-                    }
-                    .vehicle_color{}
-                    .vehicle_model{}
-                    .driver_ratings{
-                        display: flex;
-                        justify-content: flex-end;
-                        align-items: center;
-                        .BsStarFill{
-                            color: #313131;
-                        }
-                        .value{
-
-                        }
-                    }
-                }
-            }
             .fourth_part{
                 //border: 2px solid rgb(0, 255, 98);
                 display: flex;

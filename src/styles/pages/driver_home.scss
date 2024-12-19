@@ -53,68 +53,6 @@
             //transform: translate(0, -70vh);
             background-color: white;
             overflow-y: scroll;
-            .first_part{
-                //border: 2px solid red;
-                display: flex;
-                justify-content: space-between;
-                border-bottom: 1px solid #919191;
-                margin-top:15px;
-                padding-bottom:10px;
-                .passenger_image{
-                    //border: 1px solid red;
-                    width: 70px;
-                    height: 70px;
-                    img{
-                        width: 100%;
-                        border-radius: 50%;
-                    }
-                }
-                .name{
-                    .value{
-                        font-weight: 600;
-                        font-size: 1.1rem;
-                    }
-                    .btns{
-                        .apple_pay_btn{
-                            background-color: gold;
-                            border: none;
-                            outline: none;
-                            border-radius: 8px;
-                            color: black;
-                            padding: 6px 8px;
-                            font-size: 0.7rem;
-                            cursor: pointer;
-                            &:hover{
-                                background-color:rgba(255, 215, 0, 0.7);
-                            }  
-                        }
-                        .discount_btn{
-                            background-color: gold;
-                            border: none;
-                            outline: none;
-                            border-radius: 8px;
-                            color: black;
-                            padding: 6px 8px;
-                            margin-left: 6px;
-                            font-size: 0.7rem;
-                            cursor: pointer;
-                            &:hover{
-                                background-color:rgba(255, 215, 0, 0.7);
-                            }    
-                        }
-                    }
-                }
-                .price{
-                    .value{
-                        font-weight: 700;
-                        font-size: 1.1rem;
-                    }
-                    .distance{
-                        color: #919191;
-                        text-align: right;
-                    }
-                }
-            }
             .second_part{
                 //border: 2px solid red;
                 margin-top: 15px;
@@ -144,60 +82,6 @@
                         outline: none;
                         .BiSend{
                             font-size: 1.4rem;
-                        }
-                    }
-                }
-            }
-            .third_part{
-                //border: 2px solid green;
-                .pickup_location_details_cont{
-                    //border: 1px solid green;
-                    display: flex;
-                    justify-content: space-between;
-                    //align-items: ;
-                    border-bottom: 1px solid #919191;
-                    margin-top:15px;
-                    .CiLocationOn{
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .pickup_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                        }
-                    }
-    
-                }
-            }
-            .fourth_part{
-                .dropoff_location_details_cont{
-                    //border: 1px solid indigo;
-                    display: flex;
-                    justify-content: space-between;
-                    border-bottom: 1px solid #919191;
-                    margin-top:15px;
-                    .CiLocationOff{
-                        //border: 1px solid violet;
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .dropoff_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
                         }
                     }
                 }
@@ -254,48 +138,6 @@
         transform: translate(0, -100%);
         background-color: white;
         padding: 10px 15px;
-        .first_part{
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-top: 10px;
-            .driver_image{
-                //border: 1px solid red;
-                width: 70px;
-                height: 70px;
-                img{
-                    width: 100%;
-                    border-radius: 50%;
-                }
-            }
-            .driver_name{
-                //border: 1px solid blue;
-                .value{
-                    //border: 1px solid violet;
-                    font-weight: 600;
-                }
-                .heading{
-                    //border: 1px solid indianred;
-                    color: #919191;
-                    font-size:0.9rem;
-                }
-                
-            }
-            .daily_earning{
-                //border: 1px solid green;
-                margin-left: auto;
-                .value{
-                    //border: 1px solid violet;
-                    font-weight: 600;
-                }
-                .heading{
-                    //border: 1px solid indianred;
-                    color: #919191;
-                    font-size:0.9rem;
-                    text-align:right;
-                }
-            }
-        }
         .second_part{
             display: flex;
             justify-content: space-between;

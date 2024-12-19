@@ -1,9 +1,9 @@
-import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import "../styles/pages/driver_riding.scss";
+import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
-import vite from "../../public/vite.svg";
 import { NewRideNotificationTypes } from "./DriverHome";
 import { BsArrowDownSquare, BsArrowUp } from "react-icons/bs";
+import ProfileShort from "../components/ProfileShort";
 
 const activeRide:NewRideNotificationTypes = {
     _id:'aaaaaaaaaaaaaaaa',
@@ -48,20 +48,7 @@ const DriverRiding = () => {
             <div className="passenger_request_panel_cont_outer" style={{top:isRideDetailsHide?"100%":"25%"}}>
                 <button className="show_location_btn"><BsArrowDownSquare className="CiLocationOn" onClick={() => setisRideDetailsHide(true)}/></button>
                 <div className="passenger_request_panel_cont">
-                    <div className="first_part">
-                        <div className="passenger_image"><img src={vite} alt={vite} /></div>
-                        <div className="name">
-                            <div className="value">{activeRide.passengerName}</div>
-                            <div className="btns">
-                                <button className="apple_pay_btn">ApplePay</button>
-                                <button className="discount_btn">Discount</button>
-                            </div>
-                        </div>
-                        <div className="price">
-                            <div className="value">₹{activeRide?.fare}.00</div>
-                            <div className="distance">{activeRide?.distance}km</div>
-                        </div>
-                    </div>
+                    <ProfileShort name={activeRide.passengerName} amount={activeRide.fare} />
                     <div className="third_part">
                         <div className="pickup_location_details_cont">
                             <CiLocationOn className="CiLocationOn" />

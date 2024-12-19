@@ -1,13 +1,10 @@
 import "../styles/pages/home.scss";
 import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
-import vite from "../../public/vite.svg";
 import { useContext, useEffect, useState } from "react";
 import { BiDownArrow, BiSend } from "react-icons/bi";
 import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
-import { CiLocationOff, CiLocationOn } from "react-icons/ci";
-import { BsCash, BsStarFill } from "react-icons/bs";
 import { MdSafetyCheck } from "react-icons/md";
 import { IoCall } from "react-icons/io5";
 import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
@@ -25,6 +22,9 @@ import uberHCV from "../../public/uber-hcv.png";
 import uberPool from "../../public/uber-pool.png";
 import uberXL from "../../public/uber-xl.png";
 import { useNavigate } from "react-router-dom";
+import Location from "../components/Location";
+import TripFee from "../components/TripFee";
+import ProfileLong from "../components/ProfileLong";
 
 
 
@@ -297,26 +297,9 @@ const Home = () => {
                     <div className="panel_heading">Confirm your Ride</div>
                     <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
                     <div className="ride_details">
-                        <div className="pickup_location_details_cont">
-                            <CiLocationOn className="CiLocationOn" />
-                            <div className="pickup_location_details">
-                                <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{pickupLocation.address}</div>
-                            </div>
-                        </div>
-                        <div className="dropoff_location_details_cont">
-                            <CiLocationOff className="CiLocationOff" />
-                            <div className="dropoff_location_details">
-                                <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">{dropoffLocation.address}</div>
-                            </div>
-                        </div>
-                        <div className="price_cont">
-                            <BsCash className="BsCash" />
-                            <div className="price">
-                                ₹ {allFare[selectedVehicleType]}
-                            </div>
-                        </div>
+                        <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
+                        <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
+                        <TripFee amount={allFare[selectedVehicleType]} />
                     </div>
                     <button className="confirm_ride" onClick={() => {
                         setIsSelectedRidePanelActive(false);
@@ -331,26 +314,9 @@ const Home = () => {
                     <div className="panel_heading">Looking For Nearby Drivers...</div>
                     <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
                     <div className="ride_details">
-                        <div className="pickup_location_details_cont">
-                            <CiLocationOn className="CiLocationOn" />
-                            <div className="pickup_location_details">
-                                <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{pickupLocation.address}</div>
-                            </div>
-                        </div>
-                        <div className="dropoff_location_details_cont">
-                            <CiLocationOff className="CiLocationOff" />
-                            <div className="dropoff_location_details">
-                                <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">{dropoffLocation.address}</div>
-                            </div>
-                        </div>
-                        <div className="price_cont">
-                            <BsCash className="BsCash" />
-                            <div className="price">
-                                ₹ {allFare[selectedVehicleType]}
-                            </div>
-                        </div>
+                        <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
+                        <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
+                        <TripFee amount={allFare[selectedVehicleType]} />
                     </div>
                 </div>
             </div>
@@ -363,22 +329,7 @@ const Home = () => {
                             <div className="unit">min</div>
                         </div>
                     </div>
-                    <div className="second_part">
-                        <div className="driver_photo">
-                            <img src={vite} alt={vite} />
-                            <div className="otp">
-                                <div className="heading">OTP :</div>
-                                <div className="value">&nbsp;{activeDriver?.otp}</div>
-                            </div>
-                        </div>
-                        <div className="driver_details">
-                            <div className="driver_name">{activeDriver?.driverName}</div>
-                            <div className="vehicle_number">{activeDriver?.vehicleDetailes.vehicleNumber}</div>
-                            <div className="vehicle_color">{activeDriver?.vehicleDetailes.vehicleColor}</div>
-                            <div className="vehicle_model">{activeDriver?.vehicleDetailes.vehicleModel}</div>
-                            <div className="driver_ratings"><BsStarFill className="BsStarFill" /><div className="value">{activeDriver?.rating}</div></div>
-                        </div>
-                    </div>
+                    <ProfileLong driverDetails={activeDriver as RideAcceptedEventMessageType} />
                     <div className="third_part">
                         <div className="input_cont">
                             <input type="text" className="message_inp" placeholder="Send a message..." />
@@ -399,15 +350,7 @@ const Home = () => {
                             <div className="call_driver_heading">Call driver</div>
                         </div>
                     </div>
-                    <div className="fifth_part">
-                        <div className="pickup_location_details_cont">
-                            <CiLocationOn className="CiLocationOn" />
-                            <div className="pickup_location_details">
-                                <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{pickupLocation.address}</div>
-                            </div>
-                        </div>
-                    </div>
+                    <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                 </div>
             </div>
 

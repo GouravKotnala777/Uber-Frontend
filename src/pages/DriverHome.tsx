@@ -1,9 +1,8 @@
 import "../styles/pages/driver_home.scss";
 import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
-import vite from "../../public/vite.svg";
 import { useContext, useEffect, useState } from "react";
-import { CiLocationOff, CiLocationOn } from "react-icons/ci";
+import { CiLocationOn } from "react-icons/ci";
 import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
@@ -13,6 +12,8 @@ import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
 import { LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
+import Location from "../components/Location";
+import ProfileShort from "../components/ProfileShort";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -136,17 +137,7 @@ const DriverHome = () => {
             </div>
 
             <div className="driver_profile_panel_cont">
-                <div className="first_part">
-                    <div className="driver_image"><img src={vite} alt={vite} /></div>
-                    <div className="driver_name">
-                        <div className="value">Caramel Rin</div>
-                        <div className="heading">patoni</div>
-                    </div>
-                    <div className="daily_earning">
-                        <div className="value">₹ 295.00</div>
-                        <div className="heading">earned</div>
-                    </div>
-                </div>
+                    <ProfileShort name={driver?.userID.name as string} amount={2039} />
                 <div className="second_part">
                     <div className="safety_cont">
                         <div className="safety_icon"><BiStopwatch className="MdSafetyCheck" /> </div>
@@ -174,38 +165,9 @@ const DriverHome = () => {
                 {
                     newRidesNotifications.map((requestPopup) => (
                         <div className="passenger_request_panel_cont">
-                            <div className="first_part">
-                                <div className="passenger_image"><img src={vite} alt={vite} /></div>
-                                <div className="name">
-                                    <div className="value">{requestPopup.passengerName}</div>
-                                    <div className="btns">
-                                        <button className="apple_pay_btn">ApplePay</button>
-                                        <button className="discount_btn">Discount</button>
-                                    </div>
-                                </div>
-                                <div className="price">
-                                    <div className="value">₹{requestPopup.fare}.00</div>
-                                    <div className="distance">{Math.ceil(requestPopup.distance/1000)}km</div>
-                                </div>
-                            </div>
-                            <div className="third_part">
-                                <div className="pickup_location_details_cont">
-                                    <CiLocationOn className="CiLocationOn" />
-                                    <div className="pickup_location_details">
-                                        <div className="highlight_info">{requestPopup.pickupLocation.latitude}</div>
-                                        <div className="full_info">{requestPopup.pickupLocation.address}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="fourth_part">
-                                <div className="dropoff_location_details_cont">
-                                    <CiLocationOff className="CiLocationOff" />
-                                    <div className="dropoff_location_details">
-                                        <div className="highlight_info">{requestPopup.dropoffLocation.latitude}</div>
-                                        <div className="full_info">{requestPopup.dropoffLocation.address}</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProfileShort name={requestPopup.passengerMobile} amount={Math.ceil(requestPopup.distance/1000)} />
+                            <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address} />
+                            <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address} />
                             <div className="fifth_part">
                                 <button className="accept_btn" onClick={() => {
                                     setIsRideRequestPoppedUp(false);
@@ -234,20 +196,7 @@ const DriverHome = () => {
                     top:hasRideAccepted?"-20%":"-90%"
                 }}><CiLocationOn className="CiLocationOn" /></button>
                 <div className="passenger_request_panel_cont">
-                    <div className="first_part">
-                        <div className="passenger_image"><img src={vite} alt={vite} /></div>
-                        <div className="name">
-                            <div className="value">{activePassenger?.name}</div>
-                            <div className="btns">
-                                <button className="apple_pay_btn">ApplePay</button>
-                                <button className="discount_btn">Discount</button>
-                            </div>
-                        </div>
-                        <div className="price">
-                            <div className="value">₹{acceptedRide?.fare}.00</div>
-                            <div className="distance">{acceptedRide?.distance}km</div>
-                        </div>
-                    </div>
+                    <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
                     <div className="second_part">
                         <div className="input_cont">
                             <input type="text" className="message_inp" placeholder="Enter passenger OTP" onChange={(e) => setOtpInp(e.target.value)} />
@@ -260,24 +209,8 @@ const DriverHome = () => {
                             }}><BiSend className="BiSend" /></button>
                         </div>
                     </div>
-                    <div className="third_part">
-                        <div className="pickup_location_details_cont">
-                            <CiLocationOn className="CiLocationOn" />
-                            <div className="pickup_location_details">
-                                <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{acceptedRide?.pickupLocation.address}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="fourth_part">
-                        <div className="dropoff_location_details_cont">
-                            <CiLocationOff className="CiLocationOff" />
-                            <div className="dropoff_location_details">
-                                <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">{acceptedRide?.dropoffLocation.address}</div>
-                            </div>
-                        </div>
-                    </div>
+                    <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address as string} />
+                    <Location highlightAddress="Shop No.24" fullAddress={acceptedRide?.dropoffLocation.address as string} />
                     {
                         isOtpValid &&
                             <div className="fifth_part">

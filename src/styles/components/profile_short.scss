@@ -1,0 +1,45 @@
+
+
+.profile_short_cont{
+    //border: 2px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+    .driver_image{
+        //border: 1px solid red;
+        width: 70px;
+        height: 70px;
+        img{
+            width: 100%;
+            border-radius: 50%;
+        }
+    }
+    .driver_name{
+        //border: 1px solid blue;
+        .value{
+            //border: 1px solid violet;
+            font-weight: 600;
+        }
+        .heading{
+            //border: 1px solid indianred;
+            color: #919191;
+            font-size:0.9rem;
+        }
+        
+    }
+    .daily_earning{
+        //border: 1px solid green;
+        margin-left: auto;
+        .value{
+            //border: 1px solid violet;
+            font-weight: 600;
+        }
+        .heading{
+            //border: 1px solid indianred;
+            color: #919191;
+            font-size:0.9rem;
+            text-align:right;
+        }
+    }
+}

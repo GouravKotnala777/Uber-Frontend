@@ -1,14 +1,14 @@
-import { BsArrowDown, BsStarFill } from "react-icons/bs";
+import { BsArrowDown } from "react-icons/bs";
 import "../styles/pages/riding.scss";
 import { MdSafetyCheck } from "react-icons/md";
 import { FaLocationPin } from "react-icons/fa6";
 import { IoCall } from "react-icons/io5";
-import { CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
-import vite from "../../public/vite.svg";
 import { RideAcceptedEventMessageType } from "./Home";
 import { useLocation } from "react-router-dom";
 import { LocationTypes } from "../utils/types";
+import Location from "../components/Location";
+import ProfileLong from "../components/ProfileLong";
 
 
 const Riding = () => {
@@ -30,18 +30,7 @@ const Riding = () => {
                             <div className="unit">min</div>
                         </div>
                     </div>
-                    <div className="second_part">
-                        <div className="driver_photo">
-                            <img src={vite} alt={vite} />
-                        </div>
-                        <div className="driver_details">
-                            <div className="driver_name">{activeDriver?.driverName}</div>
-                            <div className="vehicle_number">{activeDriver?.vehicleDetailes.vehicleNumber}</div>
-                            <div className="vehicle_color">{activeDriver?.vehicleDetailes.vehicleColor}</div>
-                            <div className="vehicle_model">{activeDriver?.vehicleDetailes.vehicleModel}</div>
-                            <div className="driver_ratings"><BsStarFill className="BsStarFill" /><div className="value">{activeDriver?.rating}</div></div>
-                        </div>
-                    </div>
+                    <ProfileLong driverDetails={activeDriver as RideAcceptedEventMessageType} />
                     <div className="fourth_part">
                         <div className="safety_cont">
                             <div className="safety_icon"><MdSafetyCheck className="MdSafetyCheck" /> </div>
@@ -56,15 +45,7 @@ const Riding = () => {
                             <div className="call_driver_heading">Call driver</div>
                         </div>
                     </div>
-                    <div className="fifth_part">
-                        <div className="pickup_location_details_cont">
-                            <CiLocationOn className="CiLocationOn" />
-                            <div className="pickup_location_details">
-                                <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{dropoffLocation?.address}</div>
-                            </div>
-                        </div>
-                    </div>
+                    <Location highlightAddress="Shop No.24" fullAddress={dropoffLocation?.address as string} />
                     <div className="sixth_part">
                         <button className="make_payment_btn">Make payment</button>
                     </div>

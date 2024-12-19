@@ -1,0 +1,16 @@
+
+
+.price_cont{
+    //border: 1px solid red;
+    display: flex;
+    align-items: center;
+    .BsCash{
+        //border: 1px solid violet;
+        margin-left: 15px;
+    }
+    .price{
+        //border: 1px solid blue;
+        padding: 10px;
+        margin-left: 15px;
+    }
+}
