@@ -10,6 +10,8 @@ import DriverRegister from './pages/DriverRegister';
 import DriverContext from './contexts/DriverContext';
 import UserContext from './contexts/UserContext';
 import SocketContext from './contexts/SocketContext';
+import DriverRiding from './pages/DriverRiding';
+import Riding from './pages/Riding';
 
 function App() {
 
@@ -24,9 +26,11 @@ function App() {
               <Route path="/user/home" element={<Home />} />
               <Route path="/user/register" element={<Register />} />
               <Route path="/user/login" element={<Login />} />
+              <Route path="/user/riding" element={<Riding />} />
               <Route path="/driver/home" element={<DriverHome />} />
               <Route path="/driver/register" element={<DriverRegister />} />
               <Route path="/driver/login" element={<Login />} />
+              <Route path="/driver/riding" element={<DriverRiding />} />
               <Route path="/driver/singleRide" element={<SingleRide />} />
             </Routes>
           </BrowserRouter>

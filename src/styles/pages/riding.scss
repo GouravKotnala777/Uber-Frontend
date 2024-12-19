@@ -1,0 +1,202 @@
+
+.riding_page_bg{
+    //border: 2px solid red;
+    height: 100vh;
+    position: relative;
+    .map_cont{
+        //border: 2px solid violet;
+        height: 30%;
+        background-color: gainsboro;
+    }
+    .another_cont{
+        height: 70%;
+    }
+    .meet_at_pickup_point_cont{
+        //border: 2px solid indigo;
+        height: 80%;
+        transition: 0.3s;
+        background-color: white;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        .selected_ride{
+            //border: 2px solid violet;
+            overflow-y: scroll;
+            height: 90%;
+            padding: 10px;
+            .first_part{
+                //border: 2px solid indigo;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .panel_heading{
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                }
+                .timer{
+                    //border: 1px solid black;
+                    text-align: center;
+                    padding: 0 10px;
+                    background-color: black;
+                    color: white;
+                    .value{
+
+                    }
+                    .unit{
+
+                    }
+                }
+            }
+            .second_part{
+                //border: 2px solid blue;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: 15px 0;
+                border-top: 1px solid #919191;
+                .driver_photo{
+                    //border: 2px solid green;
+                    width: 120px;
+                    img{
+                        //border: 2px solid red;
+                        width: 100%;
+                        border-radius: 50%;
+                    }
+                }
+                .driver_details{
+                    //border: 2px solid red;
+                    text-align: right;
+                    color: #717171;
+                    font-size: 0.8rem;
+                    .driver_name{}
+                    .vehicle_number{
+                        color:black;
+                        font-weight: 600;
+                        font-size: 1.1rem;
+                    }
+                    .vehicle_color{}
+                    .vehicle_model{}
+                    .driver_ratings{
+                        display: flex;
+                        justify-content: flex-end;
+                        align-items: center;
+                        .BsStarFill{
+                            color: #313131;
+                        }
+                        .value{
+
+                        }
+                    }
+                }
+            }
+            .fourth_part{
+                //border: 2px solid rgb(0, 255, 98);
+                display: flex;
+                justify-content: space-around;
+                margin: 15px 0;
+                .safety_cont{
+                    //border:1px solid rgb(8, 0, 255);
+                    display: grid;
+                    place-items: center;
+                    .safety_icon{
+                        //border:1px solid red;
+                        padding:10px;
+                        width:1.4rem;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: #e3e3e3;
+                        .MdSafetyCheck{
+
+                        }
+                    }
+                    .safety_heading{
+                        font-size:0.8rem;
+                        font-weight:600;
+                    }
+                }
+                .share_my_trip_cont{
+                    //border:1px solid rgb(8, 0, 255);
+                    display: grid;
+                    place-items: center;
+                    .share_my_trip_icon{
+                        //border:1px solid red;
+                        padding:10px;
+                        width:1.4rem;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: #e3e3e3;
+                        .FaLocationPin{
+
+                        }
+                    }
+                    .share_my_trip_heading{
+                        font-size:0.8rem;
+                        font-weight:600;
+                    }
+                }
+                .call_driver_cont{
+                    //border:1px solid rgb(8, 0, 255);
+                    display: grid;
+                    place-items: center;
+                    .call_driver_icon{
+                        //border:1px solid red;
+                        padding:10px;
+                        width:1.4rem;
+                        text-align: center;
+                        border-radius: 50%;
+                        background-color: #e3e3e3;
+                        .IoCall{
+
+                        }
+                    }
+                    .call_driver_heading{
+                        font-size:0.8rem;
+                        font-weight:600;
+                    }
+                }
+                
+            }
+            .fifth_part{
+                //border: 2px solid orange;
+                padding: 15px 0;
+                border-top: 1px solid #919191;
+                .pickup_location_details_cont{
+                    //border: 1px solid green;
+                    display: flex;
+                    justify-content: space-between;
+                    //align-items: ;
+                    //border-top: 1px solid #919191;
+                    .CiLocationOn{
+                        margin-top: 15px;
+                        margin-left: 15px;
+                    }
+                    .pickup_location_details{
+                        //border: 1px solid blue;
+                        margin-left: 15px;
+                        padding: 10px;
+                        width: 85%;
+                        .highlight_info{
+                            font-weight: 600;
+                        }
+                        .full_info{
+                            font-size: 0.7rem;
+                        }
+                    }
+
+                }
+            }
+            .sixth_part{
+                .make_payment_btn{
+                    padding: 15px 10px;
+                    font-size: 1rem;
+                    width: 100%;
+                    background-color: rgba(119, 247, 119, 0.829);
+                    color: green;
+                    outline: none;
+                    border: none;
+                    border-radius: 8px;
+                }
+            }
+        }
+    }
+}
