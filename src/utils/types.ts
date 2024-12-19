@@ -46,7 +46,7 @@ export interface RegisterBodyTypes extends Pick<UserTypes, "email"|"mobile"|"gen
     lastName:string;
     password:string;
 };
-export interface RegisterDriverBodyTypes extends Pick<DriverTypes, "licenseNumber"|"userID"> {
+export interface RegisterDriverBodyTypes extends Pick<DriverTypes, "licenseNumber"> {
     vehicleColor:string;
     vehicleModel:string;
     vehicleNumber:string;

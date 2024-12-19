@@ -49,7 +49,7 @@ const DriverHome = () => {
     if (!driverContext) throw Error("driverContext not provided");
 
     //const {user, setUser, updateUser} = userContext;
-    const {driver, setDriver, updateDriver} = driverContext;
+    const {driver, setDriver} = driverContext;
     const {sendMessage, receiveMessage} = socketContext;
 
 

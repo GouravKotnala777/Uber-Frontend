@@ -7,7 +7,7 @@ import { registerDriver } from "../api";
 
 
 const DriverRegister = () => {
-    const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", userID:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"car"});
+    const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"uberX"});
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
         setRegisterDriverFormData({...registerDriverFormData, [e.target.name]:e.target.value});

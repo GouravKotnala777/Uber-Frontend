@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, VehicleTypeTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes } from "./utils/types";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
