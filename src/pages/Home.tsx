@@ -25,10 +25,11 @@ import uberComfort from "../../public/uber-comfort.png";
 import uberHCV from "../../public/uber-hcv.png";
 import uberPool from "../../public/uber-pool.png";
 import uberXL from "../../public/uber-xl.png";
+import { useNavigate } from "react-router-dom";
 
 
 
-interface RideAcceptedEventMessageType {
+export interface RideAcceptedEventMessageType {
     status:RideStatusTypes;
     otp:string;
     driverName:string;
@@ -45,7 +46,7 @@ interface RideAcceptedEventMessageType {
     rating:string;
 };
 
-const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
+export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
 const vehicleDescription = { uberAuto: "Affordable three-wheeler",
     uberX: "Affordable compact",
     uberScooty: "Quick and economical two-wheeler",
@@ -87,6 +88,7 @@ const Home = () => {
     const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
+    const navigate = useNavigate();
 
 
     if (!driverContext) {
@@ -190,6 +192,16 @@ const Home = () => {
             console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (2)");
         });
     }, []);
+    useEffect(() => {
+        if (activeDriver) {
+            receiveMessage("ride-started", (data) => {
+                console.log("EEEEEEEEEEEEEEEEEEE (1)");
+                console.log(data);
+                console.log("EEEEEEEEEEEEEEEEEEE (2)");
+                navigate("/user/riding", {state:{activeDriver, dropoffLocation}})
+            });
+        }
+    }, [activeDriver]);
 
     return(
         <div className="home_page_background">
