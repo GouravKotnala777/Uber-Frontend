@@ -82,6 +82,9 @@ export interface CreateRideRequestBodyTypes extends Pick<RideTypes, "passengerID
 export interface AcceptRideRequestBodyTypes extends Pick<RideTypes, "status"|"driverID"> {
     rideID:string;
 };
+export interface StartRideBodyTypes extends Pick<RideTypes, "otp"> {
+    rideID:string;
+};
 export interface ResponseType<J> {
     success:boolean;
     message:string;
