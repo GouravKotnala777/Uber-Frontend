@@ -1,0 +1,47 @@
+
+.short_cuts_cont{
+    //border: 2px solid red;
+    display: flex;
+    justify-content: space-between;
+    background-color: gold;
+    flex-wrap: wrap;
+    padding: 0px 15px;
+    padding-bottom: 15px;
+    margin: 0 10px;
+    margin-top: 15px;
+    border-radius: 8px;   
+    .single_short_cut_cont{
+        //border:1px solid rgb(8, 0, 255);
+        text-align: center;
+        width: 90px;
+        height: 90px;
+        padding: 4px;
+        border-radius: 8px;
+        margin-top: 15px;
+        //margin: 15px;
+        //background-color: rgb(255, 251, 227);
+        .short_cut_icon{
+            //border:1px solid red;
+            //padding:10px;
+            font-size: 1.6rem;
+            border-radius: 50%;
+            //text-align: center;
+            align-content: center;
+            margin: 0 auto;
+            width: 50%;
+            height: 50%;
+            background-color: rgb(255, 251, 227);
+            .Icon{
+
+            }
+        }
+        .short_cut_heading{
+            font-weight:600;
+        }
+        .short_cut_sub_heading{
+            font-size:0.8rem;
+            font-weight:600;
+            color: #919191;
+        }
+    }
+}

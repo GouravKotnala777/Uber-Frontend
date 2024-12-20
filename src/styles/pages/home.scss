@@ -207,7 +207,7 @@
         //border: 2px solid red;
         height: 80%;
         transition: 0.3s;
-        background-color: rgb(255, 230, 230);
+        background-color: white;
         .selected_ride{
             //border: 2px solid violet;
             overflow-y: scroll;
@@ -269,73 +269,7 @@
                     }
                 }
             }
-            .fourth_part{
-                //border: 2px solid rgb(0, 255, 98);
-                display: flex;
-                justify-content: space-around;
-                margin: 15px 0;
-                .safety_cont{
-                    //border:1px solid rgb(8, 0, 255);
-                    display: grid;
-                    place-items: center;
-                    .safety_icon{
-                        //border:1px solid red;
-                        padding:10px;
-                        width:1.4rem;
-                        text-align: center;
-                        border-radius: 50%;
-                        background-color: #e3e3e3;
-                        .MdSafetyCheck{
 
-                        }
-                    }
-                    .safety_heading{
-                        font-size:0.8rem;
-                        font-weight:600;
-                    }
-                }
-                .share_my_trip_cont{
-                    //border:1px solid rgb(8, 0, 255);
-                    display: grid;
-                    place-items: center;
-                    .share_my_trip_icon{
-                        //border:1px solid red;
-                        padding:10px;
-                        width:1.4rem;
-                        text-align: center;
-                        border-radius: 50%;
-                        background-color: #e3e3e3;
-                        .FaLocationPin{
-
-                        }
-                    }
-                    .share_my_trip_heading{
-                        font-size:0.8rem;
-                        font-weight:600;
-                    }
-                }
-                .call_driver_cont{
-                    //border:1px solid rgb(8, 0, 255);
-                    display: grid;
-                    place-items: center;
-                    .call_driver_icon{
-                        //border:1px solid red;
-                        padding:10px;
-                        width:1.4rem;
-                        text-align: center;
-                        border-radius: 50%;
-                        background-color: #e3e3e3;
-                        .IoCall{
-
-                        }
-                    }
-                    .call_driver_heading{
-                        font-size:0.8rem;
-                        font-weight:600;
-                    }
-                }
-                
-            }
         }
     }
 }

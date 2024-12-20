@@ -14,6 +14,7 @@ import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext
 import { LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileShort from "../components/ProfileShort";
+import ShortCuts from "../components/ShortCuts";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -30,6 +31,12 @@ export interface NewRideNotificationTypes {
     passengerSocketID:string;
     passengerGender:"male"|"female"|"other";
 };
+
+const shortcuts = [
+    {icon:BiStopwatch, heading:"10.2", subHeading:"patoni"},
+    {icon:PiSpeedometer, heading:"30", subHeading:"patoni"},
+    {icon:FiFile, heading:"20", subHeading:"patoni"}
+];
 
 const DriverHome = () => {
     //const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(true);
@@ -138,23 +145,7 @@ const DriverHome = () => {
 
             <div className="driver_profile_panel_cont">
                     <ProfileShort name={driver?.userID.name as string} amount={2039} />
-                <div className="second_part">
-                    <div className="safety_cont">
-                        <div className="safety_icon"><BiStopwatch className="MdSafetyCheck" /> </div>
-                        <div className="safety_heading">10.2</div>
-                        <div className="safety_sub_heading">patoni</div>
-                    </div>
-                    <div className="share_my_trip_cont">
-                        <div className="share_my_trip_icon"><PiSpeedometer className="FaLocationPin" /></div>
-                        <div className="share_my_trip_heading">30 km</div>
-                        <div className="share_my_trip_sub_heading">patoni</div>
-                    </div>
-                    <div className="call_driver_cont">
-                        <div className="call_driver_icon"><FiFile className="IoCall" /></div>
-                        <div className="call_driver_heading">20</div>
-                        <div className="call_driver_sub_heading">patoni</div>
-                    </div>
-                </div>
+                    <ShortCuts shortcuts={shortcuts} />
             </div>
 
             

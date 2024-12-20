@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import Location from "../components/Location";
 import TripFee from "../components/TripFee";
 import ProfileLong from "../components/ProfileLong";
+import ShortCuts from "../components/ShortCuts";
 
 
 
@@ -44,6 +45,11 @@ export interface RideAcceptedEventMessageType {
     };
     rating:string;
 };
+const shortcuts = [
+    {icon:MdSafetyCheck, heading:"Shafety", subHeading:"patoni"},
+    {icon:FaLocationPin, heading:"Share", subHeading:"share my trip"},
+    {icon:IoCall, heading:"Call", subHeading:"call my driver"}
+];
 
 export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
 const vehicleDescription = { uberAuto: "Affordable three-wheeler",
@@ -336,20 +342,7 @@ const Home = () => {
                             <button className="send_message_btn"><BiSend className="BiSend" /></button>
                         </div>
                     </div>
-                    <div className="fourth_part">
-                        <div className="safety_cont">
-                            <div className="safety_icon"><MdSafetyCheck className="MdSafetyCheck" /> </div>
-                            <div className="safety_heading">Safety</div>
-                        </div>
-                        <div className="share_my_trip_cont">
-                            <div className="share_my_trip_icon"><FaLocationPin className="FaLocationPin" /></div>
-                            <div className="share_my_trip_heading">Share my trip</div>
-                        </div>
-                        <div className="call_driver_cont">
-                            <div className="call_driver_icon"><IoCall className="IoCall" /></div>
-                            <div className="call_driver_heading">Call driver</div>
-                        </div>
-                    </div>
+                    <ShortCuts shortcuts={shortcuts} />
                     <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                 </div>
             </div>
