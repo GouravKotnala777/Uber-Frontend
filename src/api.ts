@@ -286,6 +286,30 @@ export const startRide = async(startRideFormData:StartRideBodyTypes) => {
         return error as ResponseType<typeof error>;
     }
 };
+// Function for start ride by filling OTP by driver
+export const endRide = async({rideID}:{rideID:string}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/end`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({rideID})
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for get fare of trip
 export const getFareOfTrip = async(getFareFormData:{dropoffLocation:string; pickupLocation:string;}) => {
     try {

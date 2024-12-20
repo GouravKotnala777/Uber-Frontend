@@ -204,7 +204,7 @@ const DriverHome = () => {
                     {
                         isOtpValid &&
                             <div className="fifth_part">
-                                <button className="confirm_btn" onClick={() => navigate("/driver/riding")}>Confirm</button>
+                                <button className="confirm_btn" onClick={() => navigate("/driver/riding", {state:{acceptedRide}})}>Confirm</button>
                                 <button className="cancel_btn">Cancel</button>
                             </div>
                     }

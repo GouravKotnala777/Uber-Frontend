@@ -4,6 +4,8 @@ import { useState } from "react";
 import { NewRideNotificationTypes } from "./DriverHome";
 import { BsArrowDownSquare, BsArrowUp } from "react-icons/bs";
 import ProfileShort from "../components/ProfileShort";
+import { endRide } from "../api";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const activeRide:NewRideNotificationTypes = {
     _id:'aaaaaaaaaaaaaaaa',
@@ -23,9 +25,12 @@ const activeRide:NewRideNotificationTypes = {
 
 const DriverRiding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(true);
+    const {acceptedRide} = useLocation().state;
+    const navigate = useNavigate();
 
     return(
         <div className="driver_riding_page_bg">
+            {/*<pre>{JSON.stringify(acceptedRide, null, `\t`)}</pre>*/}
             <div className="map_cont"></div>
             <div className="riding_detail_panel_cont">
                 <div className="show_btn_cont">
@@ -69,7 +74,13 @@ const DriverRiding = () => {
                     </div>
                     
                     <div className="fifth_part">
-                        <button className="confirm_btn">End Ride</button>
+                        <button className="confirm_btn" onClick={async() => {
+                            const res = await endRide({rideID:acceptedRide._id});
+                            
+                            if (res.success) {
+                                navigate("/driver/home");
+                            }
+                        }}>End Ride</button>
                         <button className="cancel_btn">Hide</button>
                     </div>
                     
