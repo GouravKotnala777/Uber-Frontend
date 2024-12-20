@@ -165,7 +165,6 @@ const DriverHome = () => {
                                     setHasRideAccepted(true);
                                     acceptRideRequest({
                                         rideID:requestPopup._id,
-                                        driverID:driver?._id as string,
                                         status:"accepted"});
                                     setActivePassenger({
                                         name:requestPopup.passengerName,

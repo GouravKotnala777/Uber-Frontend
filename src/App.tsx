@@ -12,6 +12,7 @@ import UserContext from './contexts/UserContext';
 import SocketContext from './contexts/SocketContext';
 import DriverRiding from './pages/DriverRiding';
 import Riding from './pages/Riding';
+import DriverLogin from './pages/DriverLogin';
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
               <Route path="/user/riding" element={<Riding />} />
               <Route path="/driver/home" element={<DriverHome />} />
               <Route path="/driver/register" element={<DriverRegister />} />
-              <Route path="/driver/login" element={<Login />} />
+              <Route path="/driver/login" element={<DriverLogin />} />
               <Route path="/driver/riding" element={<DriverRiding />} />
               <Route path="/driver/singleRide" element={<SingleRide />} />
             </Routes>

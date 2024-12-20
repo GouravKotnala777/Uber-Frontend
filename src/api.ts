@@ -96,6 +96,30 @@ export const registerDriver = async(registerDriverFormData:RegisterDriverBodyTyp
         return error as ResponseType<typeof error>;
     }
 };
+// Function for driver login
+export const loginDriver = async(loginFormData:Pick<RegisterBodyTypes&RegisterDriverBodyTypes, "email"|"password"|"licenseNumber"|"vehicleNumber">) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/login`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify(loginFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for fetch my profile as driver
 export const myDriverProfile = async() => {
     try {

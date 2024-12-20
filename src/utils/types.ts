@@ -79,7 +79,7 @@ export interface RideTypes {
 export interface CreateRideRequestBodyTypes extends Pick<RideTypes, "passengerID"|"pickupLocation"|"dropoffLocation"> {
     vehicleType:VehicleTypeTypes;
 };
-export interface AcceptRideRequestBodyTypes extends Pick<RideTypes, "status"|"driverID"> {
+export interface AcceptRideRequestBodyTypes extends Pick<RideTypes, "status"> {
     rideID:string;
 };
 export interface StartRideBodyTypes extends Pick<RideTypes, "otp"> {
