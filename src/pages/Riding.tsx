@@ -9,11 +9,18 @@ import { useLocation } from "react-router-dom";
 import { LocationTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileLong from "../components/ProfileLong";
+import Button from "../components/Button";
+import Heading from "../components/Heading";
+import ShowHideToggler from "../components/ShowHideToggler";
 
 
 const Riding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(false);
     const {activeDriver, dropoffLocation}:{activeDriver:RideAcceptedEventMessageType|undefined; dropoffLocation:LocationTypes|undefined;} = useLocation().state;
+
+    const makePaymentHandler = () => {
+        console.log("payment");
+    };
 
     return(
         <div className="riding_page_bg">
@@ -21,10 +28,10 @@ const Riding = () => {
             <div className="map_cont">map</div>
             <div className="another_cont">aa</div>
             <div className="meet_at_pickup_point_cont" style={{top:isRideDetailsHide?"100%":"20%", zIndex:isRideDetailsHide?"-1":"1"}}>
-                <div className="hide_panel_cont"><BsArrowDown onClick={() => setisRideDetailsHide(true)} /></div>
+                <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
                 <div className="selected_ride">
                     <div className="first_part">
-                        <div className="panel_heading">You are currently riding...</div>
+                        <Heading text="You are currently riding" />
                         <div className="timer">
                             <div className="value">2</div>
                             <div className="unit">min</div>
@@ -47,7 +54,7 @@ const Riding = () => {
                     </div>
                     <Location highlightAddress="Shop No.24" fullAddress={dropoffLocation?.address as string} />
                     <div className="sixth_part">
-                        <button className="make_payment_btn">Make payment</button>
+                        <Button text="Make payment" margin="15px 0 0 0" onClickHandler={makePaymentHandler} />
                     </div>
                 </div>
             </div>

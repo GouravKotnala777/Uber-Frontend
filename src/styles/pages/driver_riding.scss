@@ -161,44 +161,6 @@
                 flex-direction: column;
                 gap: 10px;
                 margin: 15px 0;
-                .ignore_btn{
-                    background-color: transparent;
-                    color: #919191;
-                    border: 1px solid #919191;
-                    &:hover{
-                        background-color:#f1f1f1;
-                    }
-                }
-                .accept_btn{
-                    background-color: gold;
-                    color: black;
-                    &:hover{
-                        background-color:rgba(255, 215, 0, 0.7);
-                    }
-                }
-                .cancel_btn{
-                    background-color: transparent;
-                    color: red;
-                    border: 1px solid red;
-                    &:hover{
-                        background-color:rgba(255,0,0,0.1);
-                    }
-                }
-                .confirm_btn{
-                    background-color: rgba(53, 255, 53, 0.661);
-                    color: rgb(0, 89, 0);
-                    &:hover{
-                        background-color:rgba(0,255,0,0.1);
-                    }
-                }
-                button{
-                    padding: 14px 20px;
-                    font-size: 1.1rem;
-                    border: none;
-                    outline: none;
-                    border-radius: 8px;
-                    cursor: pointer;
-                }
             }
         }
     }

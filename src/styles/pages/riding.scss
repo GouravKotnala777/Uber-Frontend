@@ -29,10 +29,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                .panel_heading{
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                }
+
                 .timer{
                     //border: 1px solid black;
                     text-align: center;
@@ -144,16 +141,6 @@
                 }
             }
             .sixth_part{
-                .make_payment_btn{
-                    padding: 15px 10px;
-                    font-size: 1rem;
-                    width: 100%;
-                    background-color: rgba(119, 247, 119, 0.829);
-                    color: green;
-                    outline: none;
-                    border: none;
-                    border-radius: 8px;
-                }
             }
         }
     }

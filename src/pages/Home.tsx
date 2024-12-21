@@ -1,12 +1,11 @@
 import "../styles/pages/home.scss";
 import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
-import { useContext, useEffect, useState } from "react";
-import { BiDownArrow, BiSend } from "react-icons/bi";
-import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
+import { MouseEvent, useContext, useEffect, useState } from "react";
+import { BiSend } from "react-icons/bi";
+import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
-import { MdSafetyCheck } from "react-icons/md";
-import { IoCall } from "react-icons/io5";
+import { IoCallOutline } from "react-icons/io5";
 import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
 import { LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
@@ -26,6 +25,12 @@ import Location from "../components/Location";
 import TripFee from "../components/TripFee";
 import ProfileLong from "../components/ProfileLong";
 import ShortCuts from "../components/ShortCuts";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Heading from "../components/Heading";
+import ShowHideToggler from "../components/ShowHideToggler";
+import { TbShieldPin } from "react-icons/tb";
+import { MdOutlineLocationOn } from "react-icons/md";
 
 
 
@@ -46,9 +51,9 @@ export interface RideAcceptedEventMessageType {
     rating:string;
 };
 const shortcuts = [
-    {icon:MdSafetyCheck, heading:"Shafety", subHeading:"patoni"},
-    {icon:FaLocationPin, heading:"Share", subHeading:"share my trip"},
-    {icon:IoCall, heading:"Call", subHeading:"call my driver"}
+    {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
+    {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
+    {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
 ];
 
 export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
@@ -120,6 +125,25 @@ const Home = () => {
         console.log("====================== (2)");
         return res.jsonData;
     };
+
+    const createRideHandler = (e:MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setIsLocationPanelActive(false);
+        setIsRidesPanelActive(true);
+        getFareOfTrip({pickupLocation:pickupLocation.address, dropoffLocation:dropoffLocation.address})
+        .then((res) => {
+            setAllFare(res.jsonData.fare);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    };
+    const confirmRideHandler = () => {
+        setIsSelectedRidePanelActive(false);
+        setIsWaitingPanelActive(true);
+        createRideRequest({passengerID:user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});    
+    };
+
     useEffect(() => {
         const aa = setTimeout(() => {
             //---------------------------------------setPickupLocation({address:"", latitude:0, longitude:0});
@@ -219,23 +243,19 @@ const Home = () => {
                 <img src={map} alt={map} />
             </div>
             <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -60vh)":"translate(0, 0vh)"}}>
-                <form>
-                    <div className="form_heading">Find a trip <BiDownArrow onClick={() => setIsLocationPanelActive(false)} style={{display:isLocationPanelActive?"block":"none"}} /></div>
-                    <input type="text" placeholder="Add a pickup location" onChange={(e) => setPickupLocationInp(e.target.value)} onClick={() => setIsLocationPanelActive(true)} />
-                    <input type="text" className="destination_inp" placeholder="Enter your destination" onChange={(e) => setDropoffLocationInp(e.target.value)} onClick={() => setIsLocationPanelActive(true)} />
-                    <button className="create_ride_btn" onClick={(e) => {
-                        e.preventDefault();
-                        setIsLocationPanelActive(false);
-                        setIsRidesPanelActive(true);
-                        getFareOfTrip({pickupLocation:pickupLocation.address, dropoffLocation:dropoffLocation.address})
-                        .then((res) => {
-                            setAllFare(res.jsonData.fare);
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
-                    }}>Create Ride</button>
-                </form>
+                <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
+                <Heading text="Find a trip" />
+                <Input placeholder="Add a pickup location"
+                    margin="15px 0 0 0"
+                    onChangeHandler={(e) => setPickupLocationInp(e.target.value)}
+                    onClickHandler={() => setIsLocationPanelActive(true)}
+                        />
+                <Input placeholder="Enter your destination"
+                    margin="15px 0 0 0"
+                    onChangeHandler={(e) => setDropoffLocationInp(e.target.value)}
+                    onClickHandler={() => setIsLocationPanelActive(true)}
+                        />
+                <Button text="Create ride" margin="15px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
             </div>
             <div className="suggestion_list_cont" style={{transform:isLocationPanelActive?"translate(0, -70vh)":"translate(0, 0vh)", zIndex:isLocationPanelActive?"1":"-1"}}>
                 {
@@ -268,8 +288,9 @@ const Home = () => {
                 }
 
             </div>
-            <div className="rides_list_cont" style={{transform:isRidesPanelActive?"translate(0, -130vh)":"translate(0, 0vh)", zIndex:isRidesPanelActive?"1":"-1"}}>
-                <BiDownArrow className="BiDownArrow" onClick={() => setIsRidesPanelActive(false)} style={{display:isRidesPanelActive?"block":"none"}} />
+            <div className="rides_list_cont" style={{transform:isRidesPanelActive?"translate(0, -137vh)":"translate(0, 0vh)", zIndex:isRidesPanelActive?"1":"-1"}}>
+                <ShowHideToggler hide={!isRidesPanelActive} toggleHandler={() => setIsRidesPanelActive(false)} />
+                <Heading text="Choose vehicle type" />
                 <div className="rides_list">
                     {
                         (["uberX", "uberComfort", "uberXL", "uberPool", "uberMoto", "uberScooty","uberAuto", "uberHCV"] as VehicleTypeTypes[]).map((item) => (
@@ -298,26 +319,23 @@ const Home = () => {
                 </div>
             </div>
             <div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>
-                <BiDownArrow className="BiDownArrow" onClick={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} style={{display:isSelectedRidePanelActive?"block":"none"}} />
+                <ShowHideToggler hide={!isSelectedRidePanelActive} toggleHandler={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} />
+                <Heading text="Confirm your ride" />
                 <div className="selected_ride">
-                    <div className="panel_heading">Confirm your Ride</div>
                     <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
                     <div className="ride_details">
                         <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                         <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
                         <TripFee amount={allFare[selectedVehicleType]} />
                     </div>
-                    <button className="confirm_ride" onClick={() => {
-                        setIsSelectedRidePanelActive(false);
-                        setIsWaitingPanelActive(true);
-                        createRideRequest({passengerID:user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});
-                        }}>Confirm with {selectedVehicleType}</button>
+                    {/*<button className="confirm_ride" onClick={() => }>Confirm with {selectedVehicleType}</button>*/}
                 </div>
+                <Button text={`Confirm with ${selectedVehicleType}`} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
             </div>
             <div className="waiting_for_driver_cont" style={{transform:isWaitingPanelActive?"translate(0, -290vh)":"translate(0, 0vh)", zIndex:isWaitingPanelActive?"1":"-1"}}>
-                <BiDownArrow className="BiDownArrow" onClick={() => setIsWaitingPanelActive(false)} style={{display:isWaitingPanelActive?"block":"none"}} />
+                <ShowHideToggler hide={!isWaitingPanelActive} toggleHandler={() => setIsWaitingPanelActive(false)} />
+                <Heading text="Looking For Nearby Drivers..." />
                 <div className="selected_ride">
-                    <div className="panel_heading">Looking For Nearby Drivers...</div>
                     <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
                     <div className="ride_details">
                         <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
@@ -329,7 +347,7 @@ const Home = () => {
             <div className="meet_at_pickup_point_cont" style={{transform:isMeetAtPickupPanelActive?"translate(0, -370vh)":"translate(0, 0vh)", zIndex:isMeetAtPickupPanelActive?"1":"-1"}}>
                 <div className="selected_ride">
                     <div className="first_part">
-                        <div className="panel_heading">Meet At The Pickup Point</div>
+                        <Heading text="Meet At The Pickup Point" />
                         <div className="timer">
                             <div className="value">2</div>
                             <div className="unit">min</div>

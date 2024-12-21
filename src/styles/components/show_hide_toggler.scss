@@ -1,0 +1,16 @@
+
+
+.show_hide_toggler_cont{
+    //border: 2px solid red;
+    text-align: center;
+    .toggle_btn{
+        //border: 2px solid blue;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        .IoIosArrowDown{
+            color: #919191;
+            font-size: 1.2rem;
+        }
+    }
+}

@@ -6,6 +6,9 @@ import { BsArrowDownSquare, BsArrowUp } from "react-icons/bs";
 import ProfileShort from "../components/ProfileShort";
 import { endRide } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import Heading from "../components/Heading";
+import ShowHideToggler from "../components/ShowHideToggler";
 
 const activeRide:NewRideNotificationTypes = {
     _id:'aaaaaaaaaaaaaaaa',
@@ -28,17 +31,24 @@ const DriverRiding = () => {
     const {acceptedRide} = useLocation().state;
     const navigate = useNavigate();
 
+    const endRideHandler = async() => {    
+        const res = await endRide({rideID:acceptedRide._id});
+                            
+        if (res.success) {
+            navigate("/driver/home");
+        }
+    };
+    const hideRideHandler = () => {
+        console.log("hide");
+    }
+
     return(
         <div className="driver_riding_page_bg">
             {/*<pre>{JSON.stringify(acceptedRide, null, `\t`)}</pre>*/}
             <div className="map_cont"></div>
             <div className="riding_detail_panel_cont">
-                <div className="show_btn_cont">
-                    <BsArrowUp className="BsArrowUp" onClick={() => setisRideDetailsHide(false)} />
-                </div>
-                <div className="riding_detail_panel_heading">
-                    You are riding now
-                </div>
+                <ShowHideToggler toggleHandler={() => setisRideDetailsHide(false)} />
+                <Heading text="You are riding now" />
                 <div className="riding_distance_cont">
                     <div className="heading">Total Distance</div>
                     <div className="value">2km</div>
@@ -51,7 +61,7 @@ const DriverRiding = () => {
                 </div>
             </div>
             <div className="passenger_request_panel_cont_outer" style={{top:isRideDetailsHide?"100%":"25%"}}>
-                <button className="show_location_btn"><BsArrowDownSquare className="CiLocationOn" onClick={() => setisRideDetailsHide(true)}/></button>
+                <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
                 <div className="passenger_request_panel_cont">
                     <ProfileShort name={activeRide.passengerName} amount={activeRide.fare} />
                     <div className="third_part">
@@ -74,14 +84,8 @@ const DriverRiding = () => {
                     </div>
                     
                     <div className="fifth_part">
-                        <button className="confirm_btn" onClick={async() => {
-                            const res = await endRide({rideID:acceptedRide._id});
-                            
-                            if (res.success) {
-                                navigate("/driver/home");
-                            }
-                        }}>End Ride</button>
-                        <button className="cancel_btn">Hide</button>
+                        <Button text="End ride" onClickHandler={endRideHandler} />
+                        <Button text="Hide" background="transparent" color="#717171" border={true} onClickHandler={hideRideHandler} />
                     </div>
                     
                 </div>

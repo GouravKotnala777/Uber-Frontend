@@ -1,0 +1,17 @@
+
+
+.button_cont{
+    //border: 2px solid red;
+    .button{
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 1.1rem;
+        border: none;
+        outline: none;
+        border-radius: 8px;
+        cursor: pointer;
+        &:hover{
+            background-color:rgba(255, 215, 0, 0.7);
+        }
+    }
+}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { RegisterBodyTypes } from "../utils/types";
 import { register } from "../api";
+import Button from "../components/Button";
 
 const Register = () => {
     const [registerFormData, setRegisterFormData] = useState<RegisterBodyTypes>({firstName:"", lastName:"", email:"", password:"", mobile:"", gender:"male"});
@@ -13,7 +14,7 @@ const Register = () => {
         setRegisterFormData({...registerFormData, [e.target.name]:e.target.value});
     };
 
-    const onClickHandler = async() => {
+    const registerHandler = async() => {
         const res = await register(registerFormData);
         console.log(res);
     };
@@ -42,7 +43,7 @@ const Register = () => {
                     <option value="female">Female</option>
                     <option value="other">Other</option>
                 </select>
-                <button className="register_btn" onClick={onClickHandler}>Register</button>
+                <Button text="Register" margin="25px 0 0 0" onClickHandler={registerHandler} />
                 <p>Already have a account? <Link to="/user/login" className="link"> Login here</Link></p>
                 <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>
                 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { RegisterDriverBodyTypes } from "../utils/types";
 import { registerDriver } from "../api";
+import Button from "../components/Button";
 
 
 const DriverRegister = () => {
@@ -13,7 +14,7 @@ const DriverRegister = () => {
         setRegisterDriverFormData({...registerDriverFormData, [e.target.name]:e.target.value});
     };
 
-    const onClickHandler = async() => {
+    const createDriverAccountHandler = async() => {
         const res = await registerDriver(registerDriverFormData);
         console.log(registerDriverFormData);
         console.log(res);
@@ -50,8 +51,7 @@ const DriverRegister = () => {
                     <option value="van">van</option>
                 </select>
             </div>
-
-            <button className="register_btn" onClick={onClickHandler}>Create Driver Account</button>
+            <Button text="Create driver account" margin="25px 0 0 0" onClickHandler={createDriverAccountHandler} />
             <p>Already have a account? <Link to="/user/login" className="link"> Login here</Link></p>
             <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>
             

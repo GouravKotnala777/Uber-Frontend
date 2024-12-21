@@ -29,40 +29,11 @@
         transition: 0.3s;
         //transform: translate(0, -70vh);
         background-color: white;
-        form{
-            .form_heading{
-                //border: 2px solid red;
-                font-size: 1.3rem;
-                font-weight: 600;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            input{
-                background-color: #e3e3e3;
-                padding: 15px 10px;
-                border-radius: 8px;
-                width: 100%;
-                box-sizing: border-box;
-                outline: none;
-                border: none;
-                margin-top: 10px;
-                color: #515151;
-                font-size: 1rem;
-            }
-            .destination_inp{
-                margin-top: 10px;
-            }
-            .create_ride_btn{
-                width: 100%;
-                padding: 15px 10px;
-                font-size: 1.1rem;
-                margin-top: 10px;
-                border-radius: 8px;
-                background-color: black;
-                border: none;
-            }
-        }
+        //form{
+        //    .destination_inp{
+        //        margin-top: 10px;
+        //    }
+        //}
     }
     .suggestion_list_cont{
         //border: 2px solid greenyellow;
@@ -94,21 +65,16 @@
     }
     .rides_list_cont{
         //border: 2px solid red;
-        height: 60%;
+        height: 67%;
         transition: 0.3s;
         //background-color: rgb(255, 230, 230);
         background-color: white;
         border-radius: 20px 20px 0 0;
-        .BiDownArrow{
-            //border: 1px solid blue;
-            width: 100%;
-            height: 20px;
-            color: #919191;
-        }
+        padding: 10px;
         .rides_list{
-            overflow-y: scroll;
             //border: 2px solid green;
-            height: 90%;
+            overflow-y: scroll;
+            height: 85%;
         }
     }
     .selected_rides_detail_cont{
@@ -118,21 +84,12 @@
         //background-color: rgb(255, 230, 230);
         background-color: rgb(247, 247, 247);
         border-radius: 20px 20px 0 0;
-        .BiDownArrow{
-            //border: 1px solid blue;
-            width: 100%;
-            height: 4%;
-            color: #919191;
-        }
+        padding: 10px;
         .selected_ride{
             //border: 2px solid green;
             overflow-y: scroll;
-            height: 90%;
-            padding: 10px;
-            .panel_heading{
-                font-weight: 700;
-                font-size: 1.3rem;
-            }
+            height: 60%;
+            //padding: 10px;
             .car_icon_cont{
                 //border: 1px solid violet;
                 text-align: center;
@@ -143,17 +100,6 @@
             }
             .ride_details{
                 // modulated
-            }
-            .confirm_ride{
-                padding: 10px;
-                width: 100%;
-                font-size: 1rem;
-                background-color: green;
-                border: none;
-                outline: none;
-                border-radius: 8px;
-                cursor: pointer;
-                margin: 10px 0;
             }
         }
     }
@@ -164,21 +110,13 @@
         //background-color: rgb(255, 230, 230);
         background-color: rgb(247, 247, 247);
         border-radius: 20px 20px 0 0;
-        .BiDownArrow{
-            //border: 1px solid blue;
-            width: 100%;
-            height: 4%;
-            color: #919191;
-        }
+        padding: 10px 10px 0 10px;
         .selected_ride{
             //border: 2px solid green;
             overflow-y: scroll;
-            height: 90%;
-            padding: 10px;
-            .panel_heading{
-                font-weight: 700;
-                font-size: 1.3rem;
-            }
+            height: 67.5%;
+            padding-bottom: 20px;
+            //padding: 10px;
             .car_icon_cont{
                 //border: 1px solid violet;
                 text-align: center;
@@ -190,38 +128,24 @@
             .ride_details{
                 // modulated
             }
-            .confirm_ride{
-                padding: 10px;
-                width: 100%;
-                font-size: 1rem;
-                background-color: green;
-                border: none;
-                outline: none;
-                border-radius: 8px;
-                cursor: pointer;
-                margin: 10px 0;
-            }
         }
     }
     .meet_at_pickup_point_cont{
         //border: 2px solid red;
-        height: 80%;
+        height: 66%;
         transition: 0.3s;
         background-color: white;
         .selected_ride{
             //border: 2px solid violet;
             overflow-y: scroll;
-            height: 90%;
+            height: 100%;
             padding: 10px;
+            box-sizing: border-box;
             .first_part{
                 //border: 2px solid indigo;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                .panel_heading{
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                }
                 .timer{
                     //border: 1px solid black;
                     text-align: center;
