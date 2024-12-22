@@ -17,6 +17,8 @@ import ProfileShort from "../components/ProfileShort";
 import ShortCuts from "../components/ShortCuts";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
+import { TiMessages } from "react-icons/ti";
+import ChatPanel from "../components/ChatPanel";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -49,6 +51,8 @@ const DriverHome = () => {
     const [acceptedRide, setAcceptedRide] = useState<NewRideNotificationTypes|null>(null);
     const [otpInp, setOtpInp] = useState<string>("");
     const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
+    const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
+    const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
@@ -164,10 +168,14 @@ const DriverHome = () => {
     return(
         <div className="driver_home_page_bg">
             {/*<pre>{JSON.stringify(driver?.userID._id, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(activePassenger, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
             <div className="map_cont">
                 <img src={map} alt={map} />
+            </div>
+            <div className="chat_short_cut" onClick={() => setIsChatPanelActive(true)}>
+                <TiMessages className="TiMessages" />
+                <div className="notification">{newChatNotification}</div>
             </div>
 
             <div className="driver_profile_panel_cont">
@@ -227,6 +235,7 @@ const DriverHome = () => {
                     }
                 </div>
             </div>
+            <ChatPanel isChatPanelActive={isChatPanelActive} setIsChatPanelActive={setIsChatPanelActive} />
 
 
         </div>

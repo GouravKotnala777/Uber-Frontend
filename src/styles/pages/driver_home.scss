@@ -18,6 +18,32 @@
             height: 100%;
         }
     }
+    .chat_short_cut{
+        //border: 2px solid red;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border-radius: 50%;
+        background-color: white;
+        .TiMessages{
+            width: 35px;
+            height: 28px;
+            padding: 10px;
+        }
+        .notification{
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            color: white;
+            font-weight: 600;
+            background-color: red;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+            border-radius: 20px;
+        }
+    }
     .passenger_request_panel_cont_outer{
         //border: 2px solid rgb(81, 255, 0);
         position: relative;

@@ -24,13 +24,15 @@ import { useNavigate } from "react-router-dom";
 import Location from "../components/Location";
 import TripFee from "../components/TripFee";
 import ProfileLong from "../components/ProfileLong";
-import ShortCuts from "../components/ShortCuts";
+import ShortCuts, { ShortcutTypes } from "../components/ShortCuts";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
 import { TbShieldPin } from "react-icons/tb";
 import { MdOutlineLocationOn } from "react-icons/md";
+import { TiMessages } from "react-icons/ti";
+import ChatPanel from "../components/ChatPanel";
 
 
 
@@ -50,11 +52,12 @@ export interface RideAcceptedEventMessageType {
     };
     rating:string;
 };
-const shortcuts = [
-    {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
-    {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
-    {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
-];
+//const shortcuts:ShortcutTypes[]= [
+//    {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
+//    {icon:TiMessages, heading:"Message", subHeading:"chat with driver", onClickHandler},
+//    {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
+//    {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
+//];
 
 export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
 const vehicleDescription = { uberAuto: "Affordable three-wheeler",
@@ -74,7 +77,8 @@ const Home = () => {
     const [isRidesPanelActive, setIsRidesPanelActive] = useState<boolean>(false);
     const [isSelectedRidePanelActive, setIsSelectedRidePanelActive] = useState<boolean>(false);
     const [isWaitingPanelActive, setIsWaitingPanelActive] = useState<boolean>(false);
-    const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
+    const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(true);
+    const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
     const [pickupLocation, setPickupLocation] = useState<LocationTypes>({
@@ -98,6 +102,13 @@ const Home = () => {
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const navigate = useNavigate();
+
+    const shortcuts:ShortcutTypes[]= [
+        {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
+        {icon:TiMessages, heading:"Message", subHeading:"chat with driver", onClickHandler:() => setIsChatPanelActive(true)},
+        {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
+        {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
+    ];
 
 
     if (!driverContext) {
@@ -364,6 +375,8 @@ const Home = () => {
                     <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                 </div>
             </div>
+
+            <ChatPanel isChatPanelActive={isChatPanelActive} setIsChatPanelActive={setIsChatPanelActive} />
 
         </div>
     )
