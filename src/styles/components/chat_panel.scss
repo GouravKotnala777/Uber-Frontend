@@ -1,0 +1,80 @@
+
+
+.chat_panel_cont{
+    border: 2px solid red;
+    height: 100vh;
+    transition: 0.3s;
+    background-color: rgb(255, 239, 239);
+    border-radius: 20px 20px 0 0;
+    position: absolute;
+    //top: 13px;
+    //left: 0;
+    .messanger_cont{
+        border: 2px solid blue;
+        height: 93%;
+        .messanger_screen_cont{
+            border: 2px solid greenyellow;
+            height: 85%;
+            overflow-y: scroll;
+            .messages_cont{
+                border: 2px solid violet;
+                
+                .incoming_message{
+                    //border: 1px solid red;
+                    width: 50%;
+                    padding: 10px;
+                    margin: 10px;
+                    border-radius: 0 15px 15px 15px;
+                    background-color: white;
+                    color: black;
+                    font-size: 0.9rem;
+                    box-shadow: 0.1px 0.1px 1px 0.1px gray;
+                }
+                .outgoing_message{
+                    //border: 1px solid red;
+                    width: 50%;
+                    padding: 10px;
+                    margin: 10px 10px 10px auto;
+                    border-radius: 15px 0 15px 15px;
+                    background-color: rgba(0, 0, 0, 0.399);
+                    color: white;
+                    font-size: 0.9rem;
+                    box-shadow: 0.1px 0.1px 1px 0.1px gray;
+                }
+            }                
+        }
+        .messanger_controllers_cont{
+            border: 2px solid orange;
+            height: 15%;
+            .input_cont{
+                //border: 2px solid red;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                background-color: #e3e3e3;
+                border-radius: 8px;
+                .message_inp{
+                    //border: 2px solid blue;
+                    padding: 10px;
+                    flex: 1;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;  
+                    color: #313131;
+                    font-size: 1.1rem;                      
+                }
+                .send_message_btn{
+                    //border: 2px solid orange;
+                    padding: 6px;
+                    border-radius: 6px;
+                    border: none;
+                    outline: none;
+                    .BiSend{
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+        }
+    }
+}
