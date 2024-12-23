@@ -23,4 +23,5 @@ body {
   min-height: 100vh;
   font-size: 18px;
   /*box-sizing: border-box;*/
+  overflow-y: hidden;
 }

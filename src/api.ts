@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, ChatTypes, CreateChatBodyType, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes } from "./utils/types";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
@@ -320,6 +320,30 @@ export const getFareOfTrip = async(getFareFormData:{dropoffLocation:string; pick
             },
             credentials:"include",
             body:JSON.stringify(getFareFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for create new chat for user
+export const createChat = async({receiver, content, senderType, receiverSocketID}:CreateChatBodyType) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/chat/${senderType}/message/create`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({receiver, content, senderType, receiverSocketID})
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

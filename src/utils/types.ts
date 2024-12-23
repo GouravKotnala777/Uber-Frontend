@@ -90,3 +90,13 @@ export interface ResponseType<J> {
     message:string;
     jsonData:J;
 };
+export interface ChatTypes{
+    sender:string;
+    receiver:string;
+    content:string;
+    createdAt:Date;
+}
+export interface CreateChatBodyType extends Pick<ChatTypes, "receiver"|"content">{
+    senderType:"user"|"driver";
+    receiverSocketID:string;
+};

@@ -1,23 +1,26 @@
 
 
 .chat_panel_cont{
-    border: 2px solid red;
+    //border: 2px solid red;
     height: 100vh;
     transition: 0.3s;
     background-color: rgb(255, 239, 239);
     border-radius: 20px 20px 0 0;
     position: absolute;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
     //top: 13px;
     //left: 0;
     .messanger_cont{
-        border: 2px solid blue;
+        //border: 2px solid blue;
         height: 93%;
         .messanger_screen_cont{
-            border: 2px solid greenyellow;
+            //border: 2px solid greenyellow;
             height: 85%;
             overflow-y: scroll;
             .messages_cont{
-                border: 2px solid violet;
+                //border: 2px solid violet;
                 
                 .incoming_message{
                     //border: 1px solid red;
@@ -44,7 +47,7 @@
             }                
         }
         .messanger_controllers_cont{
-            border: 2px solid orange;
+            //border: 2px solid orange;
             height: 15%;
             .input_cont{
                 //border: 2px solid red;

@@ -7,7 +7,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
 import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
-import { LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
+import { ChatTypes, LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
@@ -39,10 +39,12 @@ import ChatPanel from "../components/ChatPanel";
 export interface RideAcceptedEventMessageType {
     status:RideStatusTypes;
     otp:string;
+    driverID:string;
     driverName:string;
     driverEmail:string;
     driverMobile:string;
     driverGender:"male"|"female"|"other";
+    driverSocketID:string;
     licenseNumber:string;
     vehicleDetailes:{
         vehicleType:VehicleTypeTypes;
@@ -77,7 +79,7 @@ const Home = () => {
     const [isRidesPanelActive, setIsRidesPanelActive] = useState<boolean>(false);
     const [isSelectedRidePanelActive, setIsSelectedRidePanelActive] = useState<boolean>(false);
     const [isWaitingPanelActive, setIsWaitingPanelActive] = useState<boolean>(false);
-    const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(true);
+    const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
@@ -98,6 +100,7 @@ const Home = () => {
     const [allFare, setAllFare] = useState<{[P in VehicleTypeTypes]:number;}>({uberAuto:0 ,uberX:0 ,uberMoto:0 ,uberScooty:0 ,uberComfort:0 ,uberHCV:0 ,uberPool:0 , uberXL:0});
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
+    const [messages, setMessages] = useState<ChatTypes[]>([]);
     const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
@@ -242,6 +245,12 @@ const Home = () => {
             });
         }
     }, [activeDriver]);
+    useEffect(() => {
+        receiveMessage("new-message", (data) => {
+            console.log(data);
+            setMessages((prev) => [...prev, data as ChatTypes])
+        });
+    }, []);
 
     return(
         <div className="home_page_background">
@@ -376,7 +385,15 @@ const Home = () => {
                 </div>
             </div>
 
-            <ChatPanel isChatPanelActive={isChatPanelActive} setIsChatPanelActive={setIsChatPanelActive} />
+            <ChatPanel isChatPanelActive={isChatPanelActive}
+                setIsChatPanelActive={setIsChatPanelActive}
+                receiver={activeDriver?.driverID as string}
+                senderType="user"
+                receiverSocketID={activeDriver?.driverSocketID as string}
+                messages={messages}
+                setMessages={setMessages}
+                myUserID={user?._id as string}
+            />
 
         </div>
     )

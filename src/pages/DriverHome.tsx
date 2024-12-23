@@ -2,7 +2,6 @@ import "../styles/pages/driver_home.scss";
 import map from "../../public/bg-2.jpg";
 import logo from "../../public/uber-logo-1.png";
 import { useContext, useEffect, useState } from "react";
-import { CiLocationOn } from "react-icons/ci";
 import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
@@ -11,7 +10,7 @@ import { acceptRideRequest, myDriverProfile, startRide } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
-import { LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
+import { ChatTypes, LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileShort from "../components/ProfileShort";
 import ShortCuts from "../components/ShortCuts";
@@ -29,6 +28,7 @@ export interface NewRideNotificationTypes {
     fare:number;
     status:RideStatusTypes;
     otp:string;
+    passengerID:string;
     passengerName:string;
     passengerEmail:string;
     passengerMobile:string;
@@ -47,12 +47,13 @@ const DriverHome = () => {
     const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<boolean>(false);
     const [hasRideAccepted, setHasRideAccepted] = useState<boolean>(false);
     const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
-    const [activePassenger, setActivePassenger] = useState<Pick<UserTypes, "name"|"email"|"mobile"|"socketID">|null>(null);
+    const [activePassenger, setActivePassenger] = useState<Pick<UserTypes, "_id"|"name"|"email"|"mobile"|"socketID">|null>(null);
     const [acceptedRide, setAcceptedRide] = useState<NewRideNotificationTypes|null>(null);
     const [otpInp, setOtpInp] = useState<string>("");
     const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
     const [newChatNotification, setNewChatNotification] = useState<number>(0);
+    const [messages, setMessages] = useState<ChatTypes[]>([]);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const userContext = useContext<UserContextTypes|null>(UserDataContext);
@@ -74,6 +75,7 @@ const DriverHome = () => {
             rideID:requestPopup._id,
             status:"accepted"});
         setActivePassenger({
+            _id:requestPopup.passengerID,
             name:requestPopup.passengerName,
             email:requestPopup.passengerEmail,
             mobile:requestPopup.passengerMobile,
@@ -116,6 +118,13 @@ const DriverHome = () => {
             //setActivePassenger({name:passengerName, email:passengerEmail, mobile:passengerMobile, gender:passengerGender, socketID:passengerSocketID});
             console.log("DATADATADATADATADATADATADATADATA (2)");
         })
+    }, []);
+    useEffect(() => {
+        receiveMessage("new-message", (data) => {
+            console.log(data);
+            setMessages((prev) => [...prev, data as ChatTypes]);
+            setNewChatNotification((prev) => prev+1);
+        });
     }, []);
     useEffect(() => {
 
@@ -235,7 +244,15 @@ const DriverHome = () => {
                     }
                 </div>
             </div>
-            <ChatPanel isChatPanelActive={isChatPanelActive} setIsChatPanelActive={setIsChatPanelActive} />
+            <ChatPanel isChatPanelActive={isChatPanelActive}
+                setIsChatPanelActive={setIsChatPanelActive}
+                receiver={acceptedRide?.passengerID as string}
+                senderType="driver"
+                receiverSocketID={activePassenger?.socketID as string}
+                messages={messages}
+                setMessages={setMessages}
+                myUserID={driver?._id as string}
+            />
 
 
         </div>
