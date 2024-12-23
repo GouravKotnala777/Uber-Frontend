@@ -1,15 +1,17 @@
+@import "../utils";
 
 .input_cont{
     //border: 2px solid red;
     .input{
-        background-color: #e3e3e3;
+        //background-color: #e3e3e3;
+        background-color: $grayLighter;
         padding: 15px 10px;
         border-radius: 8px;
         width: 100%;
         box-sizing: border-box;
         outline: none;
         border: none;
-        color: #515151;
+        color: $grayDark;
         font-size: 1rem;
     }
 }

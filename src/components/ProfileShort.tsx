@@ -1,5 +1,5 @@
 import "../styles/components/profile_short.scss";
-import vite from "/public/vite.svg";
+import vite from "/vite.svg";
 
 const ProfileShort = ({name, amount}:{name:string; amount:number;}) => {
 

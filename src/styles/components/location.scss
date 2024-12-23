@@ -1,10 +1,11 @@
+@import "../utils";
 
 .pickup_location_details_cont{
     //border: 1px solid green;
     display: flex;
     justify-content: space-between;
     //align-items: ;
-    border-bottom: 1px solid #919191;
+    border-bottom: 1px solid $grayLight;
     .CiLocationOn{
         margin-top: 15px;
         margin-left: 15px;
@@ -18,7 +19,7 @@
             font-weight: 600;
         }
         .full_info{
-            font-size: 0.7rem;
+            font-size: $xs;
         }
     }
 

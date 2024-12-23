@@ -1,10 +1,10 @@
-
+@import "../utils";
 
 .chat_panel_cont{
     //border: 2px solid red;
     height: 100vh;
     transition: 0.3s;
-    background-color: rgb(255, 239, 239);
+    background-color: $lightest;
     border-radius: 20px 20px 0 0;
     position: absolute;
     width: 100%;
@@ -28,9 +28,9 @@
                     padding: 10px;
                     margin: 10px;
                     border-radius: 0 15px 15px 15px;
-                    background-color: white;
-                    color: black;
-                    font-size: 0.9rem;
+                    background-color: $lightest;
+                    color: $darkest;
+                    font-size: $s;
                     box-shadow: 0.1px 0.1px 1px 0.1px gray;
                 }
                 .outgoing_message{
@@ -40,9 +40,9 @@
                     margin: 10px 10px 10px auto;
                     border-radius: 15px 0 15px 15px;
                     background-color: rgba(0, 0, 0, 0.399);
-                    color: white;
-                    font-size: 0.9rem;
-                    box-shadow: 0.1px 0.1px 1px 0.1px gray;
+                    color: $lightest;
+                    font-size: $s;
+                    box-shadow: 0.1px 0.1px 1px 0.1px $gray;
                 }
             }                
         }
@@ -55,7 +55,7 @@
                 justify-content: space-between;
                 align-items: center;
                 padding: 10px;
-                background-color: #e3e3e3;
+                background-color: $grayLight;
                 border-radius: 8px;
                 .message_inp{
                     //border: 2px solid blue;
@@ -64,8 +64,8 @@
                     background-color: transparent;
                     border: none;
                     outline: none;  
-                    color: #313131;
-                    font-size: 1.1rem;                      
+                    color: $grayDark;
+                    font-size: $l;                      
                 }
                 .send_message_btn{
                     //border: 2px solid orange;
@@ -74,7 +74,7 @@
                     border: none;
                     outline: none;
                     .BiSend{
-                        font-size: 1.4rem;
+                        font-size: $xxl;
                     }
                 }
             }

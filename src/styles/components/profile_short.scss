@@ -1,4 +1,4 @@
-
+@import "../utils";
 
 .profile_short_cont{
     //border: 2px solid red;
@@ -23,8 +23,8 @@
         }
         .heading{
             //border: 1px solid indianred;
-            color: #919191;
-            font-size:0.9rem;
+            color: $grayLight;
+            font-size:$s;
         }
         
     }
@@ -37,8 +37,8 @@
         }
         .heading{
             //border: 1px solid indianred;
-            color: #919191;
-            font-size:0.9rem;
+            color: $grayLight;
+            font-size:$s;
             text-align:right;
         }
     }

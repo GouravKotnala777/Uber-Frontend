@@ -1,7 +1,7 @@
 import { BsStarFill } from "react-icons/bs";
 import { RideAcceptedEventMessageType } from "../pages/Home";
 import "../styles/components/profile_long.scss";
-import vite from "/public/vite.svg";
+import vite from "/vite.svg";
 
 const ProfileLong = ({driverDetails}:{driverDetails:RideAcceptedEventMessageType}) => {
 

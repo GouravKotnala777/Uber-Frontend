@@ -1,5 +1,5 @@
 import "../styles/pages/login.scss";
-import logo from "../../public/uber-logo-1.png";
+import logo from "/uber-logo-1.png";
 import { Link } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { RegisterBodyTypes } from "../utils/types";

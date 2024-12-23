@@ -1,6 +1,6 @@
 import "../styles/pages/home.scss";
-import map from "../../public/bg-2.jpg";
-import logo from "../../public/uber-logo-1.png";
+import map from "/bg-2.jpg";
+import logo from "/uber-logo-1.png";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { BiSend } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
@@ -12,14 +12,14 @@ import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext
 import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
-import uberX from "../../public/uber-x.png";
-import uberAuto from "../../public/uber-tuktuk.png";
-import uberScooty from "../../public/uber-scooty.png";
-import uberMoto from "../../public/uber-moto.png";
-import uberComfort from "../../public/uber-comfort.png";
-import uberHCV from "../../public/uber-hcv.png";
-import uberPool from "../../public/uber-pool.png";
-import uberXL from "../../public/uber-xl.png";
+import uberX from "/uber-x.png";
+import uberAuto from "/uber-tuktuk.png";
+import uberScooty from "/uber-scooty.png";
+import uberMoto from "/uber-moto.png";
+import uberComfort from "/uber-comfort.png";
+import uberHCV from "/uber-hcv.png";
+import uberPool from "/uber-pool.png";
+import uberXL from "/uber-xl.png";
 import { useNavigate } from "react-router-dom";
 import Location from "../components/Location";
 import TripFee from "../components/TripFee";

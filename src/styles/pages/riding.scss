@@ -1,3 +1,4 @@
+@import "../utils";
 
 .riding_page_bg{
     //border: 2px solid red;
@@ -6,7 +7,7 @@
     .map_cont{
         //border: 2px solid violet;
         height: 30%;
-        background-color: gainsboro;
+        background-color: $grayLighter;
     }
     .another_cont{
         height: 70%;
@@ -15,7 +16,7 @@
         //border: 2px solid indigo;
         height: 80%;
         transition: 0.3s;
-        background-color: white;
+        background-color: $lightest;
         position: absolute;
         left: 0;
         width: 100%;
@@ -34,8 +35,8 @@
                     //border: 1px solid black;
                     text-align: center;
                     padding: 0 10px;
-                    background-color: black;
-                    color: white;
+                    background-color: $darkest;
+                    color: $lightest;
                     .value{
 
                     }
@@ -59,13 +60,13 @@
                         width:1.4rem;
                         text-align: center;
                         border-radius: 50%;
-                        background-color: #e3e3e3;
+                        background-color: $grayLighter;
                         .MdSafetyCheck{
 
                         }
                     }
                     .safety_heading{
-                        font-size:0.8rem;
+                        font-size:$xs;
                         font-weight:600;
                     }
                 }
@@ -79,13 +80,13 @@
                         width:1.4rem;
                         text-align: center;
                         border-radius: 50%;
-                        background-color: #e3e3e3;
+                        background-color: $grayLighter;
                         .FaLocationPin{
 
                         }
                     }
                     .share_my_trip_heading{
-                        font-size:0.8rem;
+                        font-size:$xs;
                         font-weight:600;
                     }
                 }
@@ -99,13 +100,13 @@
                         width:1.4rem;
                         text-align: center;
                         border-radius: 50%;
-                        background-color: #e3e3e3;
+                        background-color: $grayLighter;
                         .IoCall{
 
                         }
                     }
                     .call_driver_heading{
-                        font-size:0.8rem;
+                        font-size:$xs;
                         font-weight:600;
                     }
                 }
@@ -114,7 +115,7 @@
             .fifth_part{
                 //border: 2px solid orange;
                 padding: 15px 0;
-                border-top: 1px solid #919191;
+                border-top: 1px solid $grayLight;
                 .pickup_location_details_cont{
                     //border: 1px solid green;
                     display: flex;
@@ -134,7 +135,7 @@
                             font-weight: 600;
                         }
                         .full_info{
-                            font-size: 0.7rem;
+                            font-size: $xs;
                         }
                     }
 

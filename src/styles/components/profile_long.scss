@@ -1,3 +1,4 @@
+@import "../utils";
 
 .profile_long_cont{
     //border: 2px solid blue;
@@ -5,7 +6,7 @@
     align-items: center;
     justify-content: space-between;
     margin: 15px 0;
-    border-top: 1px solid #919191;
+    border-top: 1px solid $grayLight;
     .driver_photo{
         //border: 2px solid green;
         width: 120px;
@@ -26,13 +27,13 @@
     .driver_details{
         //border: 2px solid red;
         text-align: right;
-        color: #717171;
-        font-size: 0.8rem;
+        color: $gray;
+        font-size: $xs;
         .driver_name{}
         .vehicle_number{
-            color:black;
+            color:$darkest;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: $l;
         }
         .vehicle_color{}
         .vehicle_model{}
@@ -41,7 +42,7 @@
             justify-content: flex-end;
             align-items: center;
             .BsStarFill{
-                color: #313131;
+                color: $grayDark;
             }
             .value{
 

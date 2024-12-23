@@ -1,7 +1,8 @@
 import "../styles/pages/start.scss";
-import bg from "../../public/bg-3.jpg";
-import logo from "../../public/uber-logo-1.png";
-import { FaArrowRight } from "react-icons/fa6";
+import bg from "/bg-3.jpg";
+import logo from "/uber-logo-1.png";
+import Heading from "../components/Heading";
+import Button from "../components/Button";
 
 
 const Start = () => {
@@ -14,10 +15,8 @@ const Start = () => {
                 <img className="bg_img" src={bg} alt={bg} />
             </div>
             <div className="continue_cont">
-                <div className="heading">Get started with Uber</div>
-                <div className="continue_btn">
-                    <button><span>Continue</span><FaArrowRight className="BiRightArrow" /></button>
-                </div>
+                <Heading text="Get started with Uber" />
+                <Button text="Continue" margin="20px 0 0 0" onClickHandler={() => {}} />
             </div>
         </div>
     )

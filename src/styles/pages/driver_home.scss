@@ -1,4 +1,4 @@
-
+@import "../utils";
 
 .driver_home_page_bg{
     //border: 1px solid red;
@@ -24,7 +24,7 @@
         top: 10px;
         right: 10px;
         border-radius: 50%;
-        background-color: white;
+        background-color: $lightest;
         .TiMessages{
             width: 35px;
             height: 28px;
@@ -34,9 +34,9 @@
             position: absolute;
             top: -6px;
             right: -6px;
-            color: white;
+            color: $lightest;
             font-weight: 600;
-            background-color: red;
+            background-color: rgb(255, 37, 37);
             width: 30px;
             height: 30px;
             text-align: center;
@@ -49,7 +49,7 @@
         position: relative;
         transition: 0.3s;
         height: 65%;
-        background-color: white;
+        background-color: $lightest;
         padding: 10px 10px 0 10px;
         border-radius: 20px 20px 0 0;
         .passenger_request_panel_cont{
@@ -69,7 +69,7 @@
                     justify-content: space-between;
                     align-items: center;
                     padding: 10px;
-                    background-color: #e3e3e3;
+                    background-color: $grayLighter;
                     border-radius: 8px;
                     .message_inp{
                         //border: 2px solid blue;
@@ -78,8 +78,8 @@
                         background-color: transparent;
                         border: none;
                         outline: none;  
-                        color: #313131;
-                        font-size: 1.1rem;                      
+                        color: $grayDark;
+                        font-size: $l;                      
                     }
                     .send_message_btn{
                         //border: 2px solid orange;
@@ -88,7 +88,7 @@
                         border: none;
                         outline: none;
                         .BiSend{
-                            font-size: 1.4rem;
+                            font-size: $xxl;
                         }
                     }
                 }
@@ -105,7 +105,7 @@
         //border: 2px solid red;
         height: 60%;
         transform: translate(0, -100%);
-        background-color: white;
+        background-color: $lightest;
         padding: 10px 15px;
     }
 }

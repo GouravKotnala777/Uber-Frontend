@@ -1,3 +1,4 @@
+@import "../utils";
 
 .short_cuts_cont{
     //border: 2px solid red;
@@ -39,7 +40,7 @@
             font-weight:600;
         }
         .short_cut_sub_heading{
-            font-size:0.8rem;
+            font-size:$xs;
             font-weight:600;
             color: #919191;
         }

@@ -1,6 +1,6 @@
 import "../styles/pages/driver_home.scss";
-import map from "../../public/bg-2.jpg";
-import logo from "../../public/uber-logo-1.png";
+import map from "/bg-2.jpg";
+import logo from "/uber-logo-1.png";
 import { useContext, useEffect, useState } from "react";
 import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";

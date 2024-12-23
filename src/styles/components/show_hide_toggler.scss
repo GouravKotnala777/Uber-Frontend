@@ -1,4 +1,4 @@
-
+@import "../utils";
 
 .show_hide_toggler_cont{
     //border: 2px solid red;
@@ -9,8 +9,8 @@
         outline: none;
         border: none;
         .IoIosArrowDown{
-            color: #919191;
-            font-size: 1.2rem;
+            color: $grayLight;
+            font-size: $xxl;
         }
     }
 }
