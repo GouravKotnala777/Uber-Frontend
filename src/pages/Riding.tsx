@@ -1,4 +1,3 @@
-import { BsArrowDown } from "react-icons/bs";
 import "../styles/pages/riding.scss";
 import { MdSafetyCheck } from "react-icons/md";
 import { FaLocationPin } from "react-icons/fa6";

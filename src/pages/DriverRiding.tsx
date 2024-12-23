@@ -2,7 +2,6 @@ import "../styles/pages/driver_riding.scss";
 import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
 import { NewRideNotificationTypes } from "./DriverHome";
-import { BsArrowDownSquare, BsArrowUp } from "react-icons/bs";
 import ProfileShort from "../components/ProfileShort";
 import { endRide } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -24,6 +23,7 @@ const activeRide:NewRideNotificationTypes = {
     status:"in-progress",
     distance:3,
     duration:2,
+    passengerID:"aaaaaaaaaa"
 };
 
 const DriverRiding = () => {

@@ -1,12 +1,9 @@
-import { FaArrowDown } from "react-icons/fa";
 import "../styles/components/show_hide_toggler.scss";
 import { IoIosArrowDown } from "react-icons/io";
-import { MdKeyboardArrowDown } from "react-icons/md";
 
 interface ShowHideTogglerPropTypes{
     hide?:boolean;
     toggleHandler:() => void;
-
 }
 
 const ShowHideToggler = ({hide, toggleHandler}:ShowHideTogglerPropTypes) => {
