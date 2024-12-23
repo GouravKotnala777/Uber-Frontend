@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
+import LiveTracking from "../components/LiveTracking";
 
 const activeRide:NewRideNotificationTypes = {
     _id:'aaaaaaaaaaaaaaaa',
@@ -45,7 +46,9 @@ const DriverRiding = () => {
     return(
         <div className="driver_riding_page_bg">
             {/*<pre>{JSON.stringify(acceptedRide, null, `\t`)}</pre>*/}
-            <div className="map_cont"></div>
+            <div className="map_cont">
+                <LiveTracking />
+            </div>
             <div className="riding_detail_panel_cont">
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(false)} />
                 <Heading text="You are riding now" />

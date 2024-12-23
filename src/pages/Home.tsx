@@ -1,5 +1,4 @@
 import "../styles/pages/home.scss";
-import map from "/bg-2.jpg";
 import logo from "/uber-logo-1.png";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { BiSend } from "react-icons/bi";
@@ -33,6 +32,7 @@ import { TbShieldPin } from "react-icons/tb";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
+import LiveTracking from "../components/LiveTracking";
 
 
 
@@ -260,7 +260,8 @@ const Home = () => {
             {/*<pre>{JSON.stringify(allNearByDrivers.map((item) => item.vehicleDetailes.vehicleType), null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
             <div className="map_cont">
-                <img src={map} alt={map} />
+                <LiveTracking />
+                {/*<img src={map} alt={map} />*/}
             </div>
             <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -60vh)":"translate(0, 0vh)"}}>
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />

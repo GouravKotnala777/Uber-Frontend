@@ -11,6 +11,7 @@ import ProfileLong from "../components/ProfileLong";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
+import LiveTracking from "../components/LiveTracking";
 
 
 const Riding = () => {
@@ -24,7 +25,9 @@ const Riding = () => {
     return(
         <div className="riding_page_bg">
             {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
-            <div className="map_cont">map</div>
+            <div className="map_cont">
+                <LiveTracking />
+            </div>
             <div className="another_cont">aa</div>
             <div className="meet_at_pickup_point_cont" style={{top:isRideDetailsHide?"100%":"20%", zIndex:isRideDetailsHide?"-1":"1"}}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />

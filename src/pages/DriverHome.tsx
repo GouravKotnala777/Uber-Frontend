@@ -1,6 +1,5 @@
 import "../styles/pages/driver_home.scss";
 import map from "/bg-2.jpg";
-import logo from "/uber-logo-1.png";
 import { useContext, useEffect, useState } from "react";
 import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
@@ -18,6 +17,7 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
+import LiveTracking from "../components/LiveTracking";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -178,7 +178,8 @@ const DriverHome = () => {
         <div className="driver_home_page_bg">
             {/*<pre>{JSON.stringify(driver?.userID._id, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
-            <img className="logo" src={logo} alt={logo} />
+            {/*<img className="logo" src={logo} alt={logo} />*/}
+            <LiveTracking />
             <div className="map_cont">
                 <img src={map} alt={map} />
             </div>
