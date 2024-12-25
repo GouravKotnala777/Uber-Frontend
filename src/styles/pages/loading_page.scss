@@ -1,0 +1,33 @@
+
+.loading_page_bg{
+    //border: 2px solid red;
+    height: 100vh;
+    //text-align: center;
+    align-content: center;
+    .loader_cont{
+        //border: 2px solid green;
+        width: 100px;
+        height: 100px;
+        margin:0 auto;
+        .spinner{
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            animation: spin-animation 0.7s linear infinite;
+            border-left: 8px solid black;
+            border-right: 8px solid black;
+            border-top: 8px solid rgb(238, 238, 238);
+            border-bottom: 8px solid rgb(238, 238, 238);
+        }
+    }
+}
+
+@keyframes spin-animation{
+    0%{
+       transform: rotate(0deg); 
+    }
+    100%{
+        transform: rotate(360deg); 
+    }
+}
