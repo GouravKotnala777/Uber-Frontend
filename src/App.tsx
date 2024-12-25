@@ -34,11 +34,6 @@ function App() {
   const {userContextData, setUserContextData} = userContext;
   const {driverContextData, setDriverContextData} = driverContext;
 
-  console.log("QQQQQQQQQQQQQQQQQQ (1)");
-  console.log(userContextData);
-  console.log("QQQQQQQQQQQQQQQQQQ (2)");
-  
-
   useEffect(() => {
     myDriverProfile()
     .then((res) => {
@@ -47,7 +42,12 @@ function App() {
             setDriverContextData({isLoading:false, driver:res.jsonData});
           }
         }
-    }).catch((err) => {
+        else{
+          if (setDriverContextData) {
+            setDriverContextData({isLoading:false, driver:null});
+          }
+        }
+    }).catch((err) => {      
         console.log(err);
     });
     myProfile()
@@ -55,6 +55,11 @@ function App() {
         if (res.success) {
           if (setUserContextData) {            
             setUserContextData({isLoading:false, user:res.jsonData});
+          }
+        }
+        else{
+          if (setUserContextData) {            
+            setUserContextData({isLoading:false, user:null});
           }
         }
     }).catch((err) => {
@@ -65,7 +70,7 @@ function App() {
   return (
     
           <BrowserRouter>
-            {/*<pre>{JSON.stringify(user, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(driverContextData, null, `\t`)}</pre>*/}
             {/*<nav style={{border:"2px solid white", width:"100%"}}><NavLink to={"/user/register"}>Register</NavLink><NavLink to={"/user/login"}>Login</NavLink> </nav>*/}
             <Routes>
               <Route path="/" element={<Start />} />
@@ -93,8 +98,8 @@ function App() {
 
               <Route path="/user/home" element={<ProtectedRouter isLoading={userContextData.isLoading} children={<Home />} accessibleFor="user" userType={userContextData.user?.role as string} />} />
               <Route path="/user/riding" element={<ProtectedRouter isLoading={userContextData.isLoading} children={<Riding />} accessibleFor="user" userType={userContextData.user?.role as string} />} />
-              <Route path="/driver/home" element={<ProtectedRouter isLoading children={<DriverHome />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
-              <Route path="/driver/riding" element={<ProtectedRouter isLoading children={<DriverRiding />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
+              <Route path="/driver/home" element={<ProtectedRouter isLoading={driverContextData.isLoading} children={<DriverHome />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
+              <Route path="/driver/riding" element={<ProtectedRouter isLoading={driverContextData.isLoading} children={<DriverRiding />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
 
               <Route path="/*" element={<PageNotFound />} />
             </Routes>
