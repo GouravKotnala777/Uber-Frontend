@@ -15,6 +15,10 @@ const Register = () => {
     };
 
     const registerHandler = async() => {
+        console.log("aaaaaaaaaaaaaaa (1)");
+        console.log({registerFormData});
+        console.log("aaaaaaaaaaaaaaa (2)");
+        
         const res = await register(registerFormData);
         console.log(res);
         if (res.success) {

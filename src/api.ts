@@ -2,7 +2,12 @@ import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreateRideRequestBodyTy
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
+    console.log("AAAAAAAAAAAAAAAAAAAA");
+    console.log({url:`${import.meta.env.VITE_SERVER_URL}/api/v1/user/register`});
+    
     try {
+        console.log(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/register`);
+        
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/register`, {
             method:"POST",
             headers:{
