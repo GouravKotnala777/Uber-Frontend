@@ -1,6 +1,6 @@
 import "../styles/pages/login.scss";
 import logo from "/uber-logo-1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { RegisterDriverBodyTypes } from "../utils/types";
 import { registerDriver } from "../api";
@@ -9,6 +9,7 @@ import Button from "../components/Button";
 
 const DriverRegister = () => {
     const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"uberX"});
+    const navigate = useNavigate();
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
         setRegisterDriverFormData({...registerDriverFormData, [e.target.name]:e.target.value});
@@ -18,6 +19,9 @@ const DriverRegister = () => {
         const res = await registerDriver(registerDriverFormData);
         console.log(registerDriverFormData);
         console.log(res);
+        if (res.success) {
+            window.location.href = "/driver/login";
+        }
     };
 
     return(
@@ -52,7 +56,8 @@ const DriverRegister = () => {
                 </select>
             </div>
             <Button text="Create driver account" margin="25px 0 0 0" onClickHandler={createDriverAccountHandler} />
-            <p>Already have a account? <Link to="/user/login" className="link"> Login here</Link></p>
+            <p>Already have a account? <Link to="/driver/login" className="link"> Login here</Link></p>
+            <Button text="Go to user register page" margin="0 0 0 0" onClickHandler={() => navigate("/user/register")} />
             <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>
             
         </div>
