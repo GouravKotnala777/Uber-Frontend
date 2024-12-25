@@ -3,35 +3,58 @@ import { DriverTypesPopulated } from "../utils/types";
 
 // Define the shape of the context value
 export interface DriverContextTypes {
-  driver: DriverTypesPopulated | null;
-  setDriver: Dispatch<SetStateAction<DriverTypesPopulated | null>>;
-  updateDriver: (driverPayload: DriverTypesPopulated | null) => void;
+  driverContextData:{
+    isLoading:boolean;
+    driver: DriverTypesPopulated | null;
+  }
+  setDriverContextData?:Dispatch<SetStateAction<{
+    isLoading:boolean;
+    driver: DriverTypesPopulated | null;
+  }>>;
+  updateDriver?:(driverPayload: {
+    isLoading:boolean;
+    driver: DriverTypesPopulated | null;
+  }) => void;
 }
 
 // Create the context with the correct type
-export const DriverDataContext = createContext<DriverContextTypes | null>(null);
+export const DriverInitialContextData = createContext<DriverContextTypes>({
+  driverContextData:{
+    isLoading:true,
+    driver:null
+  }
+});
 
 interface DriverContextProps {
   children: ReactNode; // Properly typing the children prop
 }
 
 const DriverContext: React.FC<DriverContextProps> = ({ children }) => {
-  const [driver, setDriver] = useState<DriverTypesPopulated | null>(null);
+  const [driverContextData, setDriverContextData] = useState<{
+    isLoading:boolean;
+    driver: DriverTypesPopulated | null;
+  }>({
+      isLoading:true,
+      driver:null
+  });
 
-  const updateDriver = (driverPayload: DriverTypesPopulated | null) => {
-    setDriver(driverPayload);
+  const updateDriver = (driverPayload:{
+    isLoading:boolean;
+    driver: DriverTypesPopulated | null;
+  }) => {
+    setDriverContextData(driverPayload);
   };
 
   const value: DriverContextTypes = {
-    driver,
-    setDriver,
+    driverContextData,
+    setDriverContextData,
     updateDriver
   };
 
   return (
-    <DriverDataContext.Provider value={value}>
+    <DriverInitialContextData.Provider value={value}>
       {children}
-    </DriverDataContext.Provider>
+    </DriverInitialContextData.Provider>
   );
 };
 

@@ -3,30 +3,57 @@ import { UserTypes } from "../utils/types";
 
 
 export interface UserContextTypes {
-    user:UserTypes|null;
-    setUser:Dispatch<SetStateAction<UserTypes|null>>;
-    updateUser:(userPayload:UserTypes|null) => void;
+    userContextData:{
+        isLoading:boolean;
+        user:UserTypes|null;
+    };
+    setUserContextData?:Dispatch<SetStateAction<{
+        isLoading:boolean;
+        user:UserTypes|null;
+    }>>;
+    updateUser?:(userPayload:{
+        isLoading:boolean;
+        user:UserTypes|null;
+    }) => void;
 };
 
-export const UserDataContext = createContext<UserContextTypes|null>(null);
+export const UserInitialDataContext = createContext<UserContextTypes>({
+    userContextData:{
+        isLoading:true,
+        user:null
+    }
+});
 
 interface UserContextPropType {
     children:ReactNode;
 }
 
 const UserContext:FC<UserContextPropType> = ({children}) => {
-    const [user, setUser] = useState<UserTypes|null>(null);
+    const [userContextData, setUserContextData] = useState<{
+        isLoading:boolean;
+        user:UserTypes|null;
+    }>({
+        isLoading:true,
+        user:null
+    });
 
-    const updateUser = (userPayload:UserTypes|null) => {
-        setUser(userPayload);
+    const updateUser = (userPayload:{
+        isLoading:boolean;
+        user:UserTypes|null;
+    }) => {
+        setUserContextData(userPayload);
     };
 
-    const value:UserContextTypes = {user, setUser, updateUser};
+    const value:UserContextTypes = {
+        userContextData,
+        setUserContextData,
+        updateUser
+    };
 
     return(
-        <UserDataContext.Provider value={value}>
+        <UserInitialDataContext.Provider value={value}>
             {children}
-        </UserDataContext.Provider>
+        </UserInitialDataContext.Provider>
     )
 };
 

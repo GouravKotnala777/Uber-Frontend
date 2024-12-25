@@ -5,10 +5,10 @@ import { BiSend } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
-import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myProfile } from "../api";
+import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions } from "../api";
 import { ChatTypes, LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
-import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
-import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
+import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
+import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
 import uberX from "/uber-x.png";
@@ -101,8 +101,8 @@ const Home = () => {
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
-    const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
-    const userContext = useContext<UserContextTypes|null>(UserDataContext);
+    const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
+    const userContext = useContext<UserContextTypes>(UserInitialDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const navigate = useNavigate();
 
@@ -116,7 +116,7 @@ const Home = () => {
 
     if (!driverContext) {
         // Handle the case where the context is null
-        throw new Error("DriverDataContext is not provided!");
+        throw new Error("DriverInitialContextData is not provided!");
     }
     if (!userContext) {
         // Handle the case where the context is null
@@ -128,7 +128,7 @@ const Home = () => {
     }
 
     //const { driver, setDriver, updateDriver } = driverContext;
-    const {user, setUser} = userContext;
+    const {userContextData} = userContext;
     const {sendMessage, receiveMessage} = socketContext;
 
     const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
@@ -155,7 +155,7 @@ const Home = () => {
     const confirmRideHandler = () => {
         setIsSelectedRidePanelActive(false);
         setIsWaitingPanelActive(true);
-        createRideRequest({passengerID:user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});    
+        createRideRequest({passengerID:userContextData.user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});    
     };
 
     useEffect(() => {
@@ -206,18 +206,10 @@ const Home = () => {
     }, [dropoffLocationInp]);
 
     useEffect(() => {
-        myProfile()
-        .then((res) => {
-            setUser(res.jsonData);
-        }).catch((err) => {
-            console.log(err);
-        });
-    }, []);
-    useEffect(() => {
-        if (user) {
-            sendMessage("join", {userID:user?._id as string, userType:user?.role as "user"|"driver"|"admin"});
+        if (userContextData.user) {
+            sendMessage("join", {userID:userContextData.user?._id as string, userType:userContextData.user?.role as "user"|"driver"|"admin"});
         }
-    }, [user]);
+    }, [userContextData.user]);
     useEffect(() => {
         receiveMessage("send-location-to-passenger", (data) => {
             console.log("SSSSSSSSSSSSSSSSSSSSSSSS (1)");
@@ -393,7 +385,7 @@ const Home = () => {
                 receiverSocketID={activeDriver?.driverSocketID as string}
                 messages={messages}
                 setMessages={setMessages}
-                myUserID={user?._id as string}
+                myUserID={userContextData.user?._id as string}
             />
 
         </div>

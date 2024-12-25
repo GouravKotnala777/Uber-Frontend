@@ -1,14 +1,13 @@
 import "../styles/pages/driver_home.scss";
-import map from "/bg-2.jpg";
 import { useContext, useEffect, useState } from "react";
 import { BiSend, BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { acceptRideRequest, myDriverProfile, startRide } from "../api";
+import { acceptRideRequest, startRide } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
-import { UserContextTypes, UserDataContext } from "../contexts/UserContext";
-import { DriverContextTypes, DriverDataContext } from "../contexts/DriverContext";
+import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
+import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { ChatTypes, LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileShort from "../components/ProfileShort";
@@ -56,15 +55,15 @@ const DriverHome = () => {
     const [messages, setMessages] = useState<ChatTypes[]>([]);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
-    const userContext = useContext<UserContextTypes|null>(UserDataContext);
-    const driverContext = useContext<DriverContextTypes|null>(DriverDataContext);
+    const userContext = useContext<UserContextTypes>(UserInitialDataContext);
+    const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
 
     if (!socketContext) throw Error("socketDataContext not provided");
-    if (!userContext) throw Error("userDataContext not provided");
+    if (!userContext) throw Error("UserInitialDataContext not provided");
     if (!driverContext) throw Error("driverContext not provided");
 
     //const {user, setUser, updateUser} = userContext;
-    const {driver, setDriver} = driverContext;
+    const {driverContextData} = driverContext;
     const {sendMessage, receiveMessage} = socketContext;
 
 
@@ -95,19 +94,19 @@ const DriverHome = () => {
 
 
 
+    //useEffect(() => {
+    //    myDriverProfile()
+    //    .then((res) => {
+    //        setDriver(res.jsonData);
+    //    }).catch((err) => {
+    //        console.log(err);
+    //    })
+    //}, []);
     useEffect(() => {
-        myDriverProfile()
-        .then((res) => {
-            setDriver(res.jsonData);
-        }).catch((err) => {
-            console.log(err);
-        })
-    }, []);
-    useEffect(() => {
-        if (driver) {
-            sendMessage("join", {userID:driver?.userID._id as string, userType:"driver"});
+        if (driverContextData.driver) {
+            sendMessage("join", {userID:driverContextData.driver?.userID._id as string, userType:"driver"});
         }
-    }, [driver]);
+    }, [driverContextData.driver]);
     useEffect(() => {
         receiveMessage("new-ride", (data) => {
             console.log("DATADATADATADATADATADATADATADATA (1)");
@@ -135,7 +134,7 @@ const DriverHome = () => {
             if (navigator.geolocation) {
                 console.log({
                     passengerSocketID:activePassenger?.socketID,
-                    driverID:driver?._id as string,
+                    driverID:driverContextData.driver?._id as string,
                     eventName:"send-location-to-passenger",
                     location:{
                         ltd:1.2345,
@@ -145,7 +144,7 @@ const DriverHome = () => {
                 sendMessage("update-driver-location", {
                     message:{
                         passengerSocketID:activePassenger?.socketID,
-                        driverID:driver?._id as string,
+                        driverID:driverContextData.driver?._id as string,
                         eventName:"send-location-to-passenger",
                         location:{
                             ltd:1.2345,
@@ -173,23 +172,28 @@ const DriverHome = () => {
         const locationInterval = setInterval(updateLocation, 20000);
 
         return () => clearInterval(locationInterval);
-    }, [driver, activePassenger]);
+    }, [driverContextData.driver, activePassenger]);
     return(
         <div className="driver_home_page_bg">
             {/*<pre>{JSON.stringify(driver?.userID._id, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
             {/*<img className="logo" src={logo} alt={logo} />*/}
-            <LiveTracking />
+            
             <div className="map_cont">
-                <img src={map} alt={map} />
+                <LiveTracking />
             </div>
             <div className="chat_short_cut" onClick={() => setIsChatPanelActive(true)}>
                 <TiMessages className="TiMessages" />
-                <div className="notification">{newChatNotification}</div>
+                {
+                    newChatNotification ?
+                        <div className="notification">{newChatNotification}</div>
+                        :
+                        ""
+                }
             </div>
 
             <div className="driver_profile_panel_cont">
-                    <ProfileShort name={driver?.userID.name as string} amount={2039} />
+                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} />
                     <ShortCuts shortcuts={shortcuts} />
             </div>
 
@@ -252,7 +256,7 @@ const DriverHome = () => {
                 receiverSocketID={activePassenger?.socketID as string}
                 messages={messages}
                 setMessages={setMessages}
-                myUserID={driver?._id as string}
+                myUserID={driverContextData.driver?._id as string}
             />
 
 
