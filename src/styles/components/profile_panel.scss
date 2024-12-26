@@ -1,0 +1,159 @@
+@import "../utils.scss";
+
+.profile_panel_cont{
+    //border: 2px solid red;
+    height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $lightest;
+    position: absolute;
+    border-radius: 20px 20px 0 0;
+    transition: 0.3s;
+    .scrollable_cont{
+        height: 87vh;
+        overflow-y: scroll;
+        padding: 0 10px;
+        .dp_cont{
+            //border: 2px solid violet;
+            height: 250px;
+            align-content: center;
+            text-align: center;
+            position: relative;
+            background-color: $grayLighter;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            img{
+                border: 2px solid indigo;
+                width: 200px;
+                border-radius: 50%;
+    
+            }
+            .choose_db_cont{
+                //border: 2px solid blue;
+                width: 50px;
+                height: 50px;
+                //position: relative;
+                overflow: hidden;
+                position: absolute;
+                right: 90px;
+                bottom: 18px;
+    
+                .MdChangeCircle{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-size: 2rem;
+                
+                }
+                .choose_db_inp{
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    opacity: 0;
+                }
+            }
+        }
+        .user_info_cont{
+            //border: 2px solid red;
+            //display: flex;
+            //flex-direction: column;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background-color: $grayLighter;
+            .key_value_cont{
+                //border: 2px solid violet;
+                //width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                .key{
+                    //border: 2px solid indigo;
+                    color: $grayDark;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .value_inp_icon_cont{
+                    //border: 2px solid greenyellow;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    //align-items: start;
+                    .value{
+                        //border: 2px solid blue;
+                        color: $darkest;
+                        font-size: 1rem;
+                        height: 40px;
+                        align-content: center;
+                    }
+                    .BiEdit{
+                        font-size: 1.3rem;
+                        color: $grayDark;
+                    }
+                    .update_info_inp{
+                        //border: 2px solid greenyellow;
+                        font-size: 1rem;
+                        height: 34px;
+                    }
+                    .GiCancel{
+                        //border: 1px solid green;
+                        font-size: 1.3rem;
+                        color: red;
+                    }
+                }
+            }
+        }
+        .driver_info_cont{
+            //border: 2px solid red;
+            //display: flex;
+            //flex-direction: column;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background-color: $grayLighter;
+            .key_value_cont{
+                //border: 2px solid violet;
+                //width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                .key{
+                    //border: 2px solid indigo;
+                    color: $grayDark;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .value_inp_icon_cont{
+                    //border: 2px solid greenyellow;
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+                    //align-items: start;
+                    .value{
+                        //border: 2px solid blue;
+                        color: $darkest;
+                        font-size: 1rem;
+                        height: 40px;
+                        align-content: center;
+                    }
+                    .BiEdit{
+                        font-size: 1.3rem;
+                        color: $grayDark;
+                    }
+                    .update_info_inp{
+                        //border: 2px solid greenyellow;
+                        font-size: 1rem;
+                        height: 34px;
+                    }
+                    .GiCancel{
+                        //border: 1px solid green;
+                        font-size: 1.3rem;
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+}
