@@ -1,6 +1,6 @@
 import "../styles/pages/driver_home.scss";
 import { useContext, useEffect, useState } from "react";
-import { BiSend, BiStopwatch } from "react-icons/bi";
+import { BiSend, BiStopwatch, BiUser } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { acceptRideRequest, startRide } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
-import { ChatTypes, LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
+import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileShort from "../components/ProfileShort";
 import ShortCuts from "../components/ShortCuts";
@@ -17,6 +17,7 @@ import Heading from "../components/Heading";
 import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
+import ProfilePanel from "../components/ProfilePanel";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -51,6 +52,7 @@ const DriverHome = () => {
     const [otpInp, setOtpInp] = useState<string>("");
     const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
+    const [isMyProfilePanelActive, setIsMyProfilePanelActive] = useState<boolean>(false);
     const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
     const navigate = useNavigate();
@@ -191,6 +193,15 @@ const DriverHome = () => {
                         ""
                 }
             </div>
+            <div className="my_profile_short_cut" onClick={() => setIsMyProfilePanelActive(true)}>
+                <BiUser className="TiMessages" />
+                {
+                    newChatNotification ?
+                        <div className="notification">{newChatNotification}</div>
+                        :
+                        ""
+                }
+            </div>
 
             <div className="driver_profile_panel_cont">
                     <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} />
@@ -258,6 +269,13 @@ const DriverHome = () => {
                 setMessages={setMessages}
                 myUserID={driverContextData.driver?._id as string}
             />
+            <ProfilePanel
+                isMyProfilePanelActive={isMyProfilePanelActive}
+                setIsMyProfilePanelActive={setIsMyProfilePanelActive}
+                profileFor="driver"
+                profile={driverContextData.driver as DriverTypesPopulated}
+            />
+            
 
 
         </div>

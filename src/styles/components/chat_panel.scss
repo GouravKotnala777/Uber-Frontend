@@ -55,7 +55,7 @@
                 justify-content: space-between;
                 align-items: center;
                 padding: 10px;
-                background-color: $grayLight;
+                background-color: $grayLighter;
                 border-radius: 8px;
                 .message_inp{
                     //border: 2px solid blue;
@@ -73,6 +73,7 @@
                     border-radius: 6px;
                     border: none;
                     outline: none;
+                    background-color: white;
                     .BiSend{
                         font-size: $xxl;
                     }

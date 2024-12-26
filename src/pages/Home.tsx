@@ -1,12 +1,12 @@
 import "../styles/pages/home.scss";
 import logo from "/uber-logo-1.png";
 import { MouseEvent, useContext, useEffect, useState } from "react";
-import { BiSend } from "react-icons/bi";
+import { BiSend, BiUser } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
 import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions } from "../api";
-import { ChatTypes, LocationTypes, RideStatusTypes, VehicleTypeTypes } from "../utils/types";
+import { ChatTypes, LocationTypes, RideStatusTypes, UserTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
@@ -33,6 +33,7 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
+import ProfilePanel from "../components/ProfilePanel";
 
 
 
@@ -81,6 +82,7 @@ const Home = () => {
     const [isWaitingPanelActive, setIsWaitingPanelActive] = useState<boolean>(false);
     const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
+    const [isMyProfilePanelActive, setIsMyProfilePanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
     const [pickupLocation, setPickupLocation] = useState<LocationTypes>({
@@ -101,6 +103,7 @@ const Home = () => {
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
+    const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
     const userContext = useContext<UserContextTypes>(UserInitialDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
@@ -108,7 +111,7 @@ const Home = () => {
 
     const shortcuts:ShortcutTypes[]= [
         {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
-        {icon:TiMessages, heading:"Message", subHeading:"chat with driver", onClickHandler:() => setIsChatPanelActive(true)},
+        {icon:TiMessages, heading:"Message", subHeading:"chat with driver"},
         {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
         {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
     ];
@@ -240,7 +243,8 @@ const Home = () => {
     useEffect(() => {
         receiveMessage("new-message", (data) => {
             console.log(data);
-            setMessages((prev) => [...prev, data as ChatTypes])
+            setMessages((prev) => [...prev, data as ChatTypes]);
+            setNewChatNotification((prev) => prev+1);
         });
     }, []);
 
@@ -254,6 +258,24 @@ const Home = () => {
             <div className="map_cont">
                 <LiveTracking />
                 {/*<img src={map} alt={map} />*/}
+            </div>
+            <div className="chat_short_cut" onClick={() => setIsChatPanelActive(true)}>
+                <TiMessages className="TiMessages" />
+                {
+                    newChatNotification ?
+                        <div className="notification">{newChatNotification}</div>
+                        :
+                        ""
+                }
+            </div>
+            <div className="my_profile_short_cut" onClick={() => setIsMyProfilePanelActive(true)}>
+                <BiUser className="TiMessages" />
+                {
+                    newChatNotification ?
+                        <div className="notification">{newChatNotification}</div>
+                        :
+                        ""
+                }
             </div>
             <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -60vh)":"translate(0, 0vh)"}}>
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
@@ -386,6 +408,13 @@ const Home = () => {
                 messages={messages}
                 setMessages={setMessages}
                 myUserID={userContextData.user?._id as string}
+            />
+
+            <ProfilePanel
+                isMyProfilePanelActive={isMyProfilePanelActive}
+                setIsMyProfilePanelActive={setIsMyProfilePanelActive}
+                profileFor="passenger"
+                profile={userContextData.user as UserTypes}
             />
 
         </div>
