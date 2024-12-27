@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, UserTypes } from "./utils/types";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
@@ -77,6 +77,30 @@ export const myProfile = async() => {
         return error as ResponseType<typeof error>;
     }
 };
+// Function to update my profile
+export const updateMyProfile = async(updateMyProfileFormData:Partial<Pick<UserTypes, "name"|"mobile"|"gender">>&{password?:string; oldPassword:string;}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/update`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify(updateMyProfileFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for register driver
 export const registerDriver = async(registerDriverFormData:RegisterDriverBodyTypes) => {
     try {
@@ -134,6 +158,30 @@ export const myDriverProfile = async() => {
                 "Content-Type":"application/json"
             },
             credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function to update my driving profile
+export const updateMyDrivingProfile = async(updateMyDrivingProfileFormData:{licenseNumber?:string; vehicleColor?:string; vehicleModel?:string; vehicleNumber?:string; vehicleType?:string; availabilityStatus?:boolean;}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/update`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify(updateMyDrivingProfileFormData)
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

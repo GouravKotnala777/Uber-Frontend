@@ -1,5 +1,5 @@
 import "../styles/pages/driver_home.scss";
-import { useContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { BiSend, BiStopwatch, BiUser } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
@@ -65,7 +65,7 @@ const DriverHome = () => {
     if (!driverContext) throw Error("driverContext not provided");
 
     //const {user, setUser, updateUser} = userContext;
-    const {driverContextData} = driverContext;
+    const {driverContextData, setDriverContextData} = driverContext;
     const {sendMessage, receiveMessage} = socketContext;
 
 
@@ -274,6 +274,11 @@ const DriverHome = () => {
                 setIsMyProfilePanelActive={setIsMyProfilePanelActive}
                 profileFor="driver"
                 profile={driverContextData.driver as DriverTypesPopulated}
+                setProfile={setDriverContextData as Dispatch<SetStateAction<{
+                    isLoading: boolean;
+                    user?: UserTypes|null;
+                    driver?: DriverTypesPopulated|null;
+                }>>}
             />
             
 

@@ -1,12 +1,12 @@
 import "../styles/pages/home.scss";
 import logo from "/uber-logo-1.png";
-import { MouseEvent, useContext, useEffect, useState } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
 import { BiSend, BiUser } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
 import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions } from "../api";
-import { ChatTypes, LocationTypes, RideStatusTypes, UserTypes, VehicleTypeTypes } from "../utils/types";
+import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, UserTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
@@ -131,7 +131,7 @@ const Home = () => {
     }
 
     //const { driver, setDriver, updateDriver } = driverContext;
-    const {userContextData} = userContext;
+    const {userContextData, setUserContextData} = userContext;
     const {sendMessage, receiveMessage} = socketContext;
 
     const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
@@ -415,6 +415,11 @@ const Home = () => {
                 setIsMyProfilePanelActive={setIsMyProfilePanelActive}
                 profileFor="passenger"
                 profile={userContextData.user as UserTypes}
+                setProfile={setUserContextData as Dispatch<SetStateAction<{
+                    isLoading: boolean;
+                    user?: UserTypes|null;
+                    driver?: DriverTypesPopulated|null;
+                }>>}
             />
 
         </div>
