@@ -8,6 +8,7 @@ export interface UserTypes {
     gender:"male"|"female"|"other";
     role:"user"|"admin";
     socketID:string;
+    image?:string;
 };
 export type VehicleTypeTypes = "uberAuto"|"uberX"|"uberMoto"|"uberScooty"|"uberComfort"|"uberHCV"|"uberPool"|"uberXL";
 export interface DriverTypes {
@@ -22,6 +23,7 @@ export interface DriverTypes {
     },
     availabilityStatus:boolean;
     rating:number;
+    image?:string;
     createdAt:Date;
     updatedAt:Date;
 };
@@ -37,6 +39,7 @@ export interface DriverTypesPopulated {
     },
     availabilityStatus:boolean;
     rating:number;
+    image?:string;
     createdAt:Date;
     updatedAt:Date;
 };
