@@ -101,6 +101,27 @@ export const updateMyProfile = async(updateMyProfileFormData:Partial<Pick<UserTy
         return error as ResponseType<typeof error>;
     }
 };
+// Function to post/update my profile image
+export const uploadProfileImage = async(formData:FormData) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/upload-image`, {
+            method:"POST",
+            credentials:"include",
+            body:formData
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for register driver
 export const registerDriver = async(registerDriverFormData:RegisterDriverBodyTypes) => {
     try {
@@ -182,6 +203,27 @@ export const updateMyDrivingProfile = async(updateMyDrivingProfileFormData:{lice
             },
             credentials:"include",
             body:JSON.stringify(updateMyDrivingProfileFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function to post/update driver profile image
+export const uploadDriverProfileImage = async(formData:FormData) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/upload-image`, {
+            method:"POST",
+            credentials:"include",
+            body:formData
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

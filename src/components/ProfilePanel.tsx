@@ -3,11 +3,10 @@ import "../styles/components/profile_panel.scss";
 import { DriverTypes, DriverTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import Heading from "./Heading";
 import ShowHideToggler from "./ShowHideToggler";
-import vite from "/public/vite.svg";
 import { MdChangeCircle } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
-import { updateMyDrivingProfile, updateMyProfile } from "../api";
+import { updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
 import Button from "./Button";
 
 interface ProfilePanelPropTypes{
@@ -33,6 +32,34 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
     const [updateDriverProfileForm, setUpdateDriverProfileForm] = useState<Partial<Pick<DriverTypes, "licenseNumber"|"availabilityStatus">>&{vehicleColor?:string; vehicleModel?:string; vehicleNumber?:string; vehicleType?:VehicleTypeTypes}>({});
     const [selectedFieldsForUserUpdate, setSelectedFieldsForUserUpdate] = useState<string[]>([]);
     const [selectedFieldsForDriverUpdate, setSelectedFieldsForDriverUpdate] = useState<string[]>([]);
+    const [image, setImage] = useState<File|null>(null);
+
+    const fileChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        console.log({files});
+        
+        if (files && files[0]) {
+            setImage(files[0]);
+        }
+    };
+
+    const uploadProfileImagehandler = async(e:MouseEvent<HTMLButtonElement>, profileFor:"passenger"|"driver") => {
+        e.preventDefault();        
+        const formData = new FormData();
+        formData.append("image", image as File);
+        if (profileFor === "passenger") {
+            const uploadedImage = await uploadProfileImage(formData);
+            if (uploadedImage.success) {
+                setProfile({isLoading:false, user:uploadedImage.jsonData});
+            }
+        }
+        else{
+            const uploadedImage = await uploadDriverProfileImage(formData);
+            if (uploadedImage.success) {
+                setProfile({isLoading:false, driver:uploadedImage.jsonData});
+            }
+        }
+    }
 
     const updateUserFiledOnChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setUpdateUserProfileForm({...updateUserProfileForm, [e.target.name]:e.target.value});
@@ -87,8 +114,12 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
             <ShowHideToggler toggleHandler={() => setIsMyProfilePanelActive(false)} />
             <Heading text="My profile" padding="0 0 10px 10px" />
             <div className="scrollable_cont">
+                <form>
+                    <input type="file" name="image" onChange={(e) => fileChangeHandler(e)} />
+                    <button onClick={(e) => uploadProfileImagehandler(e, profileFor)}>POST</button>
+                </form>
                 <div className="dp_cont">
-                    <img src={vite} alt={vite} />
+                    <img src={`${import.meta.env.VITE_SERVER_URL}/public/${profile.image}`} alt={profile.image} />
                     <div className="choose_db_cont">
                         <MdChangeCircle className="MdChangeCircle" />
                         <input type="file" className="choose_db_inp" />
