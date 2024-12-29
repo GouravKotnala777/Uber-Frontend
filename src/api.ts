@@ -122,6 +122,26 @@ export const uploadProfileImage = async(formData:FormData) => {
         return error as ResponseType<typeof error>;
     }
 };
+// Function to remove my profile image
+export const removeProfileImage = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/remove-image`, {
+            method:"POST",
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for register driver
 export const registerDriver = async(registerDriverFormData:RegisterDriverBodyTypes) => {
     try {
@@ -224,6 +244,26 @@ export const uploadDriverProfileImage = async(formData:FormData) => {
             method:"POST",
             credentials:"include",
             body:formData
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function to remove driver profile image
+export const removeDriverProfileImage = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/remove-image`, {
+            method:"POST",
+            credentials:"include"
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

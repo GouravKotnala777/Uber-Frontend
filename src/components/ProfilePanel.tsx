@@ -6,8 +6,9 @@ import ShowHideToggler from "./ShowHideToggler";
 import { MdChangeCircle } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
-import { updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
+import { removeDriverProfileImage, removeProfileImage, updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
 import Button from "./Button";
+import ImgWithFallback from "./ImgWithFallback";
 
 interface ProfilePanelPropTypes{
     isMyProfilePanelActive:boolean;
@@ -35,10 +36,8 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
 
     const fileChangeHandler = async(e:ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
-        console.log({files});
         
         if (files && files[0]) {
-            //setImage(files[0]);
             const formData = new FormData();
             formData.append("image", files[0] as File);
             if (profileFor === "passenger") {
@@ -56,23 +55,20 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
         }
     };
 
-    //const uploadProfileImagehandler = async(e:MouseEvent<HTMLButtonElement>, profileFor:"passenger"|"driver") => {
-    //    e.preventDefault();        
-    //    const formData = new FormData();
-    //    formData.append("image", image as File);
-    //    if (profileFor === "passenger") {
-    //        const uploadedImage = await uploadProfileImage(formData);
-    //        if (uploadedImage.success) {
-    //            setProfile({isLoading:false, user:uploadedImage.jsonData});
-    //        }
-    //    }
-    //    else{
-    //        const uploadedImage = await uploadDriverProfileImage(formData);
-    //        if (uploadedImage.success) {
-    //            setProfile({isLoading:false, driver:uploadedImage.jsonData});
-    //        }
-    //    }
-    //}
+    const removeProfileImageHandler = async() => {
+        if (profileFor === "passenger") {
+            const res = await removeProfileImage();
+            if (res.success) {
+                setProfile({isLoading:false, user:res.jsonData});
+            }
+        }
+        else{
+            const res = await removeDriverProfileImage();
+            if (res.success) {
+                setProfile({isLoading:false, driver:res.jsonData});
+            }
+        }
+    }
 
     const updateUserFiledOnChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setUpdateUserProfileForm({...updateUserProfileForm, [e.target.name]:e.target.value});
@@ -122,13 +118,13 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
             top:isMyProfilePanelActive?"13px":"100%"
         }}
         >
-            {/*<pre>{JSON.stringify(updateUserProfileForm, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(profile, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(updateDriverProfileForm, null, `\t`)}</pre>*/}
             <ShowHideToggler toggleHandler={() => setIsMyProfilePanelActive(false)} />
             <Heading text="My profile" padding="0 0 10px 10px" />
             <div className="scrollable_cont">
                 <div className="dp_cont">
-                    <img src={`${import.meta.env.VITE_SERVER_URL}/public/${profile.image}`} alt={profile.image} />
+                    <ImgWithFallback src={profile.image} />
                     <div className="choose_db_cont">
                         <MdChangeCircle className="MdChangeCircle" />
                         <form>
@@ -136,6 +132,10 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                         </form>
                     </div>
                 </div>
+                {
+                    profile.image &&
+                        <Button text="Remove my profile image" background="#ffcece" border={true} color="red" margin="0 0 10px 0" onClickHandler={removeProfileImageHandler} />
+                }
                 {
                     profileFor === "passenger" ?
                     <>
