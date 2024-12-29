@@ -2,10 +2,11 @@ import "../styles/pages/login.scss";
 import logo from "/uber-logo-1.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { RegisterDriverBodyTypes } from "../utils/types";
+import { RegisterDriverBodyTypes, VehicleTypeTypes } from "../utils/types";
 import { registerDriver } from "../api";
 import Button from "../components/Button";
 
+const vehicleTypes:VehicleTypeTypes[] = ["uberX", "uberXL", "uberAuto", "uberComfort", "uberMoto", "uberScooty", "uberPool", "uberHCV"];
 
 const DriverRegister = () => {
     const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"uberX"});
@@ -49,10 +50,11 @@ const DriverRegister = () => {
                 <input type="text" name="vehicleModel" placeholder="Vehicle Model" onChange={(e) => onChangeHandler(e)} />
                 <select name="vehicleType" onChange={(e) => onChangeHandler(e)} >
                     <option value="">--select type--</option>
-                    <option value="car">car</option>
-                    <option value="motorcycle">motorcycle</option>
-                    <option value="auto">auto</option>
-                    <option value="van">van</option>
+                    {
+                        vehicleTypes.map((vehicle) => (
+                            <option value={vehicle}>{vehicle}</option>
+                        ))
+                    }
                 </select>
             </div>
             <Button text="Create driver account" margin="25px 0 0 0" onClickHandler={createDriverAccountHandler} />
