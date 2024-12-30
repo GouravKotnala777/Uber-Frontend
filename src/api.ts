@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, UserTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreatePaymentFormTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, UserTypes } from "./utils/types";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
@@ -479,6 +479,30 @@ export const createChat = async({receiver, content, senderType, receiverSocketID
             },
             credentials:"include",
             body:JSON.stringify({receiver, content, senderType, receiverSocketID})
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for create new payment from user
+export const createPayment = async({rideID, amount, paymentMethod, paymentStatus}:CreatePaymentFormTypes) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/payment/create`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({rideID, amount, paymentMethod, paymentStatus})
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

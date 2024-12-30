@@ -10,22 +10,22 @@ import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
 
-const activeRide:NewRideNotificationTypes = {
-    _id:'aaaaaaaaaaaaaaaa',
-    pickupLocation:{latitude:1.123, longitude:2.345, address:"aaaaa"},
-    dropoffLocation:{latitude:1.123, longitude:2.345, address:"aaaaa"},
-    fare:69,
-    otp:"",
-    passengerEmail:"passenger@gmail.com",
-    passengerName:"pasengerName",
-    passengerGender:"male",
-    passengerMobile:"8882732859",
-    passengerSocketID:"aaaaaaaaa",
-    status:"in-progress",
-    distance:3,
-    duration:2,
-    passengerID:"aaaaaaaaaa"
-};
+//const activeRide:NewRideNotificationTypes = {
+//    _id:'aaaaaaaaaaaaaaaa',
+//    pickupLocation:{latitude:1.123, longitude:2.345, address:"aaaaa"},
+//    dropoffLocation:{latitude:1.123, longitude:2.345, address:"aaaaa"},
+//    fare:69,
+//    otp:"",
+//    passengerEmail:"passenger@gmail.com",
+//    passengerName:"pasengerName",
+//    passengerGender:"male",
+//    passengerMobile:"8882732859",
+//    passengerSocketID:"aaaaaaaaa",
+//    status:"in-progress",
+//    distance:3,
+//    duration:2,
+//    passengerID:"aaaaaaaaaa"
+//};
 
 const DriverRiding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(true);
@@ -37,6 +37,16 @@ const DriverRiding = () => {
                             
         if (res.success) {
             navigate("/driver/home");
+        }
+        else{
+            console.log(res);
+            console.log("nahi ho sakta hai");
+            console.log("nahi ho sakta hai");
+            console.log("nahi ho sakta hai");
+            console.log("nahi ho sakta hai");
+            console.log("nahi ho sakta hai");
+            
+            
         }
     };
     const hideRideHandler = () => {
@@ -66,13 +76,13 @@ const DriverRiding = () => {
             <div className="passenger_request_panel_cont_outer" style={{top:isRideDetailsHide?"100%":"25%"}}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
                 <div className="passenger_request_panel_cont">
-                    <ProfileShort name={activeRide.passengerName} amount={activeRide.fare} />
+                    <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
                     <div className="third_part">
                         <div className="pickup_location_details_cont">
                             <CiLocationOn className="CiLocationOn" />
                             <div className="pickup_location_details">
                                 <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{activeRide?.pickupLocation.address}</div>
+                                <div className="full_info">{acceptedRide?.pickupLocation.address}</div>
                             </div>
                         </div>
                     </div>
@@ -81,7 +91,7 @@ const DriverRiding = () => {
                             <CiLocationOff className="CiLocationOff" />
                             <div className="dropoff_location_details">
                                 <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">{activeRide?.dropoffLocation.address}</div>
+                                <div className="full_info">{acceptedRide?.dropoffLocation.address}</div>
                             </div>
                         </div>
                     </div>

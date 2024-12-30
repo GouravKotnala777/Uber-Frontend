@@ -2,9 +2,9 @@ import "../styles/pages/riding.scss";
 import { MdSafetyCheck } from "react-icons/md";
 import { FaLocationPin } from "react-icons/fa6";
 import { IoCall } from "react-icons/io5";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RideAcceptedEventMessageType } from "./Home";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LocationTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileLong from "../components/ProfileLong";
@@ -12,15 +12,46 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
+import { createPayment } from "../api";
+import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
 
 const Riding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(false);
     const {activeDriver, dropoffLocation}:{activeDriver:RideAcceptedEventMessageType|undefined; dropoffLocation:LocationTypes|undefined;} = useLocation().state;
+    const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
+    const [rideID, setRideID] = useState<string>("");
+    const navigate = useNavigate();
 
-    const makePaymentHandler = () => {
-        console.log("payment");
+    if (!socketContext) {
+        // Handle the case where the context is null
+        throw new Error("SocketDataContext is not provided!");
     };
+
+    const {receiveMessage} = socketContext;
+
+    const makePaymentHandler = async() => {
+        const newPayment = await createPayment({rideID, amount:6969, paymentMethod:"cash", paymentStatus:"completed"});
+    
+
+        if (newPayment.success) {
+            navigate("/user/home");
+        }
+        //rideID ke liye ride detailes chahiye location.state se,
+        //end-ride event receive karna hai riding page per user ke dwara,
+        //end-ride event send karwana hai driverRiding page per driver ke dwara
+    };
+
+    useEffect(() => {
+        receiveMessage("ride-ended", (data) => {
+            console.log("ZZZZZZZZZZZZZZZZZZZZZ (1)");
+            console.log("ZZZZZZZZZZZZZZZZZZZZZ (1)");
+            console.log(data as {data:{rideID:string}});
+            setRideID((data as {rideID:string}).rideID)
+            console.log("ZZZZZZZZZZZZZZZZZZZZZ (2)");
+            console.log("ZZZZZZZZZZZZZZZZZZZZZ (2)");
+        })
+    }, []);
 
     return(
         <div className="riding_page_bg">

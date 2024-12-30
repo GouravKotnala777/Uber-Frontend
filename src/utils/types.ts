@@ -103,3 +103,15 @@ export interface CreateChatBodyType extends Pick<ChatTypes, "receiver"|"content"
     senderType:"user"|"driver";
     receiverSocketID:string;
 };
+export type PaymentMethodTypes = "cash"|"card"|"wallet";
+export type PaymentStatusTypes = "pending"|"completed"|"failed";
+export interface PaymentTypes{
+    _id:string;
+    rideID:string;
+    amount:number;
+    paymentMethod:PaymentMethodTypes;
+    paymentStatus:PaymentStatusTypes;
+    createdAt:Date;
+    updatedAt:Date;
+};
+export type CreatePaymentFormTypes = Pick<PaymentTypes, "rideID"|"amount"|"paymentMethod"|"paymentStatus">;

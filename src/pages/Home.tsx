@@ -109,6 +109,8 @@ const Home = () => {
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const navigate = useNavigate();
 
+    
+
     const shortcuts:ShortcutTypes[]= [
         {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
         {icon:TiMessages, heading:"Message", subHeading:"chat with driver"},
