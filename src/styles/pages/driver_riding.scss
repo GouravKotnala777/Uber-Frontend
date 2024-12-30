@@ -73,6 +73,9 @@
         transition: 0.3s;
         left: 0;
         box-sizing: border-box;
+        border-radius: 20px 20px 0 0;
+        background-color: $lightest;
+        padding: 10px;
         .show_location_btn{
             //border: 2px solid blue;
             width: 100%;
@@ -91,77 +94,17 @@
                 color: $darkest;
             }
         }
-        .passenger_request_panel_cont{
-            //border: 2px solid indigo;
-            height: 94%;
-            padding: 0 10px;
-            box-sizing: border-box;
-            transition: 0.3s;
-            //transform: translate(0, -70vh);
-            background-color: $lightest;
-            overflow-y: scroll;
-            .third_part{
-                //border: 2px solid green;
-                .pickup_location_details_cont{
-                    //border: 1px solid green;
-                    display: flex;
-                    justify-content: space-between;
-                    //align-items: ;
-                    border-bottom: 1px solid $gray;
-                    margin-top:15px;
-                    .CiLocationOn{
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .pickup_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                            font-size: $m;
-                        }
-                        .full_info{
-                            font-size: $s;
-                        }
-                    }
-    
-                }
-            }
-            .fourth_part{
-                .dropoff_location_details_cont{
-                    //border: 1px solid indigo;
-                    display: flex;
-                    justify-content: space-between;
-                    border-bottom: 1px solid #919191;
-                    margin-top:15px;
-                    .CiLocationOff{
-                        //border: 1px solid violet;
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .dropoff_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                            font-size: 1rem;
-                        }
-                        .full_info{
-                            font-size: 0.7rem;
-                            font-size: 0.9rem;
-                        }
-                    }
-                }
-            }
-            .fifth_part{
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                margin: 15px 0;
+        .llll{
+            height: 92%;
+            .passenger_request_panel_cont{
+                //border: 2px solid indigo;
+                height: 58%;
+                padding: 0 10px;
+                box-sizing: border-box;
+                transition: 0.3s;
+                //transform: translate(0, -70vh);
+                background-color: $lightest;
+                overflow-y: scroll;
             }
         }
     }

@@ -8,6 +8,7 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
+import Location from "../components/Location";
 
 
 const DriverRiding = () => {
@@ -58,32 +59,14 @@ const DriverRiding = () => {
             </div>
             <div className="passenger_request_panel_cont_outer" style={{top:isRideDetailsHide?"100%":"25%"}}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
-                <div className="passenger_request_panel_cont">
-                    <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
-                    <div className="third_part">
-                        <div className="pickup_location_details_cont">
-                            <CiLocationOn className="CiLocationOn" />
-                            <div className="pickup_location_details">
-                                <div className="highlight_info">562/11-A</div>
-                                <div className="full_info">{acceptedRide?.pickupLocation.address}</div>
-                            </div>
-                        </div>
+                <div className="llll">
+                    <div className="passenger_request_panel_cont">
+                        <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
+                        <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
+                        <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
                     </div>
-                    <div className="fourth_part">
-                        <div className="dropoff_location_details_cont">
-                            <CiLocationOff className="CiLocationOff" />
-                            <div className="dropoff_location_details">
-                                <div className="highlight_info">Ho.No.371</div>
-                                <div className="full_info">{acceptedRide?.dropoffLocation.address}</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="fifth_part">
-                        <Button text="End ride" onClickHandler={endRideHandler} />
-                        <Button text="Hide" background="transparent" color="#717171" border={true} onClickHandler={hideRideHandler} />
-                    </div>
-                    
+                    <Button text="End ride" margin="10px 0" onClickHandler={endRideHandler} />
+                    <Button text="Hide" background="transparent" color="#717171" border={true} onClickHandler={hideRideHandler} />
                 </div>
             </div>
         </div>

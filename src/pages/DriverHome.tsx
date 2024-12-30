@@ -213,18 +213,17 @@ const DriverHome = () => {
                 {/*<button className="show_location_btn" style={{
                     top:isRideRequestPoppedUp?"-20%":"-90%"
                 }} onClick={() => setIsRideRequestPoppedUp(!isRideRequestPoppedUp)}><CiLocationOn className="CiLocationOn" /></button>*/}
-                <Heading text="New ride available" />
+                <Heading text="New ride available" padding="10px" />
                 {
                     newRidesNotifications.map((requestPopup) => (
-                        <div className="passenger_request_panel_cont">
-                            <ProfileShort name={requestPopup.passengerMobile} amount={Math.ceil(requestPopup.distance/1000)} />
-                            <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address} />
-                            <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address} />
-                            <div className="fifth_part">
-                                {/*<button className="accept_btn" >Accept</button>*/}
-                                <Button text="Accept" onClickHandler={() => acceptRequestHandler(requestPopup)} />
-                                <Button text="Ignore" background="transparent" color="#717171" border={true} onClickHandler={ignoreRequestHandler} />
+                        <div className="llll">
+                            <div className="passenger_request_panel_cont">
+                                <ProfileShort name={requestPopup.passengerMobile} amount={Math.ceil(requestPopup.distance/1000)} />
+                                <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
+                                <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
                             </div>
+                            <Button text="Accept" margin="10px 0" onClickHandler={() => acceptRequestHandler(requestPopup)} />
+                            <Button text="Ignore" background="transparent" color="#717171" border={true} onClickHandler={ignoreRequestHandler} />
                         </div>
                     ))
                 }
@@ -235,28 +234,30 @@ const DriverHome = () => {
                     top:hasRideAccepted?"-20%":"-90%"
                 }}><CiLocationOn className="CiLocationOn" /></button>*/}
                 <Heading text="Start ride by OTP" />
-                <div className="passenger_request_panel_cont">
-                    <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
-                    <div className="second_part">
-                        <div className="input_cont">
-                            <input type="text" className="message_inp" placeholder="Enter passenger OTP" onChange={(e) => setOtpInp(e.target.value)} />
-                            <button className="send_message_btn" onClick={async() => {
-                                const startedRide = await startRide({rideID:acceptedRide?._id as string, otp:otpInp});
+                <div className="llll">
+                    <div className="passenger_request_panel_cont">
+                        <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
+                        <div className="second_part">
+                            <div className="input_cont">
+                                <input type="text" className="message_inp" placeholder="Enter passenger OTP" onChange={(e) => setOtpInp(e.target.value)} />
+                                <button className="send_message_btn" onClick={async() => {
+                                    const startedRide = await startRide({rideID:acceptedRide?._id as string, otp:otpInp});
 
-                                if (startedRide.success) {
-                                    setIsOtpValid(true);
-                                }
-                            }}><BiSend className="BiSend" /></button>
+                                    if (startedRide.success) {
+                                        setIsOtpValid(true);
+                                    }
+                                }}><BiSend className="BiSend" /></button>
+                            </div>
                         </div>
+                        <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
+                        <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
                     </div>
-                    <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
-                    <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
                     {
                         isOtpValid &&
-                            <div className="fifth_part">
-                                <Button text="Confirm ride" onClickHandler={confirmRideHandler} />
+                            <>
+                                <Button text="Confirm ride" margin="10px 0" onClickHandler={confirmRideHandler} />
                                 <Button text="Cancel" background="transparent" color="red" border={true} onClickHandler={cancelRideHandler} />
-                            </div>
+                            </>
                     }
                 </div>
             </div>
