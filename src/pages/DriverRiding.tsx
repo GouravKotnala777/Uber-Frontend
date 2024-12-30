@@ -1,7 +1,6 @@
 import "../styles/pages/driver_riding.scss";
 import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
-import { NewRideNotificationTypes } from "./DriverHome";
 import ProfileShort from "../components/ProfileShort";
 import { endRide } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,22 +9,6 @@ import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
 
-//const activeRide:NewRideNotificationTypes = {
-//    _id:'aaaaaaaaaaaaaaaa',
-//    pickupLocation:{latitude:1.123, longitude:2.345, address:"aaaaa"},
-//    dropoffLocation:{latitude:1.123, longitude:2.345, address:"aaaaa"},
-//    fare:69,
-//    otp:"",
-//    passengerEmail:"passenger@gmail.com",
-//    passengerName:"pasengerName",
-//    passengerGender:"male",
-//    passengerMobile:"8882732859",
-//    passengerSocketID:"aaaaaaaaa",
-//    status:"in-progress",
-//    distance:3,
-//    duration:2,
-//    passengerID:"aaaaaaaaaa"
-//};
 
 const DriverRiding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(true);
