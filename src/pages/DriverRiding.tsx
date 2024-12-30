@@ -1,5 +1,4 @@
 import "../styles/pages/driver_riding.scss";
-import { CiLocationOff, CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
 import ProfileShort from "../components/ProfileShort";
 import { endRide } from "../api";
