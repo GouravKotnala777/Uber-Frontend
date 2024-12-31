@@ -1,0 +1,40 @@
+@import "../utils.scss";
+
+.scrollable_container_cont{
+    //border: 2px solid red;
+    overflow-y: scroll;
+}
+
+.center_container_cont{
+    //border: 2px solid green;
+    text-align: center;
+}
+
+.panel_cont{
+    //border: 2px solid blue;
+    height: 80%;
+    transition: 0.5s;
+    background-color: $lightest;
+    border-radius: 20px 20px 0 0;
+    padding: 10px;
+
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    bottom: 0px;
+
+    // .first_part styles are only for 'Driver page' 'Meet at the pickup point' panel
+    .first_part{
+        //border: 2px solid indigo;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .timer{
+            //border: 1px solid black;
+            text-align: center;
+            padding: 0 10px;
+            background-color: $darkest;
+            color: $lightest;
+        }
+    }
+}
