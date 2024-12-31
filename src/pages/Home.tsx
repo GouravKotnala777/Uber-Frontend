@@ -1,7 +1,7 @@
 import "../styles/pages/home.scss";
 import logo from "/uber-logo-1.png";
 import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
-import { BiSend, BiUser } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
@@ -34,6 +34,8 @@ import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
+import {CenterContainer, Panel, ScrollableContainer} from "../components/WrapperContainers";
+import { SendMessageInput } from "../components/SendMessageInput";
 
 
 
@@ -325,82 +327,83 @@ const Home = () => {
                 }
 
             </div>
-            <div className="rides_list_cont" style={{transform:isRidesPanelActive?"translate(0, -137vh)":"translate(0, 0vh)", zIndex:isRidesPanelActive?"1":"-1"}}>
+            <Panel isPanelActive={isRidesPanelActive}>
                 <ShowHideToggler hide={!isRidesPanelActive} toggleHandler={() => setIsRidesPanelActive(false)} />
                 <Heading text="Choose vehicle type" />
-                <div className="rides_list">
-                    {
-                        (["uberX", "uberComfort", "uberXL", "uberPool", "uberMoto", "uberScooty","uberAuto", "uberHCV"] as VehicleTypeTypes[]).map((item) => (
-                            <div className="car_list_item_outer" onClick={() => {
-                                setIsRidesPanelActive(false);
-                                setIsSelectedRidePanelActive(true);
-                                setSelectedVehicleType(item);
-                            }}>
-                                <CarListItem vehicleType={item} allFare={allFare} vehicleDescription={vehicleDescription[item]} vehicleCapacity={vehicleCapacity[item]} vehicleImg={vehicleImages[item]} />
-                                {/*<CarListItem vehicleDetails={item} allFare={allFare} />*/}
-                            </div>
-                        ))
-                    }
-                    {
-                        //allNearByDrivers.map((item) => (
-                        //    <div className="car_list_item_outer" onClick={() => {
-                        //        setIsRidesPanelActive(false);
-                        //        setIsSelectedRidePanelActive(true);
-                        //        setSsss(item);
-                        //        setDriver(item);
-                        //    }}>
-                        //        <CarListItem vehicleDetails={item} allFare={allFare} />
-                        //    </div>
-                        //))
-                    }
-                </div>
-            </div>
-            <div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>
-                <ShowHideToggler hide={!isSelectedRidePanelActive} toggleHandler={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} />
-                <Heading text="Confirm your ride" />
-                <div className="selected_ride">
-                    <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
-                    <div className="ride_details">
+                <ScrollableContainer height="85%">
+                        {
+                            (["uberX", "uberComfort", "uberXL", "uberPool", "uberMoto", "uberScooty","uberAuto", "uberHCV"] as VehicleTypeTypes[]).map((item) => (
+                                <div className="car_list_item_outer" onClick={() => {
+                                    setIsRidesPanelActive(false);
+                                    setIsSelectedRidePanelActive(true);
+                                    setSelectedVehicleType(item);
+                                }}>
+                                    <CarListItem vehicleType={item} allFare={allFare} vehicleDescription={vehicleDescription[item]} vehicleCapacity={vehicleCapacity[item]} vehicleImg={vehicleImages[item]} />
+                                    {/*<CarListItem vehicleDetails={item} allFare={allFare} />*/}
+                                </div>
+                            ))
+                        }
+                        {
+                            //allNearByDrivers.map((item) => (
+                            //    <div className="car_list_item_outer" onClick={() => {
+                            //        setIsRidesPanelActive(false);
+                            //        setIsSelectedRidePanelActive(true);
+                            //        setSsss(item);
+                            //        setDriver(item);
+                            //    }}>
+                            //        <CarListItem vehicleDetails={item} allFare={allFare} />
+                            //    </div>
+                            //))
+                        }
+                </ScrollableContainer>
+                {/*<div className="rides_list">
+                </div>*/}
+            </Panel>
+            <Panel isPanelActive={isSelectedRidePanelActive} >
+                {/*<div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>*/}
+                    <ShowHideToggler hide={!isSelectedRidePanelActive} toggleHandler={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} />
+                    <Heading text="Confirm your ride" />
+                    <ScrollableContainer height="60%">
+                        <CenterContainer>
+                            <img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} />
+                        </CenterContainer>
                         <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                         <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
                         <TripFee amount={allFare[selectedVehicleType]} />
-                    </div>
-                    {/*<button className="confirm_ride" onClick={() => }>Confirm with {selectedVehicleType}</button>*/}
-                </div>
-                <Button text={`Confirm with ${selectedVehicleType}`} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
-            </div>
-            <div className="waiting_for_driver_cont" style={{transform:isWaitingPanelActive?"translate(0, -290vh)":"translate(0, 0vh)", zIndex:isWaitingPanelActive?"1":"-1"}}>
+                    </ScrollableContainer>
+                    <Button text={`Confirm with ${selectedVehicleType}`} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
+                {/*</div>*/}
+            </Panel>
+            <Panel isPanelActive={isWaitingPanelActive}>
                 <ShowHideToggler hide={!isWaitingPanelActive} toggleHandler={() => setIsWaitingPanelActive(false)} />
                 <Heading text="Looking For Nearby Drivers..." />
-                <div className="selected_ride">
-                    <div className="car_icon_cont"><img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} /></div>
-                    <div className="ride_details">
-                        <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
-                        <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
-                        <TripFee amount={allFare[selectedVehicleType]} />
+                <ScrollableContainer height="80%">
+                    <CenterContainer>
+                        <img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} />
+                    </CenterContainer>
+                    <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
+                    <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
+                    <TripFee amount={allFare[selectedVehicleType]} />
+                </ScrollableContainer>
+            </Panel>
+
+            <Panel isPanelActive={isMeetAtPickupPanelActive}>
+                <div className="first_part">
+                    <Heading text="Meet At The Pickup Point" />
+                    <div className="timer">
+                        <div className="value">2</div>
+                        <div className="unit">min</div>
                     </div>
                 </div>
-            </div>
-            <div className="meet_at_pickup_point_cont" style={{transform:isMeetAtPickupPanelActive?"translate(0, -370vh)":"translate(0, 0vh)", zIndex:isMeetAtPickupPanelActive?"1":"-1"}}>
-                <div className="selected_ride">
-                    <div className="first_part">
-                        <Heading text="Meet At The Pickup Point" />
-                        <div className="timer">
-                            <div className="value">2</div>
-                            <div className="unit">min</div>
-                        </div>
-                    </div>
+                <ScrollableContainer height="91%">
                     <ProfileLong driverDetails={activeDriver as RideAcceptedEventMessageType} />
-                    <div className="third_part">
-                        <div className="input_cont">
-                            <input type="text" className="message_inp" placeholder="Send a message..." />
-                            <button className="send_message_btn"><BiSend className="BiSend" /></button>
-                        </div>
-                    </div>
+                    <SendMessageInput onChangeHandler={() => {}} onClickHandler={async() => {}} />
                     <ShortCuts shortcuts={shortcuts} />
                     <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
-                </div>
-            </div>
+                </ScrollableContainer>
+            </Panel>
+            {/*<div className="meet_at_pickup_point_cont" style={{transform:isMeetAtPickupPanelActive?"translate(0, -370vh)":"translate(0, 0vh)", zIndex:isMeetAtPickupPanelActive?"1":"-1"}}>
+            </div>*/}
 
             <ChatPanel isChatPanelActive={isChatPanelActive}
                 setIsChatPanelActive={setIsChatPanelActive}

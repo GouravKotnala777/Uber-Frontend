@@ -8,6 +8,7 @@ import Heading from "../components/Heading";
 import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
 import Location from "../components/Location";
+import { Panel, ScrollableContainer } from "../components/WrapperContainers";
 
 
 const DriverRiding = () => {
@@ -56,18 +57,16 @@ const DriverRiding = () => {
                     <div className="value">10min</div>
                 </div>
             </div>
-            <div className="passenger_request_panel_cont_outer" style={{top:isRideDetailsHide?"100%":"25%"}}>
+            <Panel isPanelActive={isRideDetailsHide}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
-                <div className="llll">
-                    <div className="passenger_request_panel_cont">
-                        <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
-                        <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
-                        <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
-                    </div>
-                    <Button text="End ride" margin="10px 0" onClickHandler={endRideHandler} />
-                    <Button text="Hide" background="transparent" color="#717171" border={true} onClickHandler={hideRideHandler} />
-                </div>
-            </div>
+                <ScrollableContainer height="68%">
+                    <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
+                    <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
+                    <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
+                </ScrollableContainer>
+                <Button text="End ride" margin="10px 0" onClickHandler={endRideHandler} />
+                <Button text="Hide" background="transparent" color="#717171" border={true} onClickHandler={hideRideHandler} />
+            </Panel>
         </div>
     )
 };

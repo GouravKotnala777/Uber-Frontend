@@ -5,6 +5,10 @@ import { VehicleTypeTypes } from "../utils/types";
 
 const CarListItem = ({allFare, vehicleType, vehicleDescription, vehicleCapacity, vehicleImg}:{vehicleType:VehicleTypeTypes; allFare:{[P in VehicleTypeTypes]:number;}; vehicleDescription:string; vehicleCapacity:number; vehicleImg:string;}) => {
 
+    //Image theek karni hai
+    //Image box component banana hai
+
+
     return(
         <div className="list_item">
             <div className="car_icon_cont"><img src={vehicleImg} alt={vehicleImg} /></div>

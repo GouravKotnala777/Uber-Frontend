@@ -1,10 +1,10 @@
 import { SyntheticEvent } from "react";
 
 
-const ImgWithFallback = ({src}:{src?:string;}) => {
+const ImgWithFallback = ({src, fallbackSrc}:{src?:string; fallbackSrc:string;}) => {
 
     const onErrorHandler = (e:SyntheticEvent<HTMLImageElement>) => {
-        e.currentTarget.src = `${import.meta.env.VITE_SERVER_URL}/public/unknown_user.png`;
+        e.currentTarget.src = `${import.meta.env.VITE_SERVER_URL}/public/${fallbackSrc}`;
         e.currentTarget.alt = "fallback_image";
         e.currentTarget.onerror = null;
     }

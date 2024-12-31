@@ -1,6 +1,6 @@
 import "../styles/pages/driver_home.scss";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { BiSend, BiStopwatch, BiUser } from "react-icons/bi";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { BiStopwatch, BiUser } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,8 @@ import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
+import { Panel, ScrollableContainer } from "../components/WrapperContainers";
+import { SendMessageInput } from "../components/SendMessageInput";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -44,9 +46,19 @@ const shortcuts = [
 
 const DriverHome = () => {
     //const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(true);
-    const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<boolean>(false);
     const [hasRideAccepted, setHasRideAccepted] = useState<boolean>(false);
+    
+    
+    
+    const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<string[]>([]);
     const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
+
+
+
+
+
+
+
     const [activePassenger, setActivePassenger] = useState<Pick<UserTypes, "_id"|"name"|"email"|"mobile"|"socketID">|null>(null);
     const [acceptedRide, setAcceptedRide] = useState<NewRideNotificationTypes|null>(null);
     const [otpInp, setOtpInp] = useState<string>("");
@@ -70,7 +82,7 @@ const DriverHome = () => {
 
 
     const acceptRequestHandler = (requestPopup:NewRideNotificationTypes) => {
-        setIsRideRequestPoppedUp(false);
+        setIsRideRequestPoppedUp([]);
         setHasRideAccepted(true);
         acceptRideRequest({
             rideID:requestPopup._id,
@@ -84,14 +96,22 @@ const DriverHome = () => {
         });
         setAcceptedRide(requestPopup);
     };
-    const ignoreRequestHandler = () => {
-        setIsRideRequestPoppedUp(false);
+    const ignoreRequestHandler = (rideID:string) => {
+        setIsRideRequestPoppedUp((prev) => prev.filter((item) => item !== rideID));
     };
     const confirmRideHandler = () => {
         navigate("/driver/riding", {state:{acceptedRide}});
     };
     const cancelRideHandler = () => {
         console.log("Ride cancelled");
+    };
+
+
+    const startedRideHandler = async() => {
+        const startedRide = await startRide({rideID:acceptedRide?._id as string, otp:otpInp});
+        if (startedRide.success) {
+            setIsOtpValid(true);
+        }
     };
 
 
@@ -115,7 +135,7 @@ const DriverHome = () => {
             console.log(data);
             //const {passengerName, passengerEmail, passengerMobile, passengerGender, passengerSocketID} = (data as NewRideNotificationTypes);
             setNewRidesNotifications((prev) => [...prev, data as NewRideNotificationTypes]);
-            setIsRideRequestPoppedUp(true);
+            setIsRideRequestPoppedUp((prev) => [...prev, (data as NewRideNotificationTypes)._id]);
             //setActivePassenger({name:passengerName, email:passengerEmail, mobile:passengerMobile, gender:passengerGender, socketID:passengerSocketID});
             console.log("DATADATADATADATADATADATADATADATA (2)");
         })
@@ -208,50 +228,28 @@ const DriverHome = () => {
                     <ShortCuts shortcuts={shortcuts} />
             </div>
 
-            
-            <div className="passenger_request_panel_cont_outer" style={{transform:isRideRequestPoppedUp?"translate(0, -192%)":"translate(0, 50%)"}}>
-                {/*<button className="show_location_btn" style={{
-                    top:isRideRequestPoppedUp?"-20%":"-90%"
-                }} onClick={() => setIsRideRequestPoppedUp(!isRideRequestPoppedUp)}><CiLocationOn className="CiLocationOn" /></button>*/}
-                <Heading text="New ride available" padding="10px" />
-                {
-                    newRidesNotifications.map((requestPopup) => (
-                        <div className="llll">
-                            <div className="passenger_request_panel_cont">
-                                <ProfileShort name={requestPopup.passengerMobile} amount={Math.ceil(requestPopup.distance/1000)} />
-                                <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
-                                <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
-                            </div>
-                            <Button text="Accept" margin="10px 0" onClickHandler={() => acceptRequestHandler(requestPopup)} />
-                            <Button text="Ignore" background="transparent" color="#717171" border={true} onClickHandler={ignoreRequestHandler} />
-                        </div>
-                    ))
-                }
-
-            </div>
-            <div className="passenger_request_panel_cont_outer" style={{transform:hasRideAccepted?"translate(0, -292%)":"translate(0, 50%)"}}>
-                {/*<button className="show_location_btn" style={{
-                    top:hasRideAccepted?"-20%":"-90%"
-                }}><CiLocationOn className="CiLocationOn" /></button>*/}
+            {
+                newRidesNotifications.map((requestPopup) => (
+                    <Panel isPanelActive={isRideRequestPoppedUp.includes(requestPopup._id)}>
+                        <Heading text="New ride available" padding="10px" />
+                        <ScrollableContainer height="58%">
+                            <ProfileShort name={requestPopup.passengerMobile} amount={Math.ceil(requestPopup.distance/1000)} />
+                            <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
+                            <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
+                        </ScrollableContainer>
+                        <Button text="Accept" margin="10px 0" onClickHandler={() => acceptRequestHandler(requestPopup)} />
+                        <Button text="Ignore" background="transparent" color="#717171" border={true} onClickHandler={() => ignoreRequestHandler(requestPopup._id)} />
+                    </Panel>
+                ))
+            }
+            <Panel isPanelActive={hasRideAccepted}>
                 <Heading text="Start ride by OTP" />
-                <div className="llll">
-                    <div className="passenger_request_panel_cont">
+                    <ScrollableContainer height="68%">
                         <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
-                        <div className="second_part">
-                            <div className="input_cont">
-                                <input type="text" className="message_inp" placeholder="Enter passenger OTP" onChange={(e) => setOtpInp(e.target.value)} />
-                                <button className="send_message_btn" onClick={async() => {
-                                    const startedRide = await startRide({rideID:acceptedRide?._id as string, otp:otpInp});
-
-                                    if (startedRide.success) {
-                                        setIsOtpValid(true);
-                                    }
-                                }}><BiSend className="BiSend" /></button>
-                            </div>
-                        </div>
+                        <SendMessageInput onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
                         <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
                         <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
-                    </div>
+                    </ScrollableContainer>
                     {
                         isOtpValid &&
                             <>
@@ -259,8 +257,7 @@ const DriverHome = () => {
                                 <Button text="Cancel" background="transparent" color="red" border={true} onClickHandler={cancelRideHandler} />
                             </>
                     }
-                </div>
-            </div>
+            </Panel>
             <ChatPanel isChatPanelActive={isChatPanelActive}
                 setIsChatPanelActive={setIsChatPanelActive}
                 receiver={acceptedRide?.passengerID as string}
