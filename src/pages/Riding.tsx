@@ -42,6 +42,17 @@ const Riding = () => {
     };
 
     useEffect(() => {
+        receiveMessage("ride-cancelled", (data) => {
+            console.log("RIDE cancelled Ride cancelled (1)");
+            console.log("RIDE cancelled Ride cancelled (1)");
+            console.log(data as {data:{rideID:string}});
+            setRideID((data as {rideID:string}).rideID)
+            console.log("RIDE cancelled Ride cancelled (2)");
+            console.log("RIDE cancelled Ride cancelled (2)");
+            redirectAfterToast({res:{success:false, message:"Driver cancelled ride", jsonData:{}}, redirectWithReload:"/user/home"});
+        })
+    }, []);
+    useEffect(() => {
         receiveMessage("ride-ended", (data) => {
             console.log("ZZZZZZZZZZZZZZZZZZZZZ (1)");
             console.log("ZZZZZZZZZZZZZZZZZZZZZ (1)");
@@ -49,6 +60,7 @@ const Riding = () => {
             setRideID((data as {rideID:string}).rideID)
             console.log("ZZZZZZZZZZZZZZZZZZZZZ (2)");
             console.log("ZZZZZZZZZZZZZZZZZZZZZ (2)");
+            redirectAfterToast({res:{success:true, message:"Ride ended", jsonData:{}}, redirectWithReload:"/user/home"});
         })
     }, []);
 

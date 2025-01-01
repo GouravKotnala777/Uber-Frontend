@@ -421,10 +421,34 @@ export const startRide = async(startRideFormData:StartRideBodyTypes) => {
         return error as ResponseType<typeof error>;
     }
 };
-// Function for start ride by filling OTP by driver
+// Function for end ride by driver
 export const endRide = async({rideID}:{rideID:string}) => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/end`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({rideID})
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for cancel ride by driver
+export const cancelRide = async({rideID}:{rideID:string}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/cancel`, {
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

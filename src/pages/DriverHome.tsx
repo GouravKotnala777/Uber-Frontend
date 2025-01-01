@@ -4,7 +4,7 @@ import { BiStopwatch, BiUser } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { acceptRideRequest, startRide } from "../api";
+import { acceptRideRequest, cancelRide, startRide } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
@@ -108,10 +108,11 @@ const DriverHome = () => {
         setHasRideAcceptedHide(false);
         navigate("/driver/riding", {state:{acceptedRide}});
     };
-    const cancelRideHandler = () => {
+    const cancelRideHandler = async() => {
         setHasRideAcceptedHide(false);
-        console.log("Ride cancelled");
-        redirectAfterToast({res:{success:false, message:"Ride cancelled", jsonData:{}}});        
+        const startedRide = await cancelRide({rideID:acceptedRide?._id as string});
+        redirectAfterToast({res:startedRide, redirectWithReload:"/driver/home"});
+        //redirectAfterToast({res:{success:false, message:"Ride cancelled", jsonData:{}}});        
     };
 
 
