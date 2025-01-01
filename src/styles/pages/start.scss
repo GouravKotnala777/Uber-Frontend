@@ -19,8 +19,13 @@
         }
     }
     .continue_cont{
+        //border: 2px solid red;
         background-color: white;
         height: 25vh;
         padding: 10px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 }
