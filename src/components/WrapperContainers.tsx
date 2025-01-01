@@ -35,7 +35,7 @@ export const Panel = ({children, isPanelActive, onClosePosition, hasRideAccepted
                 "0"
                 :
                 (hasRideAcceptedHide?
-                    "-70%"
+                    onClosePosition
                     :
                     "-100%"),
             zIndex:isPanelActive?"1":onCloseZInd||"-1"
