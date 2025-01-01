@@ -24,6 +24,17 @@ export const redirectAfterToast = ({res, redirectWithReload, redirectWithoutRelo
         toast.error(res.message, {
             position:"top-center",
             duration:3000
-        })
+        });
+        setTimeout(() => {
+            if (redirectWithReload) {
+                window.location.href = redirectWithReload;
+            }
+            else if (redirectWithoutReload) {
+                redirectWithoutReload.navigate(redirectWithoutReload.url);
+            }
+            else{
+                console.log("redirect nahi hoga");
+            }
+        }, 3500);
     }
 };
