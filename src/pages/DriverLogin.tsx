@@ -5,6 +5,8 @@ import { ChangeEvent, useState } from "react";
 import { RegisterBodyTypes, RegisterDriverBodyTypes } from "../utils/types";
 import { loginDriver } from "../api";
 import Button from "../components/Button";
+import { redirectAfterToast } from "../utils/utilityFunctions";
+import { Toaster } from "react-hot-toast";
 
 const DriverLogin = () => {
     const [loginFormData, setLoginFormData] = useState<Pick<RegisterBodyTypes&RegisterDriverBodyTypes, "email"|"password"|"licenseNumber"|"vehicleNumber">>({email:"", password:"", licenseNumber:"", vehicleNumber:""});
@@ -16,15 +18,13 @@ const DriverLogin = () => {
 
     const driverLoginHandler = async() => {
         const res = await loginDriver(loginFormData);
-        console.log(res);
-        if (res.success) {
-            window.location.href = "/driver/home";
-        }
+        redirectAfterToast({res, redirectWithReload:"/driver/home"});
     };
 
 
     return(
         <div className="register_page_bg">
+            <Toaster />
             <div className="logo_cont">
                 <img src={logo} alt={logo} />
             </div>

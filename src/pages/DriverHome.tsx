@@ -21,6 +21,8 @@ import ProfilePanel from "../components/ProfilePanel";
 import { Panel, ScrollableContainer } from "../components/WrapperContainers";
 import { SendMessageInput } from "../components/SendMessageInput";
 import ShowHideToggler from "../components/ShowHideToggler";
+import { redirectAfterToast } from "../utils/utilityFunctions";
+import { Toaster } from "react-hot-toast";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -82,13 +84,14 @@ const DriverHome = () => {
     const {sendMessage, receiveMessage} = socketContext;
 
 
-    const acceptRequestHandler = (requestPopup:NewRideNotificationTypes) => {
+    const acceptRequestHandler = async(requestPopup:NewRideNotificationTypes) => {
         setIsRideRequestPoppedUp([]);
         setHasRideAccepted(true);
         setHasRideAcceptedHide(true);
-        acceptRideRequest({
+        const acceptRideRes = await acceptRideRequest({
             rideID:requestPopup._id,
             status:"accepted"});
+        redirectAfterToast({res:acceptRideRes});
         setActivePassenger({
             _id:requestPopup.passengerID,
             name:requestPopup.passengerName,
@@ -101,18 +104,20 @@ const DriverHome = () => {
     const ignoreRequestHandler = (rideID:string) => {
         setIsRideRequestPoppedUp((prev) => prev.filter((item) => item !== rideID));
     };
-    const confirmRideHandler = () => {
+    const goToRidePageHandler = () => {
         setHasRideAcceptedHide(false);
         navigate("/driver/riding", {state:{acceptedRide}});
     };
     const cancelRideHandler = () => {
         setHasRideAcceptedHide(false);
         console.log("Ride cancelled");
+        redirectAfterToast({res:{success:false, message:"Ride cancelled", jsonData:{}}});        
     };
 
 
     const startedRideHandler = async() => {
         const startedRide = await startRide({rideID:acceptedRide?._id as string, otp:otpInp});
+        redirectAfterToast({res:startedRide});
         if (startedRide.success) {
             setIsOtpValid(true);
         }
@@ -201,6 +206,7 @@ const DriverHome = () => {
     }, [driverContextData.driver, activePassenger]);
     return(
         <div className="driver_home_page_bg">
+            <Toaster />
             {/*<pre>{JSON.stringify(driver?.userID._id, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
             {/*<img className="logo" src={logo} alt={logo} />*/}
@@ -258,7 +264,7 @@ const DriverHome = () => {
                 {
                     isOtpValid &&
                         <>
-                            <Button text="Confirm ride" margin="10px 0" onClickHandler={confirmRideHandler} />
+                            <Button text="Go to ride page" margin="10px 0" onClickHandler={goToRidePageHandler} />
                             <Button text="Cancel" background="transparent" color="red" border={true} onClickHandler={cancelRideHandler} />
                         </>
                 }

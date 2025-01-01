@@ -14,6 +14,8 @@ import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
 import { createPayment } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
+import { redirectAfterToast } from "../utils/utilityFunctions";
+import { Toaster } from "react-hot-toast";
 
 
 const Riding = () => {
@@ -32,11 +34,8 @@ const Riding = () => {
 
     const makePaymentHandler = async() => {
         const newPayment = await createPayment({rideID, amount:6969, paymentMethod:"cash", paymentStatus:"completed"});
-    
+        redirectAfterToast({res:newPayment, redirectWithoutReload:{navigate, url:"/user/home"}})
 
-        if (newPayment.success) {
-            navigate("/user/home");
-        }
         //rideID ke liye ride detailes chahiye location.state se,
         //end-ride event receive karna hai riding page per user ke dwara,
         //end-ride event send karwana hai driverRiding page per driver ke dwara
@@ -55,6 +54,7 @@ const Riding = () => {
 
     return(
         <div className="riding_page_bg">
+            <Toaster />
             {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
             <div className="map_cont">
                 <LiveTracking />

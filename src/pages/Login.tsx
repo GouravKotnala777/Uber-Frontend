@@ -5,6 +5,8 @@ import { ChangeEvent, useState } from "react";
 import { RegisterBodyTypes } from "../utils/types";
 import { login } from "../api";
 import Button from "../components/Button";
+import { Toaster } from "react-hot-toast";
+import { redirectAfterToast } from "../utils/utilityFunctions";
 
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState<Pick<RegisterBodyTypes, "email"|"password">>({email:"", password:""});
@@ -16,16 +18,13 @@ const Login = () => {
 
     const loginHandler = async() => {
         const res = await login(loginFormData);
-        
-        console.log(res);
-        if (res.success) {
-            window.location.href = "/user/home";
-        }
+        redirectAfterToast({res, redirectWithReload:"/user/home"});
     };
 
 
     return(
         <div className="register_page_bg">
+            <Toaster />
             <div className="logo_cont">
                 <img src={logo} alt={logo} />
             </div>

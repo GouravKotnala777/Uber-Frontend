@@ -9,6 +9,8 @@ import ShowHideToggler from "../components/ShowHideToggler";
 import LiveTracking from "../components/LiveTracking";
 import Location from "../components/Location";
 import { Panel, ScrollableContainer } from "../components/WrapperContainers";
+import { redirectAfterToast } from "../utils/utilityFunctions";
+import { Toaster } from "react-hot-toast";
 
 
 const DriverRiding = () => {
@@ -18,20 +20,7 @@ const DriverRiding = () => {
 
     const endRideHandler = async() => {    
         const res = await endRide({rideID:acceptedRide._id});
-                            
-        if (res.success) {
-            navigate("/driver/home");
-        }
-        else{
-            console.log(res);
-            console.log("nahi ho sakta hai");
-            console.log("nahi ho sakta hai");
-            console.log("nahi ho sakta hai");
-            console.log("nahi ho sakta hai");
-            console.log("nahi ho sakta hai");
-            
-            
-        }
+        redirectAfterToast({res, redirectWithoutReload:{navigate, url:"/driver/home"}});
     };
     const hideRideHandler = () => {
         console.log("hide");
@@ -39,6 +28,7 @@ const DriverRiding = () => {
 
     return(
         <div className="driver_riding_page_bg">
+            <Toaster />
             {/*<pre>{JSON.stringify(acceptedRide, null, `\t`)}</pre>*/}
             <div className="map_cont">
                 <LiveTracking />
