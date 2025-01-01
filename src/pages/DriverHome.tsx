@@ -20,6 +20,7 @@ import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
 import { Panel, ScrollableContainer } from "../components/WrapperContainers";
 import { SendMessageInput } from "../components/SendMessageInput";
+import ShowHideToggler from "../components/ShowHideToggler";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -47,12 +48,12 @@ const shortcuts = [
 const DriverHome = () => {
     //const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(true);
     const [hasRideAccepted, setHasRideAccepted] = useState<boolean>(false);
+    const [hasRideAcceptedHide, setHasRideAcceptedHide] = useState<boolean>(false);
     
     
     
     const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<string[]>([]);
     const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
-
 
 
 
@@ -84,6 +85,7 @@ const DriverHome = () => {
     const acceptRequestHandler = (requestPopup:NewRideNotificationTypes) => {
         setIsRideRequestPoppedUp([]);
         setHasRideAccepted(true);
+        setHasRideAcceptedHide(true);
         acceptRideRequest({
             rideID:requestPopup._id,
             status:"accepted"});
@@ -100,9 +102,11 @@ const DriverHome = () => {
         setIsRideRequestPoppedUp((prev) => prev.filter((item) => item !== rideID));
     };
     const confirmRideHandler = () => {
+        setHasRideAcceptedHide(false);
         navigate("/driver/riding", {state:{acceptedRide}});
     };
     const cancelRideHandler = () => {
+        setHasRideAcceptedHide(false);
         console.log("Ride cancelled");
     };
 
@@ -242,21 +246,22 @@ const DriverHome = () => {
                     </Panel>
                 ))
             }
-            <Panel isPanelActive={hasRideAccepted}>
+            <Panel isPanelActive={hasRideAccepted} onClosePosition="-70%" onCloseZInd="1" hasRideAcceptedHide={hasRideAcceptedHide}>
+                <ShowHideToggler toggleHandler={() => setHasRideAccepted(!hasRideAccepted)} />
                 <Heading text="Start ride by OTP" />
-                    <ScrollableContainer height="68%">
-                        <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
-                        <SendMessageInput onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
-                        <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
-                        <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
-                    </ScrollableContainer>
-                    {
-                        isOtpValid &&
-                            <>
-                                <Button text="Confirm ride" margin="10px 0" onClickHandler={confirmRideHandler} />
-                                <Button text="Cancel" background="transparent" color="red" border={true} onClickHandler={cancelRideHandler} />
-                            </>
-                    }
+                <ScrollableContainer height="60%">
+                    <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
+                    <SendMessageInput onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
+                    <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
+                    <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
+                </ScrollableContainer>
+                {
+                    isOtpValid &&
+                        <>
+                            <Button text="Confirm ride" margin="10px 0" onClickHandler={confirmRideHandler} />
+                            <Button text="Cancel" background="transparent" color="red" border={true} onClickHandler={cancelRideHandler} />
+                        </>
+                }
             </Panel>
             <ChatPanel isChatPanelActive={isChatPanelActive}
                 setIsChatPanelActive={setIsChatPanelActive}

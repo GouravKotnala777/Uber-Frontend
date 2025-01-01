@@ -57,9 +57,9 @@ const DriverRiding = () => {
                     <div className="value">10min</div>
                 </div>
             </div>
-            <Panel isPanelActive={isRideDetailsHide}>
+            <Panel isPanelActive={!isRideDetailsHide}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
-                <ScrollableContainer height="68%">
+                <ScrollableContainer height="66%">
                     <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
                     <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
                     <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />

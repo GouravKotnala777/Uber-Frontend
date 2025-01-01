@@ -281,7 +281,9 @@ const Home = () => {
                         ""
                 }
             </div>
-            <div className="form_cont" style={{transform:isLocationPanelActive?"translate(0, -60vh)":"translate(0, 0vh)"}}>
+            <div className="form_cont"
+            style={{bottom:isLocationPanelActive?"56%":"0"}}
+            >
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
                 <Heading text="Find a trip" />
                 <Input placeholder="Add a pickup location"
@@ -296,7 +298,9 @@ const Home = () => {
                         />
                 <Button text="Create ride" margin="15px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
             </div>
-            <div className="suggestion_list_cont" style={{transform:isLocationPanelActive?"translate(0, -70vh)":"translate(0, 0vh)", zIndex:isLocationPanelActive?"1":"-1"}}>
+            <div className="suggestion_list_cont"
+            style={{bottom:isLocationPanelActive?"0":"-60%", zIndex:isLocationPanelActive?"1":"-1"}}
+            >
                 {
                     !pickupLocation.address&&pickupLocationSuggestions.map((address) => (
                         <div className="searched_pickup_location_cont" key={address} onClick={async() => {

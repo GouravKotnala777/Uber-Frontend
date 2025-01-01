@@ -26,11 +26,20 @@ export const CenterContainer = ({children}:{children:ReactNode;}) => {
         </div>
     )
 };
-export const Panel = ({children, isPanelActive}:{children:ReactNode; isPanelActive:boolean;}) => {
+export const Panel = ({children, isPanelActive, onClosePosition, hasRideAcceptedHide, onCloseZInd}:{children:ReactNode; isPanelActive:boolean; onClosePosition?:string; hasRideAcceptedHide?:boolean; onCloseZInd?:string;}) => {
 
     return (
         <div className="panel_cont" 
-        style={{bottom:isPanelActive?"0":"-100%", zIndex:isPanelActive?"1":"-1"}}
+        style={{
+            bottom:isPanelActive?
+                "0"
+                :
+                (hasRideAcceptedHide?
+                    "-70%"
+                    :
+                    "-100%"),
+            zIndex:isPanelActive?"1":onCloseZInd||"-1"
+        }}
         >
             {children}
         </div>

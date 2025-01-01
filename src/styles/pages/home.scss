@@ -28,6 +28,8 @@
         right: 10px;
         border-radius: 50%;
         background-color: $grayLighter;
+        width: 55px;
+        height: 55px;
         .TiMessages{
             width: 35px;
             height: 28px;
@@ -50,10 +52,12 @@
     .my_profile_short_cut{
         //border: 2px solid red;
         position: absolute;
-        top: 120px;
+        top: 130px;
         right: 10px;
         border-radius: 50%;
         background-color: $grayLighter;
+        width: 55px;
+        height: 55px;
         .TiMessages{
             width: 35px;
             height: 28px;
@@ -74,29 +78,28 @@
         }
     }
     .form_cont{
-        //border: 2px solid indigo;
-        height: 50%;
+        //border: 2px solid rgb(149, 0, 255);
+        height: 44%;
         padding: 10px;
         box-sizing: border-box;
         transition: 0.3s;
-        //transform: translate(0, -70vh);
         background-color: $lightest;
-        //form{
-        //    .destination_inp{
-        //        margin-top: 10px;
-        //    }
-        //}
+        width: 100%;
+        position: absolute;
+        //bottom:55%;
+        box-sizing: border-box;
     }
     .suggestion_list_cont{
-        //border: 2px solid greenyellow;
-        height: 60%;
+        //border: 2px solid red;
+        height:56%;
         width: 100%;
-        //transform: translate(0, -70vh);
         z-index: -1;
         transition: 0.3s;
-        //background-color: rgb(255, 237, 237);
         background-color: $lightest;
         overflow-y: scroll;
+        position: absolute;
+        bottom:0;
+        box-sizing: border-box;
         .searched_pickup_location_cont{
             //border: 1px solid red;
             display: flex;
