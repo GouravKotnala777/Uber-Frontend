@@ -2,7 +2,7 @@
 
 .chat_panel_cont{
     //border: 2px solid red;
-    height: 100vh;
+    height: 98.5vh;
     transition: 0.3s;
     background-color: $lightest;
     border-radius: 20px 20px 0 0;
@@ -10,6 +10,7 @@
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
+    z-index: 2;
     //top: 13px;
     //left: 0;
     .messanger_cont{
@@ -17,7 +18,7 @@
         height: 93%;
         .messanger_screen_cont{
             //border: 2px solid greenyellow;
-            height: 85%;
+            height: 80%;
             overflow-y: scroll;
             .messages_cont{
                 //border: 2px solid violet;

@@ -25,26 +25,26 @@
             overflow-y: scroll;
             height: 90%;
             padding: 10px;
-            .first_part{
-                //border: 2px solid indigo;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
+            //.first_part{
+            //    //border: 2px solid indigo;
+            //    display: flex;
+            //    justify-content: space-between;
+            //    align-items: center;
 
-                .timer{
-                    //border: 1px solid black;
-                    text-align: center;
-                    padding: 0 10px;
-                    background-color: $darkest;
-                    color: $lightest;
-                    .value{
+            //    .timer{
+            //        //border: 1px solid black;
+            //        text-align: center;
+            //        padding: 0 10px;
+            //        background-color: $darkest;
+            //        color: $lightest;
+            //        .value{
 
-                    }
-                    .unit{
+            //        }
+            //        .unit{
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
             .fourth_part{
                 //border: 2px solid rgb(0, 255, 98);
                 display: flex;
