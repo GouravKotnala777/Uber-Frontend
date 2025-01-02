@@ -17,8 +17,33 @@ const Register = () => {
     };
 
     const registerHandler = async() => {
-        const res = await register(registerFormData);
-        redirectAfterToast({res, redirectWithReload:"/user/login"});
+        if (!registerFormData.firstName || !registerFormData.lastName || !registerFormData.email || !registerFormData.password || !registerFormData.gender || !registerFormData.mobile) {
+            redirectAfterToast({res:{success:false, message:"All fields are required", jsonData:{}}});
+        }
+        else{
+            if (!registerFormData.email.split("").includes("@") && !registerFormData.email.split("").includes(".")) {
+                redirectAfterToast({res:{success:false, message:"Wrong email format", jsonData:{}}});
+            }
+            else{
+                if (registerFormData.firstName.length < 2) {
+                    redirectAfterToast({res:{success:false, message:"First name length should be greater than 1", jsonData:{}}});
+                }
+                else{
+                    if (registerFormData.mobile.length < 10 || registerFormData.mobile.length > 10) {
+                        redirectAfterToast({res:{success:false, message:"Mobile number length should be equal to 10", jsonData:{}}});
+                    }
+                    else{
+                        if (registerFormData.password.length < 6 || registerFormData.password.length > 20) {
+                            redirectAfterToast({res:{success:false, message:"Password length should be 5 < password.length <= 20", jsonData:{}}});
+                        }
+                        else{
+                            const res = await register(registerFormData);
+                            redirectAfterToast({res, redirectWithReload:"/user/login"});
+                        }
+                    }
+                }
+            }
+        }
     };
 
     return(

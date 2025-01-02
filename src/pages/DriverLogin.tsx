@@ -17,8 +17,22 @@ const DriverLogin = () => {
     };
 
     const driverLoginHandler = async() => {
-        const res = await loginDriver(loginFormData);
-        redirectAfterToast({res, redirectWithReload:"/driver/home"});
+        if (!loginFormData.email || !loginFormData.password || !loginFormData.licenseNumber || !loginFormData.vehicleNumber) {
+            redirectAfterToast({res:{success:false, message:"All fields are required", jsonData:{}}});
+        }
+        else{
+            if (!loginFormData.email.split("").includes("@") && !loginFormData.email.split("").includes(".")) {
+                redirectAfterToast({res:{success:false, message:"Wrong email format", jsonData:{}}});
+            }
+            else{
+                if (loginFormData.password.length < 6 || loginFormData.password.length > 20) {
+                    redirectAfterToast({res:{success:false, message:"Password length should be 5 < password.length <= 20", jsonData:{}}});
+                } else {
+                    const res = await loginDriver(loginFormData);
+                    redirectAfterToast({res, redirectWithReload:"/driver/home"});
+                }
+            }
+        }
     };
 
 

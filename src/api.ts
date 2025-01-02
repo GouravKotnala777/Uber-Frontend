@@ -1,4 +1,5 @@
 import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreatePaymentFormTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, UserTypes } from "./utils/types";
+import { redirectAfterToast } from "./utils/utilityFunctions";
 
 // Function for user registration
 export const register = async(registerFormData:RegisterBodyTypes) => {
@@ -329,6 +330,10 @@ export const allNearbyDrivers = async({radius, address}:{radius:string; address:
 // Function for fetch coordinates of an address
 export const getCoordinates = async({address}:{address:string;}) => {
     try {
+        if (!address) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({address}));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/map/get-coordinates?address=${address}`, {
             method:"GET",
             headers:{
@@ -352,6 +357,10 @@ export const getCoordinates = async({address}:{address:string;}) => {
 // Function for create ride request
 export const createRideRequest = async(createRideRequestFormData:CreateRideRequestBodyTypes) => {
     try {
+        if (!createRideRequestFormData.pickupLocation || !createRideRequestFormData.dropoffLocation || !createRideRequestFormData.passengerID) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify(createRideRequestFormData));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/create`, {
             method:"POST",
             headers:{
@@ -376,6 +385,10 @@ export const createRideRequest = async(createRideRequestFormData:CreateRideReque
 // Function for accept ride request
 export const acceptRideRequest = async(acceptRideRequestFormData:AcceptRideRequestBodyTypes) => {
     try {
+        if (!acceptRideRequestFormData.rideID || !acceptRideRequestFormData.status) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify(acceptRideRequestFormData));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/accept`, {
             method:"POST",
             headers:{
@@ -400,6 +413,10 @@ export const acceptRideRequest = async(acceptRideRequestFormData:AcceptRideReque
 // Function for start ride by filling OTP by driver
 export const startRide = async(startRideFormData:StartRideBodyTypes) => {
     try {
+        if (!startRideFormData.otp || !startRideFormData.rideID) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify(startRideFormData));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/start`, {
             method:"POST",
             headers:{
@@ -424,6 +441,10 @@ export const startRide = async(startRideFormData:StartRideBodyTypes) => {
 // Function for end ride by driver
 export const endRide = async({rideID}:{rideID:string}) => {
     try {
+        if (!rideID) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({rideID}));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/end`, {
             method:"POST",
             headers:{
@@ -448,6 +469,10 @@ export const endRide = async({rideID}:{rideID:string}) => {
 // Function for cancel ride by driver
 export const cancelRide = async({rideID}:{rideID:string}) => {
     try {
+        if (!rideID) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({rideID}));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/cancel`, {
             method:"POST",
             headers:{
@@ -472,6 +497,10 @@ export const cancelRide = async({rideID}:{rideID:string}) => {
 // Function for get fare of trip
 export const getFareOfTrip = async(getFareFormData:{dropoffLocation:string; pickupLocation:string;}) => {
     try {
+        if (!getFareFormData.pickupLocation || !getFareFormData.dropoffLocation) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify(getFareFormData));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/get-fare`, {
             method:"POST",
             headers:{
@@ -496,6 +525,10 @@ export const getFareOfTrip = async(getFareFormData:{dropoffLocation:string; pick
 // Function for create new chat for user
 export const createChat = async({receiver, content, senderType, receiverSocketID}:CreateChatBodyType) => {
     try {
+        if (!receiver || !content || !senderType || !receiverSocketID) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({receiver, content, senderType, receiverSocketID}));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/chat/${senderType}/message/create`, {
             method:"POST",
             headers:{
@@ -520,6 +553,10 @@ export const createChat = async({receiver, content, senderType, receiverSocketID
 // Function for create new payment from user
 export const createPayment = async({rideID, amount, paymentMethod, paymentStatus}:CreatePaymentFormTypes) => {
     try {
+        if (!rideID || !amount || !paymentMethod || !paymentStatus) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({rideID, amount, paymentMethod, paymentStatus}));
+        }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/payment/create`, {
             method:"POST",
             headers:{

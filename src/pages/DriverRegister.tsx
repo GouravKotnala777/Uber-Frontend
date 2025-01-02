@@ -19,8 +19,17 @@ const DriverRegister = () => {
     };
 
     const createDriverAccountHandler = async() => {
-        const res = await registerDriver(registerDriverFormData);
-        redirectAfterToast({res, redirectWithReload:"/driver/login"});
+        if (!registerDriverFormData.licenseNumber || !registerDriverFormData.password || !registerDriverFormData.vehicleColor || !registerDriverFormData.vehicleModel || !registerDriverFormData.vehicleNumber || !registerDriverFormData.vehicleType) {
+            redirectAfterToast({res:{success:false, message:"All fields are required", jsonData:{}}});
+        } else {
+            if (registerDriverFormData.password.length < 6 || registerDriverFormData.password.length > 20) {
+                redirectAfterToast({res:{success:false, message:"Password length should be 5 < password.length <= 20", jsonData:{}}});
+            }
+            else{
+                const res = await registerDriver(registerDriverFormData);
+                redirectAfterToast({res, redirectWithReload:"/driver/login"});
+            }
+        }
     };
 
     return(
