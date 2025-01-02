@@ -15,3 +15,12 @@
         font-size: 1rem;
     }
 }
+@media screen and (height <= 585px) {
+    .input_cont{
+        //border: 2px solid red;
+        .input{
+            padding: 13px 8px;
+            font-size: 1.1rem;
+        }
+    }
+}

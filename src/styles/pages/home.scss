@@ -14,8 +14,8 @@
         left: 1.6rem;
     }
     .map_cont{
-        //border: 2px solid violet;
-        height: 60%;
+        //border: 2px solid rgb(0, 255, 123);
+        height: 54%;
         img{
             width: 100%;
             height: 100%;
@@ -79,7 +79,7 @@
     }
     .form_cont{
         //border: 2px solid rgb(149, 0, 255);
-        height: 44%;
+        height: 46%;
         padding: 10px;
         box-sizing: border-box;
         transition: 0.3s;
@@ -90,7 +90,7 @@
         box-sizing: border-box;
     }
     .suggestion_list_cont{
-        //border: 2px solid red;
+        //border: 2px solid orange;
         height:56%;
         width: 100%;
         z-index: -1;
@@ -117,5 +117,93 @@
                 color: $grayDarker;
             }
         }
+    }
+}
+
+
+@media screen and (height <= 585px) {
+    .home_page_background{
+        //border: 2px solid red;
+        height: 100vh;
+        //box-sizing: border-box;
+        //position: relative;
+        transition: 0.3s;
+        overflow-y: hidden;
+        //.map_cont{
+        //    border: 2px solid rgb(0, 255, 123);
+        //    height: 54%;
+        //    img{
+        //        width: 100%;
+        //        height: 100%;
+        //    }
+        //}
+        //.form_cont{
+        //    border: 2px solid rgb(149, 0, 255);
+        //    height: 46%;
+        //    padding: 10px;
+        //    box-sizing: border-box;
+        //    transition: 0.3s;
+        //    background-color: $lightest;
+        //    width: 100%;
+        //    position: absolute;
+        //    //bottom:55%;
+        //    box-sizing: border-box;
+        //    .input_cont{
+        //        input{
+        //            padding: 12px 8px;
+        //            //border-radius: 8px;
+        //            //width: 100%;
+        //            //box-sizing: border-box;
+        //            //outline: none;
+        //            //border: none;
+        //            //color: $grayDark;
+        //            font-size: 0.9rem;
+        //        }
+        //    }
+        //    .button_cont{
+        //        //border: 2px solid red;
+        //        .button{
+        //            //width: 100%;
+        //            padding: 12px 16px;
+        //            font-size: $m;
+        //            //border: none;
+        //            //outline: none;
+        //            //border-radius: 8px;
+        //            //cursor: pointer;
+        //            &:hover{
+        //                opacity: 0.7;
+        //            }
+        //        }
+        //    }
+        //}
+        //.suggestion_list_cont{
+        //    border: 2px solid orange;
+        //    height:56%;
+        //    width: 100%;
+        //    z-index: -1;
+        //    transition: 0.3s;
+        //    background-color: $lightest;
+        //    overflow-y: scroll;
+        //    position: absolute;
+        //    bottom:0;
+        //    box-sizing: border-box;
+        //    .searched_pickup_location_cont{
+        //        //border: 1px solid red;
+        //        display: flex;
+        //        padding: 10px 0;
+        //        text-decoration: none;
+        //        .location_icon{
+        //            //border: 1px solid indigo;
+        //            padding: 10px;
+        //            color: $darkest;
+        //        }
+        //        .location_detaile{
+        //            //border: 1px solid blue;
+        //            font-size: $xs;
+        //            padding: 0 5px;
+        //            color: $grayDarker;
+        //        }
+        //    }
+        //}
     }
 }
