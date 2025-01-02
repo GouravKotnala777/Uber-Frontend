@@ -36,6 +36,8 @@ import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
 import {CenterContainer, Panel, ScrollableContainer} from "../components/WrapperContainers";
 import { SendMessageInput } from "../components/SendMessageInput";
+import { redirectAfterToast } from "../utils/utilityFunctions";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -250,6 +252,16 @@ const Home = () => {
         }
     }, [activeDriver]);
     useEffect(() => {
+        receiveMessage("ride-cancelled", (data) => {
+            console.log("RIDE cancelled Ride cancelled (1)");
+            console.log("RIDE cancelled Ride cancelled (1)");
+            console.log(data as {data:{rideID:string}});
+            console.log("RIDE cancelled Ride cancelled (2)");
+            console.log("RIDE cancelled Ride cancelled (2)");
+            redirectAfterToast({res:{success:false, message:"Driver cancelled ride", jsonData:{}}, redirectWithReload:"/user/home"});
+        })
+    }, []);
+    useEffect(() => {
         receiveMessage("new-message", (data) => {
             console.log(data);
             setMessages((prev) => [...prev, data as ChatTypes]);
@@ -259,6 +271,7 @@ const Home = () => {
 
     return(
         <div className="home_page_background">
+            <Toaster />
             {/*<pre>{JSON.stringify(pickupLocation, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(dropoffLocation, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
