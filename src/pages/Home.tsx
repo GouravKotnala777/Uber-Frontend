@@ -82,7 +82,11 @@ const Home = () => {
     const [isRidesPanelActive, setIsRidesPanelActive] = useState<boolean>(false);
     const [isSelectedRidePanelActive, setIsSelectedRidePanelActive] = useState<boolean>(false);
     const [isWaitingPanelActive, setIsWaitingPanelActive] = useState<boolean>(false);
+
     const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
+    const [isMeetAtPickupPanelActiveHide, setIsMeetAtPickupPanelActiveHide] = useState<boolean>(false);
+
+
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
     const [isMyProfilePanelActive, setIsMyProfilePanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
@@ -162,7 +166,7 @@ const Home = () => {
     const confirmRideHandler = () => {
         setIsSelectedRidePanelActive(false);
         setIsWaitingPanelActive(true);
-        createRideRequest({passengerID:userContextData.user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});    
+        createRideRequest({passengerID:userContextData.user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});
     };
 
     useEffect(() => {
@@ -231,6 +235,7 @@ const Home = () => {
             setActiveDriver(data as RideAcceptedEventMessageType);
             setIsWaitingPanelActive(false);
             setIsMeetAtPickupPanelActive(true);
+            setIsMeetAtPickupPanelActiveHide(true);
             console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (2)");
         });
     }, []);
@@ -391,15 +396,16 @@ const Home = () => {
                 </ScrollableContainer>
             </Panel>
 
-            <Panel isPanelActive={isMeetAtPickupPanelActive}>
+            <Panel isPanelActive={isMeetAtPickupPanelActive} onClosePosition="-36%" onCloseZInd="1" hasRideAcceptedHide={isMeetAtPickupPanelActiveHide}>
+                <ShowHideToggler toggleHandler={() => setIsMeetAtPickupPanelActive(!isMeetAtPickupPanelActive)} />
                 <div className="first_part">
-                    <Heading text="Meet At The Pickup Point" />
+                    <Heading padding="0 0 10px 0" text="Meet At The Pickup Point" />
                     <div className="timer">
                         <div className="value">2</div>
                         <div className="unit">min</div>
                     </div>
                 </div>
-                <ScrollableContainer height="91%">
+                <ScrollableContainer height="81%">
                     <ProfileLong driverDetails={activeDriver as RideAcceptedEventMessageType} />
                     <SendMessageInput onChangeHandler={() => {}} onClickHandler={async() => {}} />
                     <ShortCuts shortcuts={shortcuts} />
