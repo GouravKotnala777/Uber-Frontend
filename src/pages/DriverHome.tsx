@@ -265,10 +265,10 @@ const DriverHome = () => {
                 {
                     isOtpValid &&
                         <>
-                            <Button text="Go to ride page" margin="10px 0" onClickHandler={goToRidePageHandler} />
-                            <Button text="Cancel" background="transparent" color="red" border={true} onClickHandler={cancelRideHandler} />
+                            <Button text="Go to ride page" margin="10px 0 0 0" onClickHandler={goToRidePageHandler} />
                         </>
                 }
+                <Button text="Cancel" background="transparent" margin="10px 0" color="red" border={true} onClickHandler={cancelRideHandler} />
             </Panel>
             <ChatPanel isChatPanelActive={isChatPanelActive}
                 setIsChatPanelActive={setIsChatPanelActive}

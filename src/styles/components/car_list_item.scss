@@ -51,3 +51,33 @@
         font-weight: 600;
     }
 }
+
+@media screen and (height <= 585px) {
+    .list_item{
+        //border: 1px solid red;
+        padding: 6px 0;
+        margin-top: 10px;
+        margin: 10px 0;
+        .details_cont{
+            .name{
+                font-weight: 500;
+                font-size: 1.3rem;
+                .passengers_capacity{
+                    font-size: $s;
+                    margin-left: 10px;
+                }                   
+            }
+            .away{
+                font-size: $s;
+            }
+            .away1{
+                font-size: $s;
+            }
+        }
+        .price_cont{
+            font-size:$xl;
+            letter-spacing: 0.1px;
+            font-weight: 500;
+        }
+    }
+}
