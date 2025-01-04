@@ -33,7 +33,7 @@ const Riding = () => {
     const {receiveMessage} = socketContext;
 
     const makePaymentHandler = async() => {
-        const newPayment = await createPayment({rideID, amount:6969, paymentMethod:"cash", paymentStatus:"completed"});
+        const newPayment = await createPayment({rideID, amount:1234, paymentMethod:"cash", paymentStatus:"completed"});
         redirectAfterToast({res:newPayment, redirectWithoutReload:{navigate, url:"/user/home"}})
 
         //rideID ke liye ride detailes chahiye location.state se,
@@ -98,9 +98,10 @@ const Riding = () => {
                         </div>
                     </div>
                     <Location highlightAddress="Shop No.24" fullAddress={dropoffLocation?.address as string} />
-                    <div className="sixth_part">
-                        <Button text="Make payment" margin="15px 0 0 0" onClickHandler={makePaymentHandler} />
-                    </div>
+                    {
+                        rideID &&
+                            <Button text="Make payment" margin="15px 0 0 0" onClickHandler={makePaymentHandler} />
+                    }
                 </div>
             </div>
         </div>

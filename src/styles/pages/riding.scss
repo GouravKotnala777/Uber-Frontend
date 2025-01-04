@@ -25,26 +25,26 @@
             overflow-y: scroll;
             height: 90%;
             padding: 10px;
-            //.first_part{
-            //    //border: 2px solid indigo;
-            //    display: flex;
-            //    justify-content: space-between;
-            //    align-items: center;
+            .first_part{
+                //border: 2px solid indigo;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
 
-            //    .timer{
-            //        //border: 1px solid black;
-            //        text-align: center;
-            //        padding: 0 10px;
-            //        background-color: $darkest;
-            //        color: $lightest;
-            //        .value{
+                .timer{
+                    //border: 1px solid black;
+                    text-align: center;
+                    padding: 0 10px;
+                    background-color: $darkest;
+                    color: $lightest;
+                    .value{
 
-            //        }
-            //        .unit{
+                    }
+                    .unit{
 
-            //        }
-            //    }
-            //}
+                    }
+                }
+            }
             .fourth_part{
                 //border: 2px solid rgb(0, 255, 98);
                 display: flex;
@@ -111,37 +111,6 @@
                     }
                 }
                 
-            }
-            .fifth_part{
-                //border: 2px solid orange;
-                padding: 15px 0;
-                border-top: 1px solid $grayLight;
-                .pickup_location_details_cont{
-                    //border: 1px solid green;
-                    display: flex;
-                    justify-content: space-between;
-                    //align-items: ;
-                    //border-top: 1px solid #919191;
-                    .CiLocationOn{
-                        margin-top: 15px;
-                        margin-left: 15px;
-                    }
-                    .pickup_location_details{
-                        //border: 1px solid blue;
-                        margin-left: 15px;
-                        padding: 10px;
-                        width: 85%;
-                        .highlight_info{
-                            font-weight: 600;
-                        }
-                        .full_info{
-                            font-size: $xs;
-                        }
-                    }
-
-                }
-            }
-            .sixth_part{
             }
         }
     }
