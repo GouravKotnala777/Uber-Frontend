@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreatePaymentFormTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, StartRideBodyTypes, UserTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreatePaymentFormTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, RideTypes, StartRideBodyTypes, UserTypes } from "./utils/types";
 import { redirectAfterToast } from "./utils/utilityFunctions";
 
 // Function for user registration
@@ -335,6 +335,42 @@ export const getCoordinates = async({address}:{address:string;}) => {
             throw new Error(JSON.stringify({address}));
         }
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/map/get-coordinates?address=${address}`, {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for fetch all rides
+export const getAllRides = async(getAllRidesFormData:Partial<Pick<RideTypes, "driverID">>&{
+    createdAt?:string;
+    status?:string;
+    pickUpLatitude?:string;
+    pickUpLongitude?:string;
+    dropoffLatitude?:string;
+    dropoffLongitude?:string;
+    startDate?:string;
+    endDate?:string;
+}) => {
+    try {
+        //if (!getAllRidesFormData.driverID && !getAllRidesFormData.pickUpLatitude && !getAllRidesFormData.pickUpLongitude && !getAllRidesFormData.dropoffLatitude && !getAllRidesFormData.dropoffLongitude && !getAllRidesFormData.status && !getAllRidesFormData.createdAt) {
+        //    redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+        //    throw new Error(JSON.stringify(getAllRidesFormData));
+        //}
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/all?driverID=${getAllRidesFormData.driverID}&pickUpLatitude=${getAllRidesFormData.pickUpLatitude}&pickUpLongitude=${getAllRidesFormData.pickUpLongitude}&dropoffLatitude=${getAllRidesFormData.dropoffLatitude}&dropoffLongitude=${getAllRidesFormData.dropoffLongitude}&status=${getAllRidesFormData.status}&createdAt=${getAllRidesFormData.createdAt}&startDate=${getAllRidesFormData.startDate}&endDate=${getAllRidesFormData.endDate}`, {
             method:"GET",
             headers:{
                 "Content-Type":"application/json"
