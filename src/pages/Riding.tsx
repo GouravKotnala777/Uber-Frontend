@@ -60,7 +60,7 @@ const Riding = () => {
             setRideID((data as {rideID:string}).rideID)
             console.log("ZZZZZZZZZZZZZZZZZZZZZ (2)");
             console.log("ZZZZZZZZZZZZZZZZZZZZZ (2)");
-            redirectAfterToast({res:{success:true, message:"Ride ended", jsonData:{}}, redirectWithReload:"/user/home"});
+            redirectAfterToast({res:{success:true, message:"Ride ended", jsonData:{}}});
         })
     }, []);
 
