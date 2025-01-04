@@ -3,7 +3,7 @@ import Heading from "../../components/Heading";
 import { RideStatusTypes, RideTypes, RideTypesPopulated, VehicleTypeTypes } from "../../utils/types";
 import { StackedBarChart } from "../../components/charts/Charts";
 import { getAllRides } from "../../api";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ScrollableContainer } from "../../components/WrapperContainers";
 
 
@@ -53,8 +53,6 @@ export const rideVehicleTypeColor:Record<VehicleTypeTypes, string> = {
 
 const Rides = () => {
     const [rides, setRides] = useState<RideTypesPopulated[]>([]);
-    const [from, setFrom] = useState<string>("");
-    const [to, setTo] = useState<string>("");
     const [ridesFormated, setRidesFormated] = useState<Record<RideStatusTypes, {count:number; totalPrice:number;}>>({
         requested:{count:0, totalPrice:0}, accepted:{count:0, totalPrice:0}, "in-progress":{count:0, totalPrice:0}, cancelled:{count:0, totalPrice:0}, completed:{count:0, totalPrice:0}
     });
@@ -109,8 +107,6 @@ const Rides = () => {
         <div className="rides_dashboard_bg">
             <ScrollableContainer height="100vh">
                 {/*<pre>{JSON.stringify(ridesFormatedAccVehicle, null, `\t`)}</pre>*/}
-                <pre>{from}</pre>
-                <pre>{to}</pre>
                 <input type="text" name="driverID" placeholder="DriverID" onChange={(e) => changeHandler(e)} />
                 <input type="text" name="status" placeholder="Status" onChange={(e) => changeHandler(e)} />
                 <input type="text" name="createdAt" placeholder="CreatedAt" onChange={(e) => changeHandler(e)} />

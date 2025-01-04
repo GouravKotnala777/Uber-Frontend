@@ -1,5 +1,4 @@
-import { MouseEvent, MutableRefObject, useEffect, useRef, useState } from "react"
-import { RideStatusTypes, VehicleTypeTypes } from "../../utils/types";
+import { useEffect, useRef, useState } from "react"
 import { redirectAfterToast } from "../../utils/utilityFunctions";
 
 export interface TooltipTypes {
@@ -63,18 +62,13 @@ export const StackedBarChart = ({data, categoryColors,}:{data:DataTypes[]; categ
         const dates = Object.keys(aggregatedData);
         const rideStatus = [...new Set(data.map(item => item.category))];
         
-        //console.log("WWWWWWWWWWWWWWWWW (1)");
-        //console.log(rideStatus);
-        //console.log("WWWWWWWWWWWWWWWWW (2)");
-        
-
         //Canvas setup
         const canvasHeight = 300;
         const canvasWidth = 500;
         const chartHeight = 200;
         const chartWidth = 400;
         const paddingLeft = 60; 
-        const paddingBottom = 40;
+        //const paddingBottom = 40;
 
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
