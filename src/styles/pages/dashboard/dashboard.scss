@@ -1,0 +1,66 @@
+@import "../../utils.scss";
+
+//.dashboard_bg{
+//    border: 2px solid red;
+//    .options_cont{
+//        border: 2px solid violet;
+//        display: flex;
+//        justify-content: space-around;
+//        flex-wrap: wrap;
+//        padding: 15px 0;
+//        gap: 7px;
+
+//        .option_cont{
+//            border: 2px solid blue;
+//            padding: 15px;
+//            font-size: $xl;
+//            border-radius: 8px;
+//            cursor: pointer;
+//        }
+//    }
+//}
+//<Heading text="Dashboard" />
+
+//            <div className="options_cont">
+//                {
+//                    ["Rides",2,3,4,5,6].map((i) => (
+//                        <div className="option_cont">
+//                            {i}
+//                        </div>
+//                    ))
+//                }
+//            </div>
+
+
+.rides_dashboard_bg{
+    border: 2px solid red;
+    .chart_cont{
+        border: 2px solid violet;
+    }
+    .ride_status_types{
+        border: 2px solid indigo;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        //padding: 10px;
+        .status_cont{
+            border: 1px solid black;
+            padding: 10px;
+            border-radius:8px;
+            margin: 10px;
+            font-size: $s;
+            .upper{
+                text-align: center;
+            }
+            .lower{
+                text-align: center;
+            }
+        }
+    }
+    .rides_details_cont{
+        border: 2px solid orange;
+        .ride_detailes_cont{
+            border: 2px solid green;
+        }
+    }
+}
