@@ -4,7 +4,7 @@ import { BiStopwatch, BiUser } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { acceptRideRequest, cancelRide, startRide } from "../api";
+import { acceptRideRequest, cancelRide, startRide, updateMyDrivingProfile } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
@@ -124,6 +124,20 @@ const DriverHome = () => {
         }
     };
 
+    const updateDriverAvailablityStatusHandler = async() => {
+        const updateDriverAvailablityStatus = await updateMyDrivingProfile({availabilityStatus:!driverContextData.driver?.availabilityStatus});
+        setDriverContextData!({
+            isLoading:false,
+            driver:updateDriverAvailablityStatus.jsonData
+        });
+        if (updateDriverAvailablityStatus.success) {
+            redirectAfterToast({res:{success:true, message:!driverContextData.driver?.availabilityStatus?"You are now online":"You are offline", jsonData:{}}});
+        }
+        else{
+            redirectAfterToast({res:{success:false, message:updateDriverAvailablityStatus.message, jsonData:updateDriverAvailablityStatus.jsonData}});
+        }
+    };
+
 
 
     //useEffect(() => {
@@ -208,7 +222,9 @@ const DriverHome = () => {
     return(
         <div className="driver_home_page_bg">
             <Toaster />
-            {/*<pre>{JSON.stringify(driver?.userID._id, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(availabilityStatus, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify({curr:driverContextData.driver?.availabilityStatus}, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify({next:!driverContextData.driver?.availabilityStatus}, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
             {/*<img className="logo" src={logo} alt={logo} />*/}
             
@@ -235,6 +251,19 @@ const DriverHome = () => {
             </div>
 
             <div className="driver_profile_panel_cont">
+                    <div className="availability_status_toggler_cont">
+                        <div className="availability_status_toggler" style={{
+                            border:driverContextData.driver?.availabilityStatus?"2px solid #1880dc":"2px solid #aaaaaa"
+                        }}>
+                            <div className="on" style={{color:driverContextData.driver?.availabilityStatus?"black":"#aaaaaa"}}>On</div>
+                            <div className="off">Off</div>
+                            <div className="toggler_thumb" style={{
+                                left:driverContextData.driver?.availabilityStatus?"0":"53%",
+                                backgroundColor:driverContextData.driver?.availabilityStatus?"#1880dc":"#aaaaaa"
+                            }}></div>
+                            <input type="checkbox" id="availability_status_inp" className="availability_status_inp" onChange={updateDriverAvailablityStatusHandler} />
+                        </div>
+                    </div>
                     <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} />
                     <ShortCuts shortcuts={shortcuts} />
             </div>
