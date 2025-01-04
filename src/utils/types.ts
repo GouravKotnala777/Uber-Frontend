@@ -79,6 +79,23 @@ export interface RideTypes {
     createdAt:Date;
     updatedAt:Date;
 };
+export interface RideTypesPopulated {
+    _id:string;
+    driverID:DriverTypes;
+    passengerID:string;
+    pickupLocation:LocationTypes;
+    dropoffLocation:LocationTypes;
+    distance:number;
+    fare:number;
+    duration:number;
+    status:RideStatusTypes;
+    paymentID:string;
+    orderID:string;
+    signature:string;
+    otp:string;
+    createdAt:Date;
+    updatedAt:Date;
+};
 export interface CreateRideRequestBodyTypes extends Pick<RideTypes, "passengerID"|"pickupLocation"|"dropoffLocation"> {
     vehicleType:VehicleTypeTypes;
 };
