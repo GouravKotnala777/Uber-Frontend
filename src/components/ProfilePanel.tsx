@@ -6,9 +6,11 @@ import ShowHideToggler from "./ShowHideToggler";
 import { MdChangeCircle } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
-import { removeDriverProfileImage, removeProfileImage, updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
+import { logout, logoutDriver, removeDriverProfileImage, removeProfileImage, updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
 import Button from "./Button";
 import ImgWithFallback from "./ImgWithFallback";
+import { redirectAfterToast } from "../utils/utilityFunctions";
+import { useNavigate } from "react-router-dom";
 
 interface ProfilePanelPropTypes{
     isMyProfilePanelActive:boolean;
@@ -33,6 +35,7 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
     const [updateDriverProfileForm, setUpdateDriverProfileForm] = useState<Partial<Pick<DriverTypes, "licenseNumber"|"availabilityStatus">>&{vehicleColor?:string; vehicleModel?:string; vehicleNumber?:string; vehicleType?:VehicleTypeTypes}>({});
     const [selectedFieldsForUserUpdate, setSelectedFieldsForUserUpdate] = useState<string[]>([]);
     const [selectedFieldsForDriverUpdate, setSelectedFieldsForDriverUpdate] = useState<string[]>([]);
+    const navigate = useNavigate();
 
     const fileChangeHandler = async(e:ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -191,6 +194,7 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                                 </>
                             }
                         </div>
+                        <Button text="Logout" onClickHandler={() => navigate("/logout", {state:{logoutFor:"user"}})} />
                     </>
                     :
                     <>
@@ -299,6 +303,7 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                                     <Button text="Update driving profile" margin="15px 0 0 0" onClickHandler={updateDriverProfile} />
                             }
                         </div>
+                        <Button text="Driver logout" onClickHandler={() => navigate("/logout", {state:{logoutFor:"driver"}})} />
                     </>
                 }
             </div>

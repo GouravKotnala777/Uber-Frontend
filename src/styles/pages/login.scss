@@ -107,3 +107,24 @@
         }
     }
 }
+
+.logout_page_bg{
+    //border: 2px solid red;
+    height: 100vh;
+    .logo_cont{
+        width: 75px;
+        height: 12%;
+        box-sizing: border-box;
+        margin: 15px 0 0 15px;
+        img{
+            width: 100%;
+        }
+    }
+    .logout_form_cont{
+        padding: 10px;
+        .logout_confirm_checkbox{
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

@@ -18,6 +18,7 @@ import { useContext, useEffect } from 'react';
 import { myDriverProfile, myProfile } from './api';
 import { DriverContextTypes, DriverInitialContextData } from './contexts/DriverContext';
 import Rides from './pages/dashboard/Rides';
+import Logout from './pages/Logout';
 
 function App() {
   const userContext = useContext<UserContextTypes>(UserInitialDataContext);
@@ -101,6 +102,8 @@ function App() {
               <Route path="/user/riding" element={<ProtectedRouter isLoading={userContextData.isLoading} children={<Riding />} accessibleFor="user" userType={userContextData.user?.role as string} />} />
               <Route path="/driver/home" element={<ProtectedRouter isLoading={driverContextData.isLoading} children={<DriverHome />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
               <Route path="/driver/riding" element={<ProtectedRouter isLoading={driverContextData.isLoading} children={<DriverRiding />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
+
+              <Route path="/logout" element={<Logout />} />
 
               <Route path="/admin/dashboard/rides" element={<Rides />} />
 

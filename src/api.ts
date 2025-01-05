@@ -143,6 +143,26 @@ export const removeProfileImage = async() => {
         return error as ResponseType<typeof error>;
     }
 };
+// Function for user logout
+export const logout = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/logout`, {
+            method:"POST",
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for register driver
 export const registerDriver = async(registerDriverFormData:RegisterDriverBodyTypes) => {
     try {
@@ -263,6 +283,26 @@ export const uploadDriverProfileImage = async(formData:FormData) => {
 export const removeDriverProfileImage = async() => {
     try {
         const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/remove-image`, {
+            method:"POST",
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for driver logout
+export const logoutDriver = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/logout`, {
             method:"POST",
             credentials:"include"
         });
