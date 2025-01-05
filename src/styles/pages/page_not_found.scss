@@ -1,6 +1,13 @@
 
 
 .page_not_found{
-    border: 2px solid red;
-    
+    //border: 2px solid red;
+    height: 100vh;
+    padding: 15px 10px;
+    align-content: center;
+    img{
+        width: 100%;
+        max-width: 400px;
+        height: 400px;
+    }
 }
