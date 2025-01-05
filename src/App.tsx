@@ -103,7 +103,11 @@ function App() {
               <Route path="/driver/home" element={<ProtectedRouter isLoading={driverContextData.isLoading} children={<DriverHome />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
               <Route path="/driver/riding" element={<ProtectedRouter isLoading={driverContextData.isLoading} children={<DriverRiding />} accessibleFor="user" userType={driverContextData.driver?.userID?.role as string} />} />
 
-              <Route path="/logout" element={<Logout />} />
+              {
+                (driverContextData.driver?._id ||
+                userContextData.user?._id) &&
+                  <Route path="/logout" element={<Logout />} />
+              }
 
               <Route path="/admin/dashboard/rides" element={<Rides />} />
 
