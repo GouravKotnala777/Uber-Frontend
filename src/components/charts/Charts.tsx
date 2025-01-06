@@ -21,7 +21,7 @@ const formatDateHelper = (dateString:string) => {
 const aggregateData = (data:{category:string; date:string; price:number;}[]) => {
     const aggregated:Record<string, Record<string, {count:number; totalPrice:number;}>> = {};
 
-    data.forEach((item) => {
+    data.forEach((item) => {        
         const {category, date, price} = item;
 
         if (!aggregated[date]) {
@@ -77,15 +77,6 @@ export const StackedBarChart = ({data, categoryColors,}:{data:DataTypes[]; categ
         const maxTotalPrice = Math.max(...dates.map(date => {
             return Object.values(aggregatedData[date]).reduce((a, b) => a + b.totalPrice, 0);
         }));
-
-        // Color mapping for rideStatus
-        //const categoryColors:Record<RideStatusTypes, string> = {
-        //    requested:"#ff4b69",
-        //    accepted:"#3e98ff",
-        //    "in-progress":"#ff9c66",
-        //    completed:"#ff3c66",
-        //    cancelled:"#3e3c66"
-        //};
 
         //Clear the canvas
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -207,3 +198,90 @@ export const StackedBarChart = ({data, categoryColors,}:{data:DataTypes[]; categ
         </>
     )
 }
+
+export const PieChart = ({data, colorScheme}:{data:Record<string, number>; colorScheme:string[];}) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    //const [hoveredCategory, setHoveredCategory] = useState<string>("");
+    //const [hoveredRideDate, setHoveredRideDate] = useState<string>("");
+
+
+    useEffect(() => {
+        if (!canvasRef.current) return;
+
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const total = Object.values(data).reduce((acc, val) => acc + val, 0);
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(centerX, centerY) - 10;
+
+        let startAngle = 0;        
+
+        // Draw each slice of the pie
+        //const barPositions:{centerX:number; centerY:number; radius:number; startAngle:number; endAngle:number;}[] = [];
+        Object.entries(data).forEach(([rating, count], index) => {
+            if (count !== 0) {
+                const sliceAngle = (count / total) * 2 * Math.PI;
+                const endAngle = startAngle + sliceAngle;
+                
+                // Draw slice
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = colorScheme[index];
+                ctx.fill();
+        
+                // Add label
+                const labelX = centerX + (radius / 1.6) * Math.cos(startAngle + sliceAngle / 2);
+                const labelY = centerY + (radius / 1.6) * Math.sin(startAngle + sliceAngle / 2);
+                ctx.fillStyle = "#000";
+                ctx.font = "12px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(`(${rating})`, labelX, labelY);
+                ctx.fillText(`${count}`, labelX, labelY+17);
+                ctx.fillText((`${(count/total)*100}%`), labelX, labelY+34);
+        
+                startAngle = endAngle;
+            }        
+        });
+
+
+        //// Mouse hover event to show tooltip
+        //const mouseMoveHandler = (event:globalThis.MouseEvent) => {
+        //    const rect = canvas.getBoundingClientRect();
+        //    const mouseX = event.clientX - rect.left;
+        //    const mouseY = event.clientY - rect.top;
+
+        //    // Check if mouse is over any bar
+        //    const hoveredBar = barPositions.find(bar => {
+        //        return mouseX >= bar.x && mouseX <= bar.x+bar.width &&
+        //        mouseY >= bar.y && mouseY <= bar.y+bar.height;
+        //    });            
+
+        //    if (hoveredBar) {
+        //        setTooltip({x:mouseX, y:mouseY, count:hoveredBar.count, category:hoveredBar.category, price:hoveredBar.price});
+        //        setHoveredRideStatus(hoveredBar.category);
+        //        setHoveredRideDate(hoveredBar.date);
+        //    }
+        //    else{
+        //        setTooltip(null);
+        //    }
+        //};
+
+        //canvas.addEventListener("mousemove", mouseMoveHandler);
+
+        //return() => {
+        //    canvas.removeEventListener("mousemove", mouseMoveHandler);
+        //}
+    }, [data]);
+
+    return (
+        <div>
+        <canvas ref={canvasRef} width={300} height={300} />
+        </div>
+    );
+};
