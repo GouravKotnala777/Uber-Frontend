@@ -19,6 +19,7 @@ import { myDriverProfile, myProfile } from './api';
 import { DriverContextTypes, DriverInitialContextData } from './contexts/DriverContext';
 import Rides from './pages/dashboard/Rides';
 import Logout from './pages/Logout';
+import Drivers from './pages/dashboard/Drivers';
 
 function App() {
   const userContext = useContext<UserContextTypes>(UserInitialDataContext);
@@ -110,6 +111,7 @@ function App() {
               }
 
               <Route path="/admin/dashboard/rides" element={<Rides />} />
+              <Route path="/admin/dashboard/drivers" element={<Drivers />} />
 
               <Route path="/*" element={<PageNotFound />} />
             </Routes>

@@ -163,6 +163,31 @@ export const logout = async() => {
         return error as ResponseType<typeof error>;
     }
 };
+// Function for fetch all drivers
+export const getAllDrivers = async(getAllDriversFormData:{
+    rating?:string; availabilityStatus?:string; fromDate?:string; upToDate?:string;
+}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/all?availabilityStatus=${getAllDriversFormData.availabilityStatus}&fromDate=${getAllDriversFormData.fromDate}&upToDate=${getAllDriversFormData.upToDate}&rating=${getAllDriversFormData.rating}`, {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for register driver
 export const registerDriver = async(registerDriverFormData:RegisterDriverBodyTypes) => {
     try {
