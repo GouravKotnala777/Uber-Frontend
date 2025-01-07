@@ -1,0 +1,48 @@
+
+
+.rating_cont{
+    //border: 2px solid red;
+    margin: 10px 0;
+    .stars_cont{
+        display: flex;
+        justify-content: space-around;
+        margin: 15px 10px;
+        .BsStarFill{
+            font-size: 2rem;
+            flex: 1;
+            color: #515151;
+        }
+    }
+}
+
+.all_reviews_cont{
+    //border: 2px solid red;
+    .review_cont{
+        //border: 2px solid violet;
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 8px;
+        .img_cont{
+            //border: 1px solid indigo;
+            width: 70px;
+            height: 70px;
+            display: inline-block;
+            img{
+                width: 100%;
+                border-radius: 50%;
+            }
+        }
+        .rating{
+            //border: 1px solid blue;
+            margin: 10px 0;
+            .BsStarFill{
+                color: gold;
+            }
+        }
+        .comment{
+            //border: 1px solid green;
+            text-align: justify;
+        }
+    }
+}
