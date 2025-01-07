@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 import { ResponseType } from "./types";
 import { NavigateFunction } from "react-router-dom";
+import { BsStar, BsStarFill } from "react-icons/bs";
+import { IconType } from "react-icons";
 
 export const redirectAfterToast = ({res, redirectWithReload, redirectWithoutReload, toastDuration}:{res:ResponseType<Record<string, string|number|boolean|object>>; redirectWithReload?:string; redirectWithoutReload?:{navigate:NavigateFunction; url:string;}; toastDuration?:number;}) => {
     if (res.success) {
@@ -37,4 +39,16 @@ export const redirectAfterToast = ({res, redirectWithReload, redirectWithoutRelo
             }
         }, 3500);
     }
+};
+export const showStarsForRating = (num:number) => {
+    let starsArr:IconType[] = [];
+    for(let i=1; i<=5; i++){
+        if (i<=num) {
+            starsArr.push(BsStarFill);
+        }
+        else{
+            starsArr.push(BsStar);
+        }
+    }
+    return starsArr;
 };
