@@ -1,4 +1,4 @@
-import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreatePaymentFormTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, RideTypes, StartRideBodyTypes, UserTypes } from "./utils/types";
+import { AcceptRideRequestBodyTypes, CreateChatBodyType, CreatePaymentFormTypes, CreateRideRequestBodyTypes, RegisterBodyTypes, RegisterDriverBodyTypes, ResponseType, ReviewTypes, RideTypes, StartRideBodyTypes, UserTypes } from "./utils/types";
 import { redirectAfterToast } from "./utils/utilityFunctions";
 
 // Function for user registration
@@ -665,6 +665,61 @@ export const createPayment = async({rideID, amount, paymentMethod, paymentStatus
             },
             credentials:"include",
             body:JSON.stringify({rideID, amount, paymentMethod, paymentStatus})
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function to find my reviews
+export const findDriverAllReviews = async({driverID, rideID}:{driverID:string; rideID:string;}) => {
+    try {
+        if (!driverID || !rideID) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({driverID, rideID}));
+        }
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/review/my?driverID=${driverID}&rideID=${rideID}`, {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function to create/update review
+export const createReview = async({driverID, rideID, rating, comment}:Pick<ReviewTypes, "driverID"|"rideID"|"rating"|"comment">) => {
+    try {
+        if (!driverID || !rideID || !rating) {
+            redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
+            throw new Error(JSON.stringify({driverID, rideID, rating}));
+        }
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/review/create`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({driverID, rideID, rating, comment})
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");
