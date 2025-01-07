@@ -215,7 +215,7 @@ const DriverHome = () => {
             }
         };
 
-        const locationInterval = setInterval(updateLocation, 20000);
+        const locationInterval = setInterval(updateLocation, 200000);
 
         return () => clearInterval(locationInterval);
     }, [driverContextData.driver, activePassenger]);
