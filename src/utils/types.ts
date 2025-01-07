@@ -132,3 +132,23 @@ export interface PaymentTypes{
     updatedAt:Date;
 };
 export type CreatePaymentFormTypes = Pick<PaymentTypes, "rideID"|"amount"|"paymentMethod"|"paymentStatus">;
+export interface ReviewTypes {
+    _id:string;
+    passengerID:string;
+    driverID:string;
+    rideID:string;
+    rating:number;
+    comment:string;
+    createdAt:Date;
+    updatedAt:Date;
+};
+export interface ReviewTypesPopulated {
+    _id:string;
+    passengerID:UserTypes;
+    driverID:DriverTypes;
+    rideID:string;
+    rating:number;
+    comment:string;
+    createdAt:Date;
+    updatedAt:Date;
+};
