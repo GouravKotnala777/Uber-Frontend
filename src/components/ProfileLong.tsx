@@ -9,10 +9,13 @@ const ProfileLong = ({driverDetails}:{driverDetails:RideAcceptedEventMessageType
         <div className="profile_long_cont">
             <div className="driver_photo">
                 <img src={vite} alt={vite} />
-                <div className="otp">
-                    <div className="heading">OTP :</div>
-                    <div className="value">&nbsp;{driverDetails?.otp}</div>
-                </div>
+                {
+                    driverDetails?.otp &&
+                        <div className="otp">
+                            <div className="heading">OTP :</div>
+                            <div className="value">&nbsp;{driverDetails?.otp}</div>
+                        </div>
+                }
             </div>
             <div className="driver_details">
                 <div className="driver_name">{driverDetails?.driverName}</div>
