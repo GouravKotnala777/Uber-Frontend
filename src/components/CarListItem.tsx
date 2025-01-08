@@ -3,14 +3,14 @@ import { BiUser } from "react-icons/bi";
 import { VehicleTypeTypes } from "../utils/types";
 
 
-const CarListItem = ({allFare, vehicleType, vehicleDescription, vehicleCapacity, vehicleImg}:{vehicleType:VehicleTypeTypes; allFare:{[P in VehicleTypeTypes]:number;}; vehicleDescription:string; vehicleCapacity:number; vehicleImg:string;}) => {
+const CarListItem = ({allFare, vehicleType, vehicleDescription, vehicleCapacity, vehicleImg, border}:{vehicleType:VehicleTypeTypes; allFare:{[P in VehicleTypeTypes]:number;}; vehicleDescription:string; vehicleCapacity:number; vehicleImg:string; border?:string;}) => {
 
     //Image theek karni hai
     //Image box component banana hai
 
 
     return(
-        <div className="list_item">
+        <div className="list_item" style={{border:border?border:"1px solid black"}}>
             <div className="car_icon_cont"><img src={vehicleImg} alt={vehicleImg} /></div>
             <div className="details_cont">
                 <div className="name">{vehicleType} <div className="passengers_capacity"><BiUser /> {vehicleCapacity}</div></div>
