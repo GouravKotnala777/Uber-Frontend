@@ -21,62 +21,6 @@
             height: 100%;
         }
     }
-    .chat_short_cut{
-        //border: 2px solid red;
-        position: absolute;
-        top: 60px;
-        right: 10px;
-        border-radius: 50%;
-        background-color: $grayLighter;
-        width: 55px;
-        height: 55px;
-        .TiMessages{
-            width: 35px;
-            height: 28px;
-            padding: 10px;
-        }
-        .notification{
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            color: $lightest;
-            font-weight: 600;
-            background-color: rgb(255, 37, 37);
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            align-content: center;
-            border-radius: 20px;
-        }
-    }
-    .my_profile_short_cut{
-        //border: 2px solid red;
-        position: absolute;
-        top: 130px;
-        right: 10px;
-        border-radius: 50%;
-        background-color: $grayLighter;
-        width: 55px;
-        height: 55px;
-        .TiMessages{
-            width: 35px;
-            height: 28px;
-            padding: 10px;
-        }
-        .notification{
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            color: $lightest;
-            font-weight: 600;
-            background-color: rgb(255, 37, 37);
-            width: 30px;
-            height: 30px;
-            text-align: center;
-            align-content: center;
-            border-radius: 20px;
-        }
-    }
     .form_cont{
         //border: 2px solid rgb(149, 0, 255);
         height: 46%;
@@ -88,6 +32,7 @@
         position: absolute;
         //bottom:55%;
         box-sizing: border-box;
+        z-index: 1;
     }
     .suggestion_list_cont{
         //border: 2px solid orange;

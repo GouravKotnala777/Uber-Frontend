@@ -1,12 +1,12 @@
 import "../styles/pages/home.scss";
 import logo from "/uber-logo-1.png";
 import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
-import { BiUser } from "react-icons/bi";
+//import { BiUser } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
-import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions } from "../api";
-import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, UserTypes, VehicleTypeTypes } from "../utils/types";
+import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myAllPastRidesPassenger } from "../api";
+import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
@@ -38,6 +38,7 @@ import {CenterContainer, Panel, ScrollableContainer} from "../components/Wrapper
 import { SendMessageInput } from "../components/SendMessageInput";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
+import MenuButton from "../components/MenuButton";
 
 
 
@@ -89,9 +90,11 @@ const Home = () => {
     const [isMeetAtPickupPanelActive, setIsMeetAtPickupPanelActive] = useState<boolean>(false);
     const [isMeetAtPickupPanelActiveHide, setIsMeetAtPickupPanelActiveHide] = useState<boolean>(false);
 
+    const [isShortcutMenuActive, setIsShortcutMenuActive] = useState<boolean>(false);
 
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
     const [isMyProfilePanelActive, setIsMyProfilePanelActive] = useState<boolean>(false);
+    const [isMyPastTripsPanelActive, setIsMyPastTripsPanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
     const [pickupLocation, setPickupLocation] = useState<LocationTypes>({
@@ -111,8 +114,9 @@ const Home = () => {
     const [allFare, setAllFare] = useState<{[P in VehicleTypeTypes]:number;}>({uberAuto:0 ,uberX:0 ,uberMoto:0 ,uberScooty:0 ,uberComfort:0 ,uberHCV:0 ,uberPool:0 , uberXL:0});
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
+    const [myPastRides, setMyPastRides] = useState<RideTypesPopulated[]>([]);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
-    const [newChatNotification, setNewChatNotification] = useState<number>(0);
+    //const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
     const userContext = useContext<UserContextTypes>(UserInitialDataContext);
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
@@ -266,8 +270,19 @@ const Home = () => {
         receiveMessage("new-message", (data) => {
             console.log(data);
             setMessages((prev) => [...prev, data as ChatTypes]);
-            setNewChatNotification((prev) => prev+1);
+            //setNewChatNotification((prev) => prev+1);
         });
+    }, []);
+    useEffect(() => {
+        myAllPastRidesPassenger()
+        .then((data) => {
+            if (data.success) {
+                setMyPastRides(data.jsonData);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }, []);
 
     return(
@@ -278,30 +293,19 @@ const Home = () => {
             {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify(allNearByDrivers.map((item) => item.vehicleDetailes.vehicleType), null, `\t`)}</pre>*/}
             <img className="logo" src={logo} alt={logo} />
-            <div className="map_cont">
+            <div className="map_cont" onClick={() => setIsShortcutMenuActive(false)}>
                 <LiveTracking />
                 {/*<img src={map} alt={map} />*/}
             </div>
-            <div className="chat_short_cut" onClick={() => setIsChatPanelActive(true)}>
-                <TiMessages className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
-            <div className="my_profile_short_cut" onClick={() => setIsMyProfilePanelActive(true)}>
-                <BiUser className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
+
+
+            <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
+                isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
+             />
+
             <div className="form_cont"
             style={{bottom:isLocationPanelActive?"56%":"0"}}
+            onClick={() => setIsShortcutMenuActive(false)}
             >
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
                 <Heading text="Find a trip" />
@@ -319,6 +323,7 @@ const Home = () => {
             </div>
             <div className="suggestion_list_cont"
             style={{bottom:isLocationPanelActive?"0":"-60%", zIndex:isLocationPanelActive?"1":"-1"}}
+            onClick={() => setIsShortcutMenuActive(false)}
             >
                 {
                     !pickupLocation.address&&pickupLocationSuggestions.map((address) => (
@@ -409,7 +414,6 @@ const Home = () => {
                     <TripFee amount={allFare[selectedVehicleType]} />
                 </ScrollableContainer>
             </Panel>
-
             <Panel isPanelActive={isMeetAtPickupPanelActive} onClosePosition="-36%" onCloseZInd="1" hasRideAcceptedHide={isMeetAtPickupPanelActiveHide}>
                 <ShowHideToggler toggleHandler={() => setIsMeetAtPickupPanelActive(!isMeetAtPickupPanelActive)} />
                 <div className="first_part">
@@ -426,8 +430,6 @@ const Home = () => {
                     <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                 </ScrollableContainer>
             </Panel>
-            {/*<div className="meet_at_pickup_point_cont" style={{transform:isMeetAtPickupPanelActive?"translate(0, -370vh)":"translate(0, 0vh)", zIndex:isMeetAtPickupPanelActive?"1":"-1"}}>
-            </div>*/}
 
             <ChatPanel isChatPanelActive={isChatPanelActive}
                 setIsChatPanelActive={setIsChatPanelActive}
@@ -450,6 +452,38 @@ const Home = () => {
                     driver?: DriverTypesPopulated|null;
                 }>>}
             />
+
+            <Panel isPanelActive={isMyPastTripsPanelActive}>
+                <ShowHideToggler toggleHandler={() => setIsMyPastTripsPanelActive(false)} />
+                <Heading text="Choose from past trips" padding="10px 0" />
+                <ScrollableContainer height="80%">
+                    {
+                        myPastRides.map((ride) => (
+                            <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
+                                    e.preventDefault();
+                                    setIsMyPastTripsPanelActive(false);
+                                    setSelectedVehicleType(ride.driverID.vehicleDetailes.vehicleType);
+                                    setIsWaitingPanelActive(true);
+                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.driverID.vehicleDetailes.vehicleType});                        
+                            }}>
+                                <CarListItem allFare={{
+                                    uberAuto:ride.fare,
+                                    uberComfort:ride.fare,
+                                    uberHCV:ride.fare,
+                                    uberMoto:ride.fare,
+                                    uberPool:ride.fare,
+                                    uberXL:ride.fare,
+                                    uberScooty:ride.fare,
+                                    uberX:ride.fare
+                                }} vehicleCapacity={vehicleCapacity[ride.driverID.vehicleDetailes.vehicleType]} vehicleDescription={vehicleDescription[ride.driverID.vehicleDetailes.vehicleType]} vehicleImg={vehicleImages[ride.driverID.vehicleDetailes?.vehicleType]} vehicleType={ride.driverID.vehicleDetailes?.vehicleType} border="1px solid transparent" />
+                                <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
+                                <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
+                            </div>
+
+                        ))
+                    }
+                </ScrollableContainer>
+            </Panel>
 
         </div>
     )

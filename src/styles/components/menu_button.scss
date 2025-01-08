@@ -1,0 +1,125 @@
+@import "../utils.scss";
+
+.menu_button_cont{
+    //border: 1px solid red;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    //width: 40%;
+    height: 240px;
+    //display: block;
+    //background-color: aqua;
+    .short_cut_menu_handler{
+        //border: 2px solid red;
+        position: absolute;
+        right: 10px;
+        border-radius: 50%;
+        background-color: $grayLighter;
+        width: 55px;
+        height: 55px;
+        z-index: 1;
+        transition: 0.4s;
+        .TiMessages{
+            width: 35px;
+            height: 28px;
+            padding: 10px;
+        }
+        .notification{
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            color: $lightest;
+            font-weight: 600;
+            background-color: rgb(255, 37, 37);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+            border-radius: 20px;
+        }
+    }
+    .chat_short_cut{
+        //border: 2px solid red;
+        position: absolute;
+        right: 10px;
+        border-radius: 50%;
+        background-color: $grayLighter;
+        width: 55px;
+        height: 55px;
+        transition: 0.4s;
+        .TiMessages{
+            width: 35px;
+            height: 28px;
+            padding: 10px;
+        }
+        .notification{
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            color: $lightest;
+            font-weight: 600;
+            background-color: rgb(255, 37, 37);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+            border-radius: 20px;
+        }
+    }
+    .my_profile_short_cut{
+        //border: 2px solid red;
+        position: absolute;
+        right: 10px;
+        border-radius: 50%;
+        background-color: $grayLighter;
+        width: 55px;
+        height: 55px;
+        transition: 0.4s;
+        .TiMessages{
+            width: 35px;
+            height: 28px;
+            padding: 10px;
+        }
+        .notification{
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            color: $lightest;
+            font-weight: 600;
+            background-color: rgb(255, 37, 37);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+            border-radius: 20px;
+        }
+    }
+    .past_trips_short_cut{
+        //border: 2px solid red;
+        position: absolute;
+        right: 10px;
+        border-radius: 50%;
+        background-color: $grayLighter;
+        width: 55px;
+        height: 55px;
+        transition: 0.4s;
+        .TiMessages{
+            width: 35px;
+            height: 28px;
+            padding: 10px;
+        }
+        .notification{
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            color: $lightest;
+            font-weight: 600;
+            background-color: rgb(255, 37, 37);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            align-content: center;
+            border-radius: 20px;
+        }
+    }
+}

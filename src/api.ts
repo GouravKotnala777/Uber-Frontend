@@ -455,6 +455,52 @@ export const getAllRides = async(getAllRidesFormData:Partial<Pick<RideTypes, "dr
         return error as ResponseType<typeof error>;
     }
 };
+// Function for fetch my all rides as passenger (except with requested status)
+export const myAllPastRidesPassenger = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/passenger/my-rides`, {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for fetch my all rides as driver (except with requested status)
+export const myAllPastRidesDriver = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/driver/my-rides`, {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for create ride request
 export const createRideRequest = async(createRideRequestFormData:CreateRideRequestBodyTypes) => {
     try {

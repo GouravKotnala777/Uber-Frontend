@@ -1,20 +1,19 @@
 import "../styles/pages/driver_home.scss";
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { BiStopwatch, BiUser } from "react-icons/bi";
+import { BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
 import { FiFile } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { acceptRideRequest, cancelRide, startRide, updateMyDrivingProfile } from "../api";
+import { acceptRideRequest, cancelRide, myAllPastRidesDriver, startRide, updateMyDrivingProfile } from "../api";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
-import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, UserTypes } from "../utils/types";
+import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileShort from "../components/ProfileShort";
 import ShortCuts from "../components/ShortCuts";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
-import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
@@ -23,6 +22,17 @@ import { SendMessageInput } from "../components/SendMessageInput";
 import ShowHideToggler from "../components/ShowHideToggler";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
+import MenuButton from "../components/MenuButton";
+import CarListItem from "../components/CarListItem";
+
+import uberX from "/uber-x.png";
+import uberAuto from "/uber-tuktuk.png";
+import uberScooty from "/uber-scooty.png";
+import uberMoto from "/uber-moto.png";
+import uberComfort from "/uber-comfort.png";
+import uberHCV from "/uber-hcv.png";
+import uberPool from "/uber-pool.png";
+import uberXL from "/uber-xl.png";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -41,6 +51,18 @@ export interface NewRideNotificationTypes {
     passengerGender:"male"|"female"|"other";
 };
 
+
+export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
+const vehicleDescription = { uberAuto: "Affordable three-wheeler",
+    uberX: "Affordable compact",
+    uberScooty: "Quick and economical two-wheeler",
+    uberMoto: "Convenient and fast bike ride",
+    uberComfort: "Premium comfort and space",
+    uberHCV: "Heavy commercial vehicle for goods",
+    uberPool: "Shared ride for lower cost",
+    uberXL: "Spacious ride for groups or large luggage"
+};
+const vehicleCapacity = {uberAuto:5, uberX:3, uberMoto:1, uberScooty:1, uberComfort:3, uberHCV:5, uberPool:3, uberXL:4};
 const shortcuts = [
     {icon:BiStopwatch, heading:"10.2", subHeading:"patoni"},
     {icon:PiSpeedometer, heading:"30", subHeading:"patoni"},
@@ -56,8 +78,9 @@ const DriverHome = () => {
     
     const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<string[]>([]);
     const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
-
-
+    const [myPastRides, setMyPastRides] = useState<RideTypesPopulated[]>([]);
+    const [isMyPastTripsPanelActive, setIsMyPastTripsPanelActive] = useState<boolean>(false);
+    const [isShortcutMenuActive, setIsShortcutMenuActive] = useState<boolean>(false);
 
 
 
@@ -68,7 +91,7 @@ const DriverHome = () => {
     const [isOtpValid, setIsOtpValid] = useState<boolean>(false);
     const [isChatPanelActive, setIsChatPanelActive] = useState<boolean>(false);
     const [isMyProfilePanelActive, setIsMyProfilePanelActive] = useState<boolean>(false);
-    const [newChatNotification, setNewChatNotification] = useState<number>(0);
+    //const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
@@ -168,7 +191,7 @@ const DriverHome = () => {
         receiveMessage("new-message", (data) => {
             console.log(data);
             setMessages((prev) => [...prev, data as ChatTypes]);
-            setNewChatNotification((prev) => prev+1);
+            //setNewChatNotification((prev) => prev+1);
         });
     }, []);
     useEffect(() => {
@@ -219,6 +242,17 @@ const DriverHome = () => {
 
         return () => clearInterval(locationInterval);
     }, [driverContextData.driver, activePassenger]);
+    useEffect(() => {
+            myAllPastRidesDriver()
+            .then((data) => {
+                if (data.success) {
+                    setMyPastRides(data.jsonData);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }, []);
     return(
         <div className="driver_home_page_bg">
             <Toaster />
@@ -228,29 +262,13 @@ const DriverHome = () => {
             {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
             {/*<img className="logo" src={logo} alt={logo} />*/}
             
-            <div className="map_cont">
+            <div className="map_cont" onClick={() => setIsShortcutMenuActive(false)}>
                 <LiveTracking />
             </div>
-            <div className="chat_short_cut" onClick={() => setIsChatPanelActive(true)}>
-                <TiMessages className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
-            <div className="my_profile_short_cut" onClick={() => setIsMyProfilePanelActive(true)}>
-                <BiUser className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
-
-            <div className="driver_profile_panel_cont">
+            <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
+                isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
+             />
+            <div className="driver_profile_panel_cont" onClick={() => setIsShortcutMenuActive(false)}>
                     <div className="availability_status_toggler_cont">
                         <div className="availability_status_toggler" style={{
                             border:driverContextData.driver?.availabilityStatus?"2px solid #1880dc":"2px solid #aaaaaa"
@@ -319,6 +337,32 @@ const DriverHome = () => {
                     driver?: DriverTypesPopulated|null;
                 }>>}
             />
+
+            <Panel isPanelActive={isMyPastTripsPanelActive}>
+                <ShowHideToggler toggleHandler={() => setIsMyPastTripsPanelActive(false)} />
+                <Heading text="Choose from past trips" padding="10px 0" />
+                <ScrollableContainer height="80%">
+                    {
+                        myPastRides.map((ride) => (
+                            <div className="trip_cont">
+                                <CarListItem allFare={{
+                                    uberAuto:ride.fare,
+                                    uberComfort:ride.fare,
+                                    uberHCV:ride.fare,
+                                    uberMoto:ride.fare,
+                                    uberPool:ride.fare,
+                                    uberXL:ride.fare,
+                                    uberScooty:ride.fare,
+                                    uberX:ride.fare
+                                }} vehicleCapacity={vehicleCapacity[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleDescription={vehicleDescription[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleImg={vehicleImages[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleType={driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes} border="1px solid transparent" />
+                                <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
+                                <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
+                            </div>
+
+                        ))
+                    }
+                </ScrollableContainer>
+            </Panel>
             
 
 
