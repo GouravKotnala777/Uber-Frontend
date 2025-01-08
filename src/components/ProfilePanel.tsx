@@ -6,10 +6,9 @@ import ShowHideToggler from "./ShowHideToggler";
 import { MdChangeCircle } from "react-icons/md";
 import { BiEdit } from "react-icons/bi";
 import { GiCancel } from "react-icons/gi";
-import { logout, logoutDriver, removeDriverProfileImage, removeProfileImage, updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
+import { removeDriverProfileImage, removeProfileImage, updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
 import Button from "./Button";
 import ImgWithFallback from "./ImgWithFallback";
-import { redirectAfterToast } from "../utils/utilityFunctions";
 import { useNavigate } from "react-router-dom";
 
 interface ProfilePanelPropTypes{
@@ -27,10 +26,6 @@ interface ProfilePanelPropTypes{
 };
 
 const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profileFor, profile, setProfile}:ProfilePanelPropTypes) => {
-    //const [nameInfo, setNameInfo] = useState<string>("");
-    //const [emailInfo, setEmailInfo] = useState<string>("");
-    //const [passwordInfo, setPasswordInfo] = useState<string>("");
-    //const [mobileInfo, setMobileInfo] = useState<string>("");
     const [updateUserProfileForm, setUpdateUserProfileForm] = useState<Partial<Pick<UserTypes, "name"|"email"|"mobile">>&{password?:string; oldPassword:string;}>({oldPassword:""});
     const [updateDriverProfileForm, setUpdateDriverProfileForm] = useState<Partial<Pick<DriverTypes, "licenseNumber"|"availabilityStatus">>&{vehicleColor?:string; vehicleModel?:string; vehicleNumber?:string; vehicleType?:VehicleTypeTypes}>({});
     const [selectedFieldsForUserUpdate, setSelectedFieldsForUserUpdate] = useState<string[]>([]);
