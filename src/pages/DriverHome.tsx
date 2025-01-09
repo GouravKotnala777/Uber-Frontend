@@ -33,6 +33,7 @@ import uberComfort from "/uber-comfort.png";
 import uberHCV from "/uber-hcv.png";
 import uberPool from "/uber-pool.png";
 import uberXL from "/uber-xl.png";
+import Toggler from "../components/Toggler";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -73,6 +74,7 @@ const DriverHome = () => {
     //const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(true);
     const [hasRideAccepted, setHasRideAccepted] = useState<boolean>(false);
     const [hasRideAcceptedHide, setHasRideAcceptedHide] = useState<boolean>(false);
+    const [homePanelActive, setHomePanelActive] = useState<boolean>(true);
     
     
     
@@ -268,8 +270,11 @@ const DriverHome = () => {
             <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
                 isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
              />
-            <div className="driver_profile_panel_cont" onClick={() => setIsShortcutMenuActive(false)}>
-                    <div className="availability_status_toggler_cont">
+             <Panel isPanelActive={homePanelActive} hasRideAcceptedHide={true} onCloseZInd="2" onClosePosition="-55%">
+                    <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
+
+                    <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
+                    {/*<div className="availability_status_toggler_cont">
                         <div className="availability_status_toggler" style={{
                             border:driverContextData.driver?.availabilityStatus?"2px solid #1880dc":"2px solid #aaaaaa"
                         }}>
@@ -281,11 +286,10 @@ const DriverHome = () => {
                             }}></div>
                             <input type="checkbox" id="availability_status_inp" className="availability_status_inp" onChange={updateDriverAvailablityStatusHandler} />
                         </div>
-                    </div>
+                    </div>*/}
                     <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} />
                     <ShortCuts shortcuts={shortcuts} />
-            </div>
-
+             </Panel>
             {
                 newRidesNotifications.map((requestPopup) => (
                     <Panel isPanelActive={isRideRequestPoppedUp.includes(requestPopup._id)}>
