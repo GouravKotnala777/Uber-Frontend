@@ -270,23 +270,10 @@ const DriverHome = () => {
             <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
                 isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
              />
-             <Panel isPanelActive={homePanelActive} hasRideAcceptedHide={true} onCloseZInd="2" onClosePosition="-55%">
+             <Panel isPanelActive={homePanelActive} hasRideAcceptedHide={true} onClosePosition="-55%">
                     <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
 
                     <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
-                    {/*<div className="availability_status_toggler_cont">
-                        <div className="availability_status_toggler" style={{
-                            border:driverContextData.driver?.availabilityStatus?"2px solid #1880dc":"2px solid #aaaaaa"
-                        }}>
-                            <div className="on" style={{color:driverContextData.driver?.availabilityStatus?"black":"#aaaaaa"}}>On</div>
-                            <div className="off">Off</div>
-                            <div className="toggler_thumb" style={{
-                                left:driverContextData.driver?.availabilityStatus?"0":"53%",
-                                backgroundColor:driverContextData.driver?.availabilityStatus?"#1880dc":"#aaaaaa"
-                            }}></div>
-                            <input type="checkbox" id="availability_status_inp" className="availability_status_inp" onChange={updateDriverAvailablityStatusHandler} />
-                        </div>
-                    </div>*/}
                     <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} />
                     <ShortCuts shortcuts={shortcuts} />
              </Panel>
