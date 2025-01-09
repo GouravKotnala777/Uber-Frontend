@@ -1,0 +1,45 @@
+@import "../utils.scss";
+
+.toggler_cont{
+    //border: 2px solid greenyellow;
+    .toggler{
+        width: 48px;
+        height: 23px;
+        border-radius: 14px;
+        position: relative;
+        margin-left:auto;
+        .on{
+            //border: 1px solid green;
+            font-size: $xs;
+            position: absolute;
+            left: 2px;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+        .off{
+            //border: 1px solid green;
+            font-size: $xs;
+            position: absolute;
+            right: 3px;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+        .toggler_thumb{
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            transition: 0.4s;
+        }
+        .toggle_checkbox_inp{
+            width: 46px;
+            height: 23px;
+            position: absolute;
+            top: 0;
+            transition: 0.4s;
+            cursor: pointer;
+            opacity: 0;
+        }
+    }
+}
