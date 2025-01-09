@@ -11,7 +11,7 @@ import ImgWithFallback from "./ImgWithFallback";
 const AllReviews = ({driverID, rideID}:{driverID:string; rideID:string;}) => {
     const [allReviews, setAllReviews] = useState<ReviewTypesPopulated[]>([]);
     const [newReview, setNewReview] = useState<ReviewTypesPopulated|null>(null);
-    const [rating, setRating] = useState<number>(3);
+    const [rating, setRating] = useState<number>(0);
     const [comment, setComment] = useState<string>("");
     const [hasAlreadyReviewed, setHasAlreadyReviewed] = useState<boolean>(false);
 
