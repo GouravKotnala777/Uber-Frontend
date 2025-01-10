@@ -2,7 +2,7 @@ import "../styles/pages/login.scss";
 import logo from "/uber-logo-1.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { RegisterDriverBodyTypes, VehicleTypeTypes } from "../utils/types";
+import { RegisterDriverBodyTypes } from "../utils/types";
 import { registerDriver } from "../api";
 import Button from "../components/Button";
 import { redirectAfterToast } from "../utils/utilityFunctions";
