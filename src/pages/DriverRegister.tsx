@@ -7,8 +7,8 @@ import { registerDriver } from "../api";
 import Button from "../components/Button";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
+import { VEHICLE_TYPES_ARRAY } from "../utils/constants";
 
-const vehicleTypes:VehicleTypeTypes[] = ["uberX", "uberXL", "uberAuto", "uberComfort", "uberMoto", "uberScooty", "uberPool", "uberHCV"];
 
 const DriverRegister = () => {
     const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"uberX"});
@@ -59,7 +59,7 @@ const DriverRegister = () => {
                     <select name="vehicleType" onChange={(e) => onChangeHandler(e)} >
                         <option value="">--select type--</option>
                         {
-                            vehicleTypes.map((vehicle) => (
+                            VEHICLE_TYPES_ARRAY.map((vehicle) => (
                                 <option value={vehicle}>{vehicle}</option>
                             ))
                         }

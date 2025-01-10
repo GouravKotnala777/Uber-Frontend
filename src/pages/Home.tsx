@@ -39,6 +39,7 @@ import { SendMessageInput } from "../components/SendMessageInput";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import MenuButton from "../components/MenuButton";
+import { JOIN, NEW_MESSAGE, RIDE_ACCEPTED, RIDE_CANCELLED, RIDE_STARTED, SEND_LOCATION_TO_PASSENGER, VEHICLE_TYPES_ARRAY, vehicleCapacity, vehicleDescription } from "../utils/constants";
 
 
 
@@ -61,25 +62,14 @@ export interface RideAcceptedEventMessageType {
     };
     rating:string;
 };
-//const shortcuts:ShortcutTypes[]= [
-//    {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
-//    {icon:TiMessages, heading:"Message", subHeading:"chat with driver", onClickHandler},
-//    {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
-//    {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
-//];
+const shortcuts:ShortcutTypes[]= [
+    {icon:TbShieldPin, heading:"Shafety", subHeading:"something"},
+    {icon:TiMessages, heading:"Message", subHeading:"chat with driver"},
+    {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
+    {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
+];
 
 export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
-const vehicleDescription = { uberAuto: "Affordable three-wheeler",
-    uberX: "Affordable compact",
-    uberScooty: "Quick and economical two-wheeler",
-    uberMoto: "Convenient and fast bike ride",
-    uberComfort: "Premium comfort and space",
-    uberHCV: "Heavy commercial vehicle for goods",
-    uberPool: "Shared ride for lower cost",
-    uberXL: "Spacious ride for groups or large luggage"
-};
-const vehicleCapacity = {uberAuto:5, uberX:3, uberMoto:1, uberScooty:1, uberComfort:3, uberHCV:5, uberPool:3, uberXL:4};
-
 
 const Home = () => {
     const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(false);
@@ -124,12 +114,12 @@ const Home = () => {
 
     
 
-    const shortcuts:ShortcutTypes[]= [
-        {icon:TbShieldPin, heading:"Shafety", subHeading:"patoni"},
-        {icon:TiMessages, heading:"Message", subHeading:"chat with driver"},
-        {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
-        {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
-    ];
+    //const shortcuts:ShortcutTypes[]= [
+    //    {icon:TbShieldPin, heading:"Shafety", subHeading:"something"},
+    //    {icon:TiMessages, heading:"Message", subHeading:"chat with driver"},
+    //    {icon:MdOutlineLocationOn, heading:"Share", subHeading:"share my trip"},
+    //    {icon:IoCallOutline, heading:"Call", subHeading:"call my driver"}
+    //];
 
 
     if (!driverContext) {
@@ -225,18 +215,18 @@ const Home = () => {
 
     useEffect(() => {
         if (userContextData.user) {
-            sendMessage("join", {userID:userContextData.user?._id as string, userType:userContextData.user?.role as "user"|"driver"|"admin"});
+            sendMessage(JOIN, {userID:userContextData.user?._id as string, userType:userContextData.user?.role as "user"|"driver"|"admin"});
         }
     }, [userContextData.user]);
     useEffect(() => {
-        receiveMessage("send-location-to-passenger", (data) => {
+        receiveMessage(SEND_LOCATION_TO_PASSENGER, (data) => {
             console.log("SSSSSSSSSSSSSSSSSSSSSSSS (1)");
             console.log(data);
             console.log("SSSSSSSSSSSSSSSSSSSSSSSS (2)");
         });
     }, []);
     useEffect(() => {
-        receiveMessage("ride-accepted", (data) => {
+        receiveMessage(RIDE_ACCEPTED, (data) => {
             console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (1)");
             console.log(data);
             setActiveDriver(data as RideAcceptedEventMessageType);
@@ -248,7 +238,7 @@ const Home = () => {
     }, []);
     useEffect(() => {
         if (activeDriver) {
-            receiveMessage("ride-started", (data) => {
+            receiveMessage(RIDE_STARTED, (data) => {
                 console.log("EEEEEEEEEEEEEEEEEEE (1)");
                 console.log(data);
                 console.log("EEEEEEEEEEEEEEEEEEE (2)");
@@ -257,7 +247,7 @@ const Home = () => {
         }
     }, [activeDriver]);
     useEffect(() => {
-        receiveMessage("ride-cancelled", (data) => {
+        receiveMessage(RIDE_CANCELLED, (data) => {
             console.log("RIDE cancelled Ride cancelled (1)");
             console.log("RIDE cancelled Ride cancelled (1)");
             console.log(data as {data:{rideID:string}});
@@ -267,7 +257,7 @@ const Home = () => {
         })
     }, []);
     useEffect(() => {
-        receiveMessage("new-message", (data) => {
+        receiveMessage(NEW_MESSAGE, (data) => {
             console.log(data);
             setMessages((prev) => [...prev, data as ChatTypes]);
             //setNewChatNotification((prev) => prev+1);
@@ -360,7 +350,7 @@ const Home = () => {
                 <Heading text="Choose vehicle type" />
                 <ScrollableContainer height="85%">
                         {
-                            (["uberX", "uberComfort", "uberXL", "uberPool", "uberMoto", "uberScooty","uberAuto", "uberHCV"] as VehicleTypeTypes[]).map((item) => (
+                            VEHICLE_TYPES_ARRAY.map((item) => (
                                 <div className="car_list_item_outer" onClick={() => {
                                     setIsRidesPanelActive(false);
                                     setIsSelectedRidePanelActive(true);
@@ -384,8 +374,6 @@ const Home = () => {
                             //))
                         }
                 </ScrollableContainer>
-                {/*<div className="rides_list">
-                </div>*/}
             </Panel>
             <Panel isPanelActive={isSelectedRidePanelActive} >
                 {/*<div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>*/}

@@ -19,12 +19,13 @@ import { Panel, ScrollableContainer } from "../components/WrapperContainers";
 import ShortCuts from "../components/ShortCuts";
 import { TbShieldPin } from "react-icons/tb";
 import AllReviews from "../components/AllReviews";
+import { RIDE_CANCELLED, RIDE_ENDED } from "../utils/constants";
 
 
 const shortcuts = [
-    {icon:TbShieldPin, heading:"Safety", subHeading:"patoni"},
-    {icon:MdOutlineLocationOn, heading:"Share my trip", subHeading:"patoni"},
-    {icon:IoCallOutline, heading:"Call driver", subHeading:"patoni"}
+    {icon:TbShieldPin, heading:"Safety", subHeading:"heading"},
+    {icon:MdOutlineLocationOn, heading:"Share my trip", subHeading:"heading"},
+    {icon:IoCallOutline, heading:"Call driver", subHeading:"heading"}
 ];
 
 const Riding = () => {
@@ -46,13 +47,13 @@ const Riding = () => {
     };
 
     useEffect(() => {
-        receiveMessage("ride-cancelled", (data) => {
+        receiveMessage(RIDE_CANCELLED, (data) => {
             console.log(data as {data:{rideID:string}});
             redirectAfterToast({res:{success:false, message:"Driver cancelled ride", jsonData:{}}, redirectWithReload:"/user/home"});
         })
     }, []);
     useEffect(() => {
-        receiveMessage("ride-ended", (data) => {
+        receiveMessage(RIDE_ENDED, (data) => {
             console.log(data as {data:{rideID:string}});
             redirectAfterToast({res:{success:true, message:"Ride ended", jsonData:{}}});
         })

@@ -8,7 +8,7 @@ const ProfileShort = ({name, amount}:{name:string; amount:number;}) => {
             <div className="driver_image"><img src={vite} alt={vite} /></div>
             <div className="driver_name">
                 <div className="value">{name}</div>
-                <div className="heading">patoni</div>
+                <div className="heading">something</div>
             </div>
             <div className="daily_earning">
                 <div className="value">₹ {amount}.00</div>

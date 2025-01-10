@@ -34,6 +34,7 @@ import uberHCV from "/uber-hcv.png";
 import uberPool from "/uber-pool.png";
 import uberXL from "/uber-xl.png";
 import Toggler from "../components/Toggler";
+import { JOIN, NEW_MESSAGE, NEW_RIDE, SEND_LOCATION_TO_PASSENGER, UPDATE_DRIVER_LOCATION, vehicleCapacity, vehicleDescription } from "../utils/constants";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -54,20 +55,10 @@ export interface NewRideNotificationTypes {
 
 
 export const vehicleImages = {uberAuto, uberX, uberMoto, uberScooty, uberComfort, uberHCV, uberPool, uberXL};
-const vehicleDescription = { uberAuto: "Affordable three-wheeler",
-    uberX: "Affordable compact",
-    uberScooty: "Quick and economical two-wheeler",
-    uberMoto: "Convenient and fast bike ride",
-    uberComfort: "Premium comfort and space",
-    uberHCV: "Heavy commercial vehicle for goods",
-    uberPool: "Shared ride for lower cost",
-    uberXL: "Spacious ride for groups or large luggage"
-};
-const vehicleCapacity = {uberAuto:5, uberX:3, uberMoto:1, uberScooty:1, uberComfort:3, uberHCV:5, uberPool:3, uberXL:4};
 const shortcuts = [
-    {icon:BiStopwatch, heading:"10.2", subHeading:"patoni"},
-    {icon:PiSpeedometer, heading:"30", subHeading:"patoni"},
-    {icon:FiFile, heading:"20", subHeading:"patoni"}
+    {icon:BiStopwatch, heading:"10.2", subHeading:"heading"},
+    {icon:PiSpeedometer, heading:"30", subHeading:"heading"},
+    {icon:FiFile, heading:"20", subHeading:"heading"}
 ];
 
 const DriverHome = () => {
@@ -175,11 +166,11 @@ const DriverHome = () => {
     //}, []);
     useEffect(() => {
         if (driverContextData.driver) {
-            sendMessage("join", {userID:driverContextData.driver?.userID._id as string, userType:"driver"});
+            sendMessage(JOIN, {userID:driverContextData.driver?.userID._id as string, userType:"driver"});
         }
     }, [driverContextData.driver]);
     useEffect(() => {
-        receiveMessage("new-ride", (data) => {
+        receiveMessage(NEW_RIDE, (data) => {
             console.log("DATADATADATADATADATADATADATADATA (1)");
             console.log(data);
             //const {passengerName, passengerEmail, passengerMobile, passengerGender, passengerSocketID} = (data as NewRideNotificationTypes);
@@ -190,7 +181,7 @@ const DriverHome = () => {
         })
     }, []);
     useEffect(() => {
-        receiveMessage("new-message", (data) => {
+        receiveMessage(NEW_MESSAGE, (data) => {
             console.log(data);
             setMessages((prev) => [...prev, data as ChatTypes]);
             //setNewChatNotification((prev) => prev+1);
@@ -206,17 +197,17 @@ const DriverHome = () => {
                 console.log({
                     passengerSocketID:activePassenger?.socketID,
                     driverID:driverContextData.driver?._id as string,
-                    eventName:"send-location-to-passenger",
+                    eventName:SEND_LOCATION_TO_PASSENGER,
                     location:{
                         ltd:1.2345,
                         lng:2.2345
                     }});
                 
-                sendMessage("update-driver-location", {
+                sendMessage(UPDATE_DRIVER_LOCATION, {
                     message:{
                         passengerSocketID:activePassenger?.socketID,
                         driverID:driverContextData.driver?._id as string,
-                        eventName:"send-location-to-passenger",
+                        eventName:SEND_LOCATION_TO_PASSENGER,
                         location:{
                             ltd:1.2345,
                             lng:2.2345
@@ -225,7 +216,7 @@ const DriverHome = () => {
                 })
                 
                 //navigator.geolocation.getCurrentPosition(position => 
-                //    //sendMessage("update-driver-location", {
+                //    //sendMessage(UPDATE_DRIVER_LOCATION, {
                 //    //    message:{
                 //    //        passengerSocketID:activePassenger?.socketID,
                 //    //        driverID:user?._id as string,
