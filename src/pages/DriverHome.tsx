@@ -34,7 +34,7 @@ import uberHCV from "/uber-hcv.png";
 import uberPool from "/uber-pool.png";
 import uberXL from "/uber-xl.png";
 import Toggler from "../components/Toggler";
-import { JOIN, NEW_MESSAGE, NEW_RIDE, SEND_LOCATION_TO_PASSENGER, UPDATE_DRIVER_LOCATION, vehicleCapacity, vehicleDescription } from "../utils/constants";
+import { JOIN, NEW_MESSAGE, NEW_RIDE, PAYMENT_DONE, SEND_LOCATION_TO_PASSENGER, UPDATE_DRIVER_LOCATION, vehicleCapacity, vehicleDescription } from "../utils/constants";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -188,6 +188,12 @@ const DriverHome = () => {
         });
     }, []);
     useEffect(() => {
+        receiveMessage(PAYMENT_DONE, (data) => {
+            console.log(data);
+            redirectAfterToast({res:{success:true, message:(data as string), jsonData:{}}});
+        });
+    }, []);
+    useEffect(() => {
 
         const updateLocation = () => {
             navigator.geolocation.getCurrentPosition(p => {
@@ -261,7 +267,7 @@ const DriverHome = () => {
             <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
                 isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
              />
-             <Panel isPanelActive={homePanelActive} hasRideAcceptedHide={true} onClosePosition="-55%">
+             <Panel isPanelActive={homePanelActive} hasRideAcceptedHide={true} onClosePosition="-55%" onCloseZInd="1">
                     <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
 
                     <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
