@@ -1,5 +1,5 @@
 import "../styles/pages/driver_riding.scss";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProfileShort from "../components/ProfileShort";
 import { endRide } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,13 +11,19 @@ import Location from "../components/Location";
 import { Panel, ScrollableContainer } from "../components/WrapperContainers";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
+import { PAYMENT_DONE } from "../utils/constants";
+import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
 
 const DriverRiding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(true);
     const {acceptedRide} = useLocation().state;
     const navigate = useNavigate();
+    const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
 
+    if (!socketContext) throw Error("socketDataContext not provided");
+
+    const {receiveMessage} = socketContext;
     const endRideHandler = async() => {    
         const res = await endRide({rideID:acceptedRide._id});
         redirectAfterToast({res, redirectWithoutReload:{navigate, url:"/driver/home"}});
@@ -25,6 +31,12 @@ const DriverRiding = () => {
     const hideRideHandler = () => {
         console.log("hide");
     }
+    useEffect(() => {
+        receiveMessage(PAYMENT_DONE, (data) => {
+            console.log(data);
+            redirectAfterToast({res:{success:true, message:(data as string), jsonData:{}}});
+        });
+    }, []);
 
     return(
         <div className="driver_riding_page_bg">
