@@ -1,0 +1,26 @@
+
+
+.verify_cont{
+    //border: 2px solid red;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 10px;
+    .digits_cont{
+        //border: 2px solid violet;
+        display: flex;
+        height:100px;
+        gap: 2.5%;
+        box-sizing: border-box;
+        .digit_cont{
+            box-sizing: border-box;
+            //border: 2px solid indigo;
+            height: 70px;
+            width: 14.5%;
+            font-size: 2rem;
+            align-content: center;
+            text-align: center;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+    }
+}
