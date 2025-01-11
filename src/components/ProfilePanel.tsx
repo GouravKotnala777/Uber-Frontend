@@ -9,7 +9,7 @@ import { GiCancel } from "react-icons/gi";
 import { removeDriverProfileImage, removeProfileImage, updateMyDrivingProfile, updateMyProfile, uploadDriverProfileImage, uploadProfileImage } from "../api";
 import Button from "./Button";
 import ImgWithFallback from "./ImgWithFallback";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface ProfilePanelPropTypes{
     isMyProfilePanelActive:boolean;
@@ -189,6 +189,8 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                                 </>
                             }
                         </div>
+                        <span style={{display:"inline-block", margin:"15px 0"}}>Register as driver</span> &nbsp;
+                        <Link to="/driver/register" style={{margin:"15px 0"}}>register</Link>
                         <Button text="Logout" onClickHandler={() => navigate("/logout", {state:{logoutFor:"user"}})} />
                     </>
                     :
