@@ -20,6 +20,7 @@ import { DriverContextTypes, DriverInitialContextData } from './contexts/DriverC
 import Rides from './pages/dashboard/Rides';
 import Logout from './pages/Logout';
 import Drivers from './pages/dashboard/Drivers';
+import Verify from './pages/Verify';
 
 function App() {
   const userContext = useContext<UserContextTypes>(UserInitialDataContext);
@@ -73,7 +74,7 @@ function App() {
   return (
     
           <BrowserRouter>
-            {/*<pre>{JSON.stringify(driverContextData, null, `\t`)}</pre>*/}
+            {/*<pre>{JSON.stringify(userContextData.user, null, `\t`)}</pre>*/}
             {/*<nav style={{border:"2px solid white", width:"100%"}}><NavLink to={"/user/register"}>Register</NavLink><NavLink to={"/user/login"}>Login</NavLink> </nav>*/}
             <Routes>
               <Route path="/" element={<Start />} />
@@ -85,6 +86,7 @@ function App() {
                     <Route path="/user/login" element={<Login />} />
                   </>
               }
+              <Route path="/user/verify" element={<Verify />} />
               {/*<Route path="/user/riding" element={<Riding />} />*/}
               {/*<Route path="/driver/home" element={<DriverHome />} />*/}
               {

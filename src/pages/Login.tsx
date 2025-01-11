@@ -29,7 +29,17 @@ const Login = () => {
                 }
                 else{
                     const res = await login(loginFormData);
-                    redirectAfterToast({res, redirectWithReload:"/user/home"});
+                    if (res.success) {
+                        if (res.message === "User login successful") {
+                            redirectAfterToast({res, redirectWithReload:"/user/home"});
+                        }
+                        else{
+                            redirectAfterToast({res, redirectWithReload:"/user/verify?userType=passenger"});
+                        }
+                    }
+                    else{
+                        redirectAfterToast({res});
+                    }
                 }
             }
         }

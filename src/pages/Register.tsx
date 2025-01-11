@@ -38,7 +38,11 @@ const Register = () => {
                         }
                         else{
                             const res = await register(registerFormData);
-                            redirectAfterToast({res, redirectWithReload:"/user/login"});
+                            if (res.success) {
+                                redirectAfterToast({res, redirectWithReload:"/user/verify?userType=passenger"});
+                            } else {
+                                redirectAfterToast({res});
+                            }
                         }
                     }
                 }

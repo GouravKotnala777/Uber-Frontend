@@ -27,7 +27,12 @@ const DriverRegister = () => {
             }
             else{
                 const res = await registerDriver(registerDriverFormData);
-                redirectAfterToast({res, redirectWithReload:"/driver/login"});
+                if (res.success) {
+                    redirectAfterToast({res, redirectWithReload:"/user/verify?userType=driver"});
+                }
+                else{
+                    redirectAfterToast({res});
+                }
             }
         }
     };

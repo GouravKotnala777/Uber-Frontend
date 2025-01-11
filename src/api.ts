@@ -55,6 +55,30 @@ export const login = async(loginFormData:Pick<RegisterBodyTypes, "email"|"passwo
         return error as ResponseType<typeof error>;
     }
 };
+// Function for user verification
+export const verifyUser = async({otp}:{otp:string;}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/verify`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({otp})
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for fetch my profile
 export const myProfile = async() => {
     try {
@@ -222,6 +246,30 @@ export const loginDriver = async(loginFormData:Pick<RegisterBodyTypes&RegisterDr
             },
             credentials:"include",
             body:JSON.stringify(loginFormData)
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
+// Function for user verification
+export const verifyDriver = async({otp}:{otp:string;}) => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/driver/verify`, {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include",
+            body:JSON.stringify({otp})
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

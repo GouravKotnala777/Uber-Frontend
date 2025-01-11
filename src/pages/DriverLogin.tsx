@@ -29,7 +29,17 @@ const DriverLogin = () => {
                     redirectAfterToast({res:{success:false, message:"Password length should be 5 < password.length <= 20", jsonData:{}}});
                 } else {
                     const res = await loginDriver(loginFormData);
-                    redirectAfterToast({res, redirectWithReload:"/driver/home"});
+                    if (res.success) {
+                        if (res.message === "Driver login successful") {
+                            redirectAfterToast({res, redirectWithReload:"/driver/home"});
+                        }
+                        else{
+                            redirectAfterToast({res, redirectWithReload:"/user/verify/?userType=driver"});
+                        }
+                    }
+                    else{
+                        redirectAfterToast({res});
+                    }
                 }
             }
         }
