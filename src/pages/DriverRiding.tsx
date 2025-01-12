@@ -50,19 +50,19 @@ const DriverRiding = () => {
                 <Heading text="You are riding now" />
                 <div className="riding_distance_cont">
                     <div className="heading">Total Distance</div>
-                    <div className="value">2km</div>
+                    <div className="value">{((acceptedRide.distance as number)/1000).toFixed(1)}km</div>
                     <div className="heading">Remaining</div>
                     <div className="value">0.7km</div>
                 </div>
                 <div className="riding_duration_cont">
                     <div className="heading">Duration</div>
-                    <div className="value">10min</div>
+                    <div className="value">{acceptedRide.fare}min</div>
                 </div>
             </div>
             <Panel isPanelActive={!isRideDetailsHide}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
                 <ScrollableContainer height="66%">
-                    <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} />
+                    <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} distance={acceptedRide.distance as number} profileImg={acceptedRide?.passengerImg as string} />
                     <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
                     <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
                 </ScrollableContainer>

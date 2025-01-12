@@ -38,7 +38,7 @@ const AllReviews = ({driverID, rideID}:{driverID:string; rideID:string;}) => {
                         (newReview &&
                             <div className="review_cont">
                                 <div className="img_cont">
-                                    <ImgWithFallback src={newReview.passengerID.image} fallbackSrc="unknown_user.png" />
+                                    <ImgWithFallback src={newReview.passengerID?.image as string} fallbackSrc="unknown_user.png" />
                                 </div>
                                 <div className="rating">
                                     {showStarsForRating(newReview.rating).map((StarIcon) => (<StarIcon className="BsStarFill" />))}
@@ -62,7 +62,7 @@ const AllReviews = ({driverID, rideID}:{driverID:string; rideID:string;}) => {
                     allReviews.map((revw) => (
                         <div className="review_cont">
                             <div className="img_cont">
-                            <ImgWithFallback src={revw.passengerID.image} fallbackSrc="unknown_user.png" />
+                            <ImgWithFallback src={revw.passengerID?.image as string} fallbackSrc="unknown_user.png" />
                             </div>
                             <div className="rating">
                                 {showStarsForRating(revw.rating).map((StarIcon) => (<StarIcon className="BsStarFill" />))}

@@ -1,0 +1,16 @@
+
+
+.spinner_cont{
+    margin: 0 auto;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+};
+
+@keyframes spin {
+    0%{
+        rotate: 0deg;
+    }
+    100%{
+        rotate: 360deg;
+    }
+}

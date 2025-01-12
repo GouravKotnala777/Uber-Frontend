@@ -35,7 +35,6 @@ import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
 import {CenterContainer, Panel, ScrollableContainer} from "../components/WrapperContainers";
-import { SendMessageInput } from "../components/SendMessageInput";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import MenuButton from "../components/MenuButton";
@@ -52,6 +51,7 @@ export interface RideAcceptedEventMessageType {
     driverEmail:string;
     driverMobile:string;
     driverGender:"male"|"female"|"other";
+    driverImg?:string;
     driverSocketID:string;
     licenseNumber:string;
     vehicleDetailes:{
@@ -105,7 +105,10 @@ const Home = () => {
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
     const [myPastRides, setMyPastRides] = useState<RideTypesPopulated[]>([]);
+    const [isMySavedRidesActive, setIsMySavedRidesActive] = useState<boolean>(false);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     //const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
     const userContext = useContext<UserContextTypes>(UserInitialDataContext);
@@ -149,21 +152,33 @@ const Home = () => {
     };
 
     const createRideHandler = (e:MouseEvent<HTMLButtonElement>) => {
+        setIsLoading(true);
         e.preventDefault();
-        setIsLocationPanelActive(false);
-        setIsRidesPanelActive(true);
         getFareOfTrip({pickupLocation:pickupLocation.address, dropoffLocation:dropoffLocation.address})
         .then((res) => {
             setAllFare(res.jsonData.fare);
+            setIsLoading(false);
+            setIsLocationPanelActive(false);
+            setIsRidesPanelActive(true);
         })
         .catch((err) => {
             console.log(err);
+            setIsLoading(false);
         });
     };
     const confirmRideHandler = () => {
-        setIsSelectedRidePanelActive(false);
-        setIsWaitingPanelActive(true);
-        createRideRequest({passengerID:userContextData.user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType});
+        setIsLoading(true);
+        createRideRequest({passengerID:userContextData.user?._id as string, pickupLocation, dropoffLocation, vehicleType:selectedVehicleType})
+        .then(() => {
+            setIsLoading(false);
+            setIsSelectedRidePanelActive(false);
+            setIsWaitingPanelActive(true);
+            
+        })
+        .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+        });
     };
 
     useEffect(() => {
@@ -292,13 +307,15 @@ const Home = () => {
             <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
                 isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
              />
-
             <div className="form_cont"
             style={{bottom:isLocationPanelActive?"56%":"0"}}
             onClick={() => setIsShortcutMenuActive(false)}
             >
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
-                <Heading text="Find a trip" />
+                <div className="heading_and_btn">
+                    <Heading text="Find a trip" />
+                    <button className="show_saved_rides_btn" onClick={() => setIsMySavedRidesActive(true)}>show</button>
+                </div>
                 <Input placeholder="Add a pickup location"
                     margin="15px 0 0 0"
                     onChangeHandler={(e) => setPickupLocationInp(e.target.value)}
@@ -309,7 +326,7 @@ const Home = () => {
                     onChangeHandler={(e) => setDropoffLocationInp(e.target.value)}
                     onClickHandler={() => setIsLocationPanelActive(true)}
                         />
-                <Button text="Create ride" margin="15px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
+                <Button text="Create ride" isLoading={isLoading} margin="15px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
             </div>
             <div className="suggestion_list_cont"
             style={{bottom:isLocationPanelActive?"0":"-60%", zIndex:isLocationPanelActive?"1":"-1"}}
@@ -345,6 +362,13 @@ const Home = () => {
                 }
 
             </div>
+            <Panel isPanelActive={isMySavedRidesActive}>
+                <ShowHideToggler toggleHandler={() => setIsMySavedRidesActive(false)} />
+                <Heading text="Saved rides" />
+                <ScrollableContainer height="70%">
+                    <h1>sadafsfsdf</h1>
+                </ScrollableContainer>
+            </Panel>
             <Panel isPanelActive={isRidesPanelActive}>
                 <ShowHideToggler hide={!isRidesPanelActive} toggleHandler={() => setIsRidesPanelActive(false)} />
                 <Heading text="Choose vehicle type" />
@@ -387,7 +411,7 @@ const Home = () => {
                         <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
                         <TripFee amount={allFare[selectedVehicleType]} />
                     </ScrollableContainer>
-                    <Button text={`Confirm with ${selectedVehicleType}`} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
+                    <Button text={`Confirm with ${selectedVehicleType}`} isLoading={isLoading} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
                 {/*</div>*/}
             </Panel>
             <Panel isPanelActive={isWaitingPanelActive}>
@@ -413,7 +437,6 @@ const Home = () => {
                 </div>
                 <ScrollableContainer height="81%">
                     <ProfileLong driverDetails={activeDriver as RideAcceptedEventMessageType} />
-                    <SendMessageInput onChangeHandler={() => {}} onClickHandler={async() => {}} />
                     <ShortCuts shortcuts={shortcuts} />
                     <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
                 </ScrollableContainer>

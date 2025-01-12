@@ -1,14 +1,14 @@
 import { BsStarFill } from "react-icons/bs";
 import { RideAcceptedEventMessageType } from "../pages/Home";
 import "../styles/components/profile_long.scss";
-import vite from "/vite.svg";
+import ImgWithFallback from "./ImgWithFallback";
 
 const ProfileLong = ({driverDetails}:{driverDetails:RideAcceptedEventMessageType}) => {
 
     return(
         <div className="profile_long_cont">
             <div className="driver_photo">
-                <img src={vite} alt={vite} />
+                <ImgWithFallback src={driverDetails?.driverImg as string} fallbackSrc="unknown_user.png" />
                 {
                     driverDetails?.otp &&
                         <div className="otp">

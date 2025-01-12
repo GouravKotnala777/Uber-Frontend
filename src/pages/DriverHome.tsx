@@ -50,6 +50,7 @@ export interface NewRideNotificationTypes {
     passengerEmail:string;
     passengerMobile:string;
     passengerSocketID:string;
+    passengerImg?:string;
     passengerGender:"male"|"female"|"other";
 };
 
@@ -60,7 +61,7 @@ const shortcuts = [
     {icon:PiSpeedometer, heading:"30", subHeading:"heading"},
     {icon:FiFile, heading:"20", subHeading:"heading"}
 ];
-
+let setTimeOutID:number;
 const DriverHome = () => {
     //const [isLocationPanelActive, setIsLocationPanelActive] = useState<boolean>(true);
     const [hasRideAccepted, setHasRideAccepted] = useState<boolean>(false);
@@ -141,17 +142,21 @@ const DriverHome = () => {
     };
 
     const updateDriverAvailablityStatusHandler = async() => {
-        const updateDriverAvailablityStatus = await updateMyDrivingProfile({availabilityStatus:!driverContextData.driver?.availabilityStatus});
-        setDriverContextData!({
-            isLoading:false,
-            driver:updateDriverAvailablityStatus.jsonData
-        });
-        if (updateDriverAvailablityStatus.success) {
-            redirectAfterToast({res:{success:true, message:!driverContextData.driver?.availabilityStatus?"You are now online":"You are offline", jsonData:{}}});
-        }
-        else{
-            redirectAfterToast({res:{success:false, message:updateDriverAvailablityStatus.message, jsonData:updateDriverAvailablityStatus.jsonData}});
-        }
+        clearTimeout(setTimeOutID);
+        setTimeOutID = setTimeout(async() => {
+            const updateDriverAvailablityStatus = await updateMyDrivingProfile({availabilityStatus:!driverContextData.driver?.availabilityStatus});
+            setDriverContextData!({
+                isLoading:false,
+                driver:updateDriverAvailablityStatus.jsonData
+            });
+            if (updateDriverAvailablityStatus.success) {
+                redirectAfterToast({res:{success:true, message:!driverContextData.driver?.availabilityStatus?"You are now online":"You are offline", jsonData:{}}});
+            }
+            else{
+                redirectAfterToast({res:{success:false, message:updateDriverAvailablityStatus.message, jsonData:updateDriverAvailablityStatus.jsonData}});
+            }
+        }, 1000);
+
     };
 
 
@@ -271,7 +276,7 @@ const DriverHome = () => {
                     <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
 
                     <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
-                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} />
+                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} profileImg={driverContextData.driver?.image as string} />
                     <ShortCuts shortcuts={shortcuts} />
              </Panel>
             {
@@ -279,7 +284,11 @@ const DriverHome = () => {
                     <Panel isPanelActive={isRideRequestPoppedUp.includes(requestPopup._id)}>
                         <Heading text="New ride available" padding="10px" />
                         <ScrollableContainer height="58%">
-                            <ProfileShort name={requestPopup.passengerMobile} amount={Math.ceil(requestPopup.distance/1000)} />
+                            <ProfileShort name={requestPopup.passengerMobile} 
+                            //amount={Math.ceil(requestPopup.distance/1000)}
+                            amount={requestPopup.fare}
+                            distance={requestPopup.distance}
+                            profileImg={requestPopup?.passengerImg as string} />
                             <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
                             <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
                         </ScrollableContainer>
@@ -292,7 +301,7 @@ const DriverHome = () => {
                 <ShowHideToggler toggleHandler={() => setHasRideAccepted(!hasRideAccepted)} />
                 <Heading text="Start ride by OTP" />
                 <ScrollableContainer height="60%">
-                    <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} />
+                    <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} distance={acceptedRide?.distance as number} profileImg={acceptedRide?.passengerImg as string} />
                     <SendMessageInput onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
                     <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
                     <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />

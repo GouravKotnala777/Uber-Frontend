@@ -122,7 +122,7 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
             <Heading text="My profile" padding="0 0 10px 10px" />
             <div className="scrollable_cont">
                 <div className="dp_cont">
-                    <ImgWithFallback src={profile.image} fallbackSrc="unknown_user.png" />
+                    <ImgWithFallback src={profile?.image as string} fallbackSrc="unknown_user.png" />
                     <div className="choose_db_cont">
                         <MdChangeCircle className="MdChangeCircle" />
                         <form>

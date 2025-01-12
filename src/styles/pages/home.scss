@@ -33,6 +33,15 @@
         //bottom:55%;
         box-sizing: border-box;
         z-index: 1;
+        .heading_and_btn{
+            border: 1px solid blue;
+            display: flex;
+            justify-content: space-between;
+            .show_saved_rides_btn{
+                width: 130px;
+                font-size: $m;
+            }
+        }
     }
     .suggestion_list_cont{
         //border: 2px solid orange;
