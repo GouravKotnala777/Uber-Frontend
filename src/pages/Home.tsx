@@ -5,7 +5,7 @@ import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState }
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
-import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myAllPastRidesPassenger } from "../api";
+import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myAllPastRidesPassenger, myAllUniqueRidesPassenger } from "../api";
 import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
@@ -105,6 +105,7 @@ const Home = () => {
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
     const [myPastRides, setMyPastRides] = useState<RideTypesPopulated[]>([]);
+    const [isUniqueRides, setIsUniqueRides] = useState<RideTypesPopulated[]>([]);
     const [isMySavedRidesActive, setIsMySavedRidesActive] = useState<boolean>(false);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -290,6 +291,25 @@ const Home = () => {
         })
     }, []);
 
+    const fetchSavedRides = async() => {
+        const savedRidesRes = await myAllUniqueRidesPassenger();
+        setIsUniqueRides(savedRidesRes.jsonData);
+    }
+    //useEffect(() => {
+    //    myAllUniqueRidesPassenger()
+    //    .then((data) => {
+    //        if (data.success) {
+    //            setIsUniqueRides(data.jsonData);
+    //        }
+    //        console.log("QQQQQQQQQQQQQQQQ");
+    //        console.log(data.jsonData);
+    //        console.log("QQQQQQQQQQQQQQQQ");
+    //    })
+    //    .catch((err) => {
+    //        console.log(err);
+    //    })
+    //}, []);
+
     return(
         <div className="home_page_background">
             <Toaster />
@@ -314,7 +334,7 @@ const Home = () => {
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
                 <div className="heading_and_btn">
                     <Heading text="Find a trip" />
-                    <button className="show_saved_rides_btn" onClick={() => setIsMySavedRidesActive(true)}>show</button>
+                    <button className="show_saved_rides_btn" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>show</button>
                 </div>
                 <Input placeholder="Add a pickup location"
                     margin="15px 0 0 0"
@@ -365,8 +385,32 @@ const Home = () => {
             <Panel isPanelActive={isMySavedRidesActive}>
                 <ShowHideToggler toggleHandler={() => setIsMySavedRidesActive(false)} />
                 <Heading text="Saved rides" />
-                <ScrollableContainer height="70%">
-                    <h1>sadafsfsdf</h1>
+                <ScrollableContainer height="80%">
+                    {
+                        isUniqueRides.map((ride) => (
+                            <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
+                                    e.preventDefault();
+                                    setIsMyPastTripsPanelActive(false);
+                                    setSelectedVehicleType(ride?.driverID.vehicleDetailes.vehicleType);
+                                    setIsWaitingPanelActive(true);
+                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.driverID.vehicleDetailes.vehicleType});                        
+                            }}>
+                                <CarListItem allFare={{
+                                    uberAuto:ride.fare,
+                                    uberComfort:ride.fare,
+                                    uberHCV:ride.fare,
+                                    uberMoto:ride.fare,
+                                    uberPool:ride.fare,
+                                    uberXL:ride.fare,
+                                    uberScooty:ride.fare,
+                                    uberX:ride.fare
+                                }} vehicleCapacity={vehicleCapacity[ride.driverID?.vehicleDetailes.vehicleType]} vehicleDescription={vehicleDescription[ride.driverID?.vehicleDetailes.vehicleType]} vehicleImg={vehicleImages[ride.driverID?.vehicleDetailes.vehicleType]} vehicleType={ride.driverID?.vehicleDetailes.vehicleType} border="1px solid transparent" />
+                                <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
+                                <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
+                            </div>
+
+                        ))
+                    }
                 </ScrollableContainer>
             </Panel>
             <Panel isPanelActive={isRidesPanelActive}>

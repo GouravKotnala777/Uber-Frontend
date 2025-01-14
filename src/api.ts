@@ -526,6 +526,29 @@ export const myAllPastRidesPassenger = async() => {
         return error as ResponseType<typeof error>;
     }
 };
+// Function for fetch my all unique rides as passenger
+export const myAllUniqueRidesPassenger = async() => {
+    try {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/passenger/my-unique-rides`, {
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            credentials:"include"
+        });
+        const resolvedData = await res.json();
+        console.log("::::::::::::::::::::: 1");
+        console.log(resolvedData);
+        console.log("::::::::::::::::::::: 2");
+        
+        return resolvedData as ResponseType<typeof resolvedData.jsonData>;
+    } catch (error) {
+        console.log("::::::::::::::::::::: 1");
+        console.log(error);
+        console.log("::::::::::::::::::::: 2");
+        return error as ResponseType<typeof error>;
+    }
+};
 // Function for fetch my all rides as driver (except with requested status)
 export const myAllPastRidesDriver = async() => {
     try {
