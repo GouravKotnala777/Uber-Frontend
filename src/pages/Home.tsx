@@ -334,7 +334,7 @@ const Home = () => {
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
                 <div className="heading_and_btn">
                     <Heading text="Find a trip" />
-                    <button className="show_saved_rides_btn" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>show</button>
+                    <button className="show_saved_rides_btn" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>Saved rides</button>
                 </div>
                 <Input placeholder="Add a pickup location"
                     margin="15px 0 0 0"
@@ -391,9 +391,9 @@ const Home = () => {
                             <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
                                     e.preventDefault();
                                     setIsMyPastTripsPanelActive(false);
-                                    setSelectedVehicleType(ride?.driverID.vehicleDetailes.vehicleType);
+                                    setSelectedVehicleType(ride?.vehicleDetailes.vehicleType);
                                     setIsWaitingPanelActive(true);
-                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.driverID.vehicleDetailes.vehicleType});                        
+                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.vehicleDetailes.vehicleType});                        
                             }}>
                                 <CarListItem allFare={{
                                     uberAuto:ride.fare,
@@ -404,7 +404,7 @@ const Home = () => {
                                     uberXL:ride.fare,
                                     uberScooty:ride.fare,
                                     uberX:ride.fare
-                                }} vehicleCapacity={vehicleCapacity[ride.driverID?.vehicleDetailes.vehicleType]} vehicleDescription={vehicleDescription[ride.driverID?.vehicleDetailes.vehicleType]} vehicleImg={vehicleImages[ride.driverID?.vehicleDetailes.vehicleType]} vehicleType={ride.driverID?.vehicleDetailes.vehicleType} border="1px solid transparent" />
+                                }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} border="1px solid transparent" />
                                 <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
                                 <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
                             </div>
@@ -517,9 +517,9 @@ const Home = () => {
                             <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
                                     e.preventDefault();
                                     setIsMyPastTripsPanelActive(false);
-                                    setSelectedVehicleType(ride.driverID.vehicleDetailes.vehicleType);
+                                    setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
                                     setIsWaitingPanelActive(true);
-                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.driverID.vehicleDetailes.vehicleType});                        
+                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.vehicleDetailes.vehicleType});                        
                             }}>
                                 <CarListItem allFare={{
                                     uberAuto:ride.fare,
@@ -530,7 +530,7 @@ const Home = () => {
                                     uberXL:ride.fare,
                                     uberScooty:ride.fare,
                                     uberX:ride.fare
-                                }} vehicleCapacity={vehicleCapacity[ride.driverID.vehicleDetailes.vehicleType]} vehicleDescription={vehicleDescription[ride.driverID.vehicleDetailes.vehicleType]} vehicleImg={vehicleImages[ride.driverID.vehicleDetailes?.vehicleType]} vehicleType={ride.driverID.vehicleDetailes?.vehicleType} border="1px solid transparent" />
+                                }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} border="1px solid transparent" />
                                 <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
                                 <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
                             </div>

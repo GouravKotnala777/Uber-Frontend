@@ -34,12 +34,15 @@
         box-sizing: border-box;
         z-index: 0;
         .heading_and_btn{
-            border: 1px solid blue;
+            //border: 1px solid blue;
             display: flex;
             justify-content: space-between;
             .show_saved_rides_btn{
                 width: 130px;
                 font-size: $m;
+                background-color: transparent;
+                border: 1px solid black;
+                border-radius: 4px;
             }
         }
     }

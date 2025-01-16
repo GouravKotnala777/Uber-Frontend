@@ -10,17 +10,20 @@ export interface UserTypes {
     socketID:string;
     image?:string;
 };
+export interface VehicleTypes {
+    _id:string;
+    vehicleType:VehicleTypeTypes;
+    vehicleModel:string;
+    vehicleNumber:string;
+    vehicleColor:string;
+    vehicleCapacity:number;
+};
 export type VehicleTypeTypes = "uberAuto"|"uberX"|"uberMoto"|"uberScooty"|"uberComfort"|"uberHCV"|"uberPool"|"uberXL";
 export interface DriverTypes {
     _id:string;
     userID:UserTypes;
     licenseNumber:string;
-    vehicleDetailes:{
-        vehicleType:VehicleTypeTypes;
-        vehicleModel:string;
-        vehicleNumber:string;
-        vehicleColor:string;
-    },
+    vehicleDetailes:string;
     availabilityStatus:boolean;
     rating:number;
     image?:string;
@@ -31,12 +34,7 @@ export interface DriverTypesPopulated {
     _id:string;
     userID:Pick<UserTypes, "_id"|"name"|"email"|"gender"|"mobile"|"role"|"socketID">;
     licenseNumber:string;
-    vehicleDetailes:{
-        vehicleType:VehicleTypeTypes;
-        vehicleModel:string;
-        vehicleNumber:string;
-        vehicleColor:string;
-    },
+    vehicleDetailes:VehicleTypes;
     availabilityStatus:boolean;
     rating:number;
     image?:string;
@@ -62,10 +60,19 @@ export interface LocationTypes {
     longitude:number;
     address:string;
 };
+export interface VehicleTypes {
+    _id:string;
+    vehicleType:VehicleTypeTypes;
+    vehicleModel:string;
+    vehicleNumber:string;
+    vehicleColor:string;
+    vehicleCapacity:number;
+};
 export interface RideTypes {
     _id:string;
     driverID:string;
     passengerID:string;
+    vehicleDetailes:VehicleTypes;
     pickupLocation:LocationTypes;
     dropoffLocation:LocationTypes;
     distance:number;
@@ -83,6 +90,7 @@ export interface RideTypesPopulated {
     _id:string;
     driverID:DriverTypes;
     passengerID:string;
+    vehicleDetailes:VehicleTypes;
     pickupLocation:LocationTypes;
     dropoffLocation:LocationTypes;
     distance:number;

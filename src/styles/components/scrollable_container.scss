@@ -1,7 +1,7 @@
 @import "../utils.scss";
 
 .scrollable_container_cont{
-    border: 2px solid red;
+    //border: 2px solid red;
     overflow-y: scroll;
     .trip_cont{
         //border: 2px solid rgb(17, 255, 0);
@@ -18,7 +18,7 @@
 }
 
 .panel_cont{
-    border: 2px solid blue;
+    //border: 2px solid blue;
     height: 80%;
     transition: 0.5s;
     background-color: $lightest;
@@ -32,7 +32,7 @@
 
     // .first_part styles are only for 'Driver page' 'Meet at the pickup point' panel
     .first_part{
-        border: 2px solid indigo;
+        //border: 2px solid indigo;
         display: flex;
         justify-content: space-between;
         align-items: center;
