@@ -45,3 +45,26 @@
         }
     }
 }
+
+.infinite_scroller_cont{
+    //border: 2px solid red;
+    overflow-y: scroll;
+    .scroller_cont{
+        //border: 2px solid green;
+        .next_btn_cont{
+            //border: 2px solid orange;
+            text-align: center;
+            margin: 15px 0;
+            button{
+                background-color: black;
+                color: white;
+                width: 80px;
+                height: 40px;
+                border-radius: 8px;
+                font-size: $m;
+                border: none;
+                outline: none;
+            }
+        }
+    }
+}
