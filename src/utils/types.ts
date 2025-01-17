@@ -52,6 +52,7 @@ export interface RegisterDriverBodyTypes extends Pick<DriverTypes, "licenseNumbe
     vehicleModel:string;
     vehicleNumber:string;
     vehicleType:VehicleTypeTypes;
+    vehicleCapacity:number;
     password:string;
 };
 export type RideStatusTypes = "requested"|"accepted"|"in-progress"|"completed"|"cancelled";

@@ -11,7 +11,7 @@ import { VEHICLE_TYPES_ARRAY } from "../utils/constants";
 
 
 const DriverRegister = () => {
-    const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"uberX"});
+    const [registerDriverFormData, setRegisterDriverFormData] = useState<RegisterDriverBodyTypes>({licenseNumber:"", password:"", vehicleColor:"", vehicleModel:"", vehicleNumber:"", vehicleType:"uberX", vehicleCapacity:0});
     const navigate = useNavigate();
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
@@ -19,7 +19,7 @@ const DriverRegister = () => {
     };
 
     const createDriverAccountHandler = async() => {
-        if (!registerDriverFormData.licenseNumber || !registerDriverFormData.password || !registerDriverFormData.vehicleColor || !registerDriverFormData.vehicleModel || !registerDriverFormData.vehicleNumber || !registerDriverFormData.vehicleType) {
+        if (!registerDriverFormData.licenseNumber || !registerDriverFormData.password || !registerDriverFormData.vehicleColor || !registerDriverFormData.vehicleModel || !registerDriverFormData.vehicleNumber || !registerDriverFormData.vehicleType || !registerDriverFormData.vehicleCapacity) {
             redirectAfterToast({res:{success:false, message:"All fields are required", jsonData:{}}});
         } else {
             if (registerDriverFormData.password.length < 6 || registerDriverFormData.password.length > 20) {
@@ -70,6 +70,8 @@ const DriverRegister = () => {
                         }
                     </select>
                 </div>
+                <label>Passenger capacity excluding driver</label>
+                <input type="text" name="vehicleCapacity" placeholder="Vehicle Capacity" onChange={(e) => onChangeHandler(e)} />
                 <Button text="Create driver account" margin="25px 0 0 0" onClickHandler={createDriverAccountHandler} />
                 <p>Already have a account? <Link to="/driver/login" className="link"> Login here</Link></p>
                 <Button text="Go to user register page" margin="0 0 0 0" onClickHandler={() => navigate("/user/register")} />
