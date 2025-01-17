@@ -504,9 +504,9 @@ export const getAllRides = async(getAllRidesFormData:Partial<Pick<RideTypes, "dr
     }
 };
 // Function for fetch my all rides as passenger (except with requested status)
-export const myAllPastRidesPassenger = async() => {
+export const myAllPastRidesPassenger = async(skip:number) => {
     try {
-        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/passenger/my-rides`, {
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/passenger/my-rides?skip=${skip}`, {
             method:"GET",
             headers:{
                 "Content-Type":"application/json"

@@ -34,7 +34,7 @@ import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
-import {CenterContainer, Panel, ScrollableContainer} from "../components/WrapperContainers";
+import {CenterContainer, InfiniteScroller, Panel, ScrollableContainer} from "../components/WrapperContainers";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import MenuButton from "../components/MenuButton";
@@ -279,17 +279,17 @@ const Home = () => {
             //setNewChatNotification((prev) => prev+1);
         });
     }, []);
-    useEffect(() => {
-        myAllPastRidesPassenger()
-        .then((data) => {
-            if (data.success) {
-                setMyPastRides(data.jsonData);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-    }, []);
+    //useEffect(() => {
+    //    myAllPastRidesPassenger(0)
+    //    .then((data) => {
+    //        if (data.success) {
+    //            setMyPastRides(data.jsonData);
+    //        }
+    //    })
+    //    .catch((err) => {
+    //        console.log(err);
+    //    })
+    //}, []);
 
     const fetchSavedRides = async() => {
         const savedRidesRes = await myAllUniqueRidesPassenger();
@@ -512,31 +512,33 @@ const Home = () => {
                 <ShowHideToggler toggleHandler={() => setIsMyPastTripsPanelActive(false)} />
                 <Heading text="Choose from past trips" padding="10px 0" />
                 <ScrollableContainer height="80%">
-                    {
-                        myPastRides.map((ride) => (
-                            <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
-                                    e.preventDefault();
-                                    setIsMyPastTripsPanelActive(false);
-                                    setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
-                                    setIsWaitingPanelActive(true);
-                                    createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.vehicleDetailes.vehicleType});                        
-                            }}>
-                                <CarListItem allFare={{
-                                    uberAuto:ride.fare,
-                                    uberComfort:ride.fare,
-                                    uberHCV:ride.fare,
-                                    uberMoto:ride.fare,
-                                    uberPool:ride.fare,
-                                    uberXL:ride.fare,
-                                    uberScooty:ride.fare,
-                                    uberX:ride.fare
-                                }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} border="1px solid transparent" />
-                                <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
-                                <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
-                            </div>
+                    <InfiniteScroller api={myAllPastRidesPassenger} wholeArray={myPastRides} setWholeArray={setMyPastRides}>
+                        {
+                            myPastRides.map((ride) => (
+                                <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
+                                        e.preventDefault();
+                                        setIsMyPastTripsPanelActive(false);
+                                        setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
+                                        setIsWaitingPanelActive(true);
+                                        createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.vehicleDetailes.vehicleType});                        
+                                }}>
+                                    <CarListItem allFare={{
+                                        uberAuto:ride.fare,
+                                        uberComfort:ride.fare,
+                                        uberHCV:ride.fare,
+                                        uberMoto:ride.fare,
+                                        uberPool:ride.fare,
+                                        uberXL:ride.fare,
+                                        uberScooty:ride.fare,
+                                        uberX:ride.fare
+                                    }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} border="1px solid transparent" />
+                                    <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
+                                    <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
+                                </div>
 
-                        ))
-                    }
+                            ))
+                        }
+                    </InfiniteScroller>
                 </ScrollableContainer>
             </Panel>
 
