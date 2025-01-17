@@ -14,18 +14,15 @@ import Riding from './pages/Riding';
 import DriverLogin from './pages/DriverLogin';
 import PageNotFound from './pages/PageNotFound';
 import ProtectedRouter from './components/ProtectedRouter';
-import { useContext, useEffect, useState } from 'react';
-import { myAllPastRidesPassenger, myDriverProfile, myProfile } from './api';
+import { useContext, useEffect } from 'react';
+import { myDriverProfile, myProfile } from './api';
 import { DriverContextTypes, DriverInitialContextData } from './contexts/DriverContext';
 import Rides from './pages/dashboard/Rides';
 import Logout from './pages/Logout';
 import Drivers from './pages/dashboard/Drivers';
 import Verify from './pages/Verify';
-import { InfiniteScroller } from './components/WrapperContainers';
-import { RideTypesPopulated } from './utils/types';
 
 function App() {
-  const [wholeArray, setWholeArray] = useState<RideTypesPopulated[]>([]);
   const userContext = useContext<UserContextTypes>(UserInitialDataContext);
   const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
 
