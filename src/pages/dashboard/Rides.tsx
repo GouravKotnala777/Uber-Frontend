@@ -90,9 +90,9 @@ const Rides = () => {
             formatedRes[item.status].totalPrice += 10
         });
         (allRides.jsonData as RideTypesPopulated[]).forEach((item) => {            
-            if (formatedResAccVehicle[item?.driverID?.vehicleDetailes.vehicleType]) {
-                formatedResAccVehicle[item?.driverID?.vehicleDetailes.vehicleType].count += 1,
-                formatedResAccVehicle[item?.driverID?.vehicleDetailes.vehicleType].totalPrice += 10
+            if (formatedResAccVehicle[item?.vehicleDetailes.vehicleType]) {
+                formatedResAccVehicle[item?.vehicleDetailes.vehicleType].count += 1,
+                formatedResAccVehicle[item?.vehicleDetailes.vehicleType].totalPrice += 10
             }
         });
         setRidesFormated(formatedRes);
@@ -132,7 +132,7 @@ const Rides = () => {
                         ))
                     }
                 </div>
-                <StackedBarChart data={rides.filter((ite) => ite.driverID !== undefined).map((item) => ({date:new Date(item.createdAt).toLocaleDateString(undefined, {day:"numeric", month:"short"}), category:item.driverID?.vehicleDetailes?.vehicleType, price:10}))} categoryColors={rideVehicleTypeColor} />
+                <StackedBarChart data={rides.filter((ite) => ite.driverID !== undefined).map((item) => ({date:new Date(item.createdAt).toLocaleDateString(undefined, {day:"numeric", month:"short"}), category:item.vehicleDetailes?.vehicleType, price:10}))} categoryColors={rideVehicleTypeColor} />
                 <div className="ride_status_types">
                     {
                         (["uberAuto", "uberComfort", "uberHCV", "uberMoto", "uberPool", "uberScooty", "uberX", "uberXL"] as VehicleTypeTypes[]).map((type) => (
