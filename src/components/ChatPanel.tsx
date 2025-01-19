@@ -1,10 +1,11 @@
 import "../styles/components/chat_panel.scss";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Heading from "./Heading";
 import ShowHideToggler from "./ShowHideToggler";
 import { BiSend } from "react-icons/bi";
 import { createChat } from "../api";
 import { ChatTypes } from "../utils/types";
+import { setScrollPositionHandler } from "../utils/utilityFunctions";
 
 interface ChatPanelPropTypes{
     isChatPanelActive:boolean;
@@ -29,6 +30,11 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
         }
     };
 
+    useEffect(() => {
+        if (isChatPanelActive) {
+            setScrollPositionHandler("messanger_screen_cont");
+        }
+    }, [messages]);
     return(
         <div className="chat_panel_cont" 
         style={{
@@ -38,7 +44,7 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
             <ShowHideToggler toggleHandler={() => setIsChatPanelActive(false)} />
             <Heading text={`Chat with ${senderType === "user"?"driver":"passenger"}`} />
             <div className="messanger_cont">
-                <div className="messanger_screen_cont">
+                <div id="messanger_screen_cont" className="messanger_screen_cont">
                     <div className="messages_cont">
                         {
                             messages.map((msg) => {

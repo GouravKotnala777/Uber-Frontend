@@ -52,3 +52,8 @@ export const showStarsForRating = (num:number) => {
     }
     return starsArr;
 };
+export const setScrollPositionHandler = (elementID:string) => {
+    const scrollingElement = document.getElementById(elementID);
+    if (!scrollingElement) return;
+    scrollingElement.scrollTop = scrollingElement.scrollHeight - scrollingElement.clientHeight;
+};
