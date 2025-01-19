@@ -10,19 +10,17 @@
         //border: 2px solid blue;
         height: 60%;
         box-sizing: border-box;
+        //position: absolute;
 
     }
     .riding_detail_panel_cont{
         //border: 2px solid green;
         height: 40%;
         padding: 10px;
-        .show_btn_cont{
-            //border: 2px solid orange;
-            text-align: center;
-            .BsArrowUp{
-                margin: 0 auto;
-            }
-        }
+        position: absolute;
+        bottom: 0;
+        box-sizing: border-box;
+        background-color: white;
         .riding_detail_panel_heading{
             //border: 2px solid pink;
             font-size: $xxl;
