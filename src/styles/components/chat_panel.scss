@@ -16,10 +16,14 @@
     .messanger_cont{
         //border: 2px solid blue;
         height: 93%;
+        position: relative;
         .messanger_screen_cont{
             //border: 2px solid greenyellow;
-            height: 80%;
+            height: 78%;
             overflow-y: scroll;
+            position: absolute;
+            top: 0;
+            width: 100%;
             .messages_cont{
                 //border: 2px solid green;
                 
@@ -50,6 +54,10 @@
         .messanger_controllers_cont{
             //border: 2px solid orange;
             height: 15%;
+            position: absolute;
+            width: 100%;
+            box-sizing: border-box;
+            bottom: 35px;
             .input_cont{
                 //border: 2px solid red;
                 display: flex;
