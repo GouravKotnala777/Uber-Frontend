@@ -48,89 +48,32 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
                 <div id="messanger_screen_cont" className="messanger_screen_cont">
                     <div className="messages_cont">
                         {
-                            //messages.map((msg) => {
-                            //    if (msg.receiver === myUserID) {
-                            //        return(
-                            //            <div className="incoming_message">
-                            //                {msg.content}
-                            //            </div>
-                            //        )
-                            //    }
-                            //    else if (msg.sender === myUserID){
-                            //        return(
-                            //            <div className="outgoing_message">
-                            //                {msg.content}
-                            //            </div>
-                            //        )
-                            //    }
-                            //    else{
-                            //        return(
-                            //            <div className="outgoing_message">
-                            //                Pata nahi kuch gadbad ho gai
-                            //                receiver = {msg.receiver}
-                            //                sender = {msg.sender}
-                            //            </div>
-                            //        )
-                            //    }
-                            //})
+                            messages.map((msg) => {
+                                if (msg.receiver === myUserID) {
+                                    return(
+                                        <div className="incoming_message">
+                                            {msg.content}
+                                        </div>
+                                    )
+                                }
+                                else if (msg.sender === myUserID){
+                                    return(
+                                        <div className="outgoing_message">
+                                            {msg.content}
+                                        </div>
+                                    )
+                                }
+                                else{
+                                    return(
+                                        <div className="outgoing_message">
+                                            Pata nahi kuch gadbad ho gai
+                                            receiver = {msg.receiver}
+                                            sender = {msg.sender}
+                                        </div>
+                                    )
+                                }
+                            })
                         }
-
-
-
-<div className="incoming_message">
-                            asdasasd1
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj2
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd3
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj4
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd5
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj8
-                        </div>
-                        <div className="incoming_message">
-                            asdasasd9
-                        </div>
-                        <div className="outgoing_message">
-                            kjcxkhj10
-                        </div>
                     </div>
                 </div>
                 <div className="messanger_controllers_cont">
