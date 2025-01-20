@@ -276,7 +276,7 @@ const DriverHome = () => {
                     <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
 
                     <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
-                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={2039} profileImg={driverContextData.driver?.image as string} />
+                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={driverContextData.driver?.revenue as number} profileImg={driverContextData.driver?.image as string} />
                     <ShortCuts shortcuts={shortcuts} />
              </Panel>
             {

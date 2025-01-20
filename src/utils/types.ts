@@ -26,6 +26,7 @@ export interface DriverTypes {
     vehicleDetailes:string;
     availabilityStatus:boolean;
     rating:number;
+    revenue:number;
     image?:string;
     createdAt:Date;
     updatedAt:Date;
@@ -37,6 +38,7 @@ export interface DriverTypesPopulated {
     vehicleDetailes:VehicleTypes;
     availabilityStatus:boolean;
     rating:number;
+    revenue:number;
     image?:string;
     createdAt:Date;
     updatedAt:Date;

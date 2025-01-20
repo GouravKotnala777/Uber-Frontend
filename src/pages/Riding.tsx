@@ -30,7 +30,7 @@ const shortcuts = [
 
 const Riding = () => {
     const [isRideDetailsActive, setisRideDetailsActive] = useState<boolean>(true);
-    const {activeDriver, dropoffLocation}:{activeDriver:RideAcceptedEventMessageType|undefined; dropoffLocation:LocationTypes|undefined;} = useLocation().state;
+    const {activeDriver, dropoffLocation, amount}:{activeDriver:RideAcceptedEventMessageType|undefined; dropoffLocation:LocationTypes|undefined; amount:number;} = useLocation().state;
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const Riding = () => {
     const {receiveMessage} = socketContext;
 
     const makePaymentHandler = async() => {
-        const newPayment = await createPayment({rideID:activeDriver?.rideID as string, amount:1234, paymentMethod:"cash", paymentStatus:"completed"});
+        const newPayment = await createPayment({rideID:activeDriver?.rideID as string, amount, paymentMethod:"cash", paymentStatus:"completed"});
         redirectAfterToast({res:newPayment, redirectWithoutReload:{navigate, url:"/user/home"}})
     };
 

@@ -258,7 +258,7 @@ const Home = () => {
                 console.log("EEEEEEEEEEEEEEEEEEE (1)");
                 console.log(data);
                 console.log("EEEEEEEEEEEEEEEEEEE (2)");
-                navigate("/user/riding", {state:{activeDriver:{...activeDriver, otp:""}, dropoffLocation}})
+                navigate("/user/riding", {state:{activeDriver:{...activeDriver, otp:""}, dropoffLocation, amount:allFare[selectedVehicleType]}});
             });
         }
     }, [activeDriver]);
