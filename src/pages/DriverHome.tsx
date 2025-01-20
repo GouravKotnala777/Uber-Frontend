@@ -87,6 +87,7 @@ const DriverHome = () => {
     const [isMyProfilePanelActive, setIsMyProfilePanelActive] = useState<boolean>(false);
     //const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
+    const [newRevenue, setNewRevenue] = useState<number>(0);
     const navigate = useNavigate();
     const socketContext = useContext<SocketContextTypes|null>(SocketDataContext);
     const userContext = useContext<UserContextTypes>(UserInitialDataContext);
@@ -195,7 +196,8 @@ const DriverHome = () => {
     useEffect(() => {
         receiveMessage(PAYMENT_DONE, (data) => {
             console.log(data);
-            redirectAfterToast({res:{success:true, message:(data as string), jsonData:{}}});
+            setNewRevenue(Number(data));
+            redirectAfterToast({res:{success:true, message:(`Payment ${data} done` as string), jsonData:{}}});
         });
     }, []);
     useEffect(() => {
@@ -276,7 +278,7 @@ const DriverHome = () => {
                     <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
 
                     <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
-                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={driverContextData.driver?.revenue as number} profileImg={driverContextData.driver?.image as string} />
+                    <ProfileShort name={driverContextData.driver?.userID.name as string} amount={(driverContextData.driver?.revenue as number)+newRevenue} profileImg={driverContextData.driver?.image as string} />
                     <ShortCuts shortcuts={shortcuts} />
              </Panel>
             {
