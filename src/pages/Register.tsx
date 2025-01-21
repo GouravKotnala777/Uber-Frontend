@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 import { RegisterBodyTypes } from "../utils/types";
 import { register } from "../api";
 import Button from "../components/Button";
-import { redirectAfterToast } from "../utils/utilityFunctions";
+import { credentialLoginHandler, redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 
 const Register = () => {
@@ -76,6 +76,7 @@ const Register = () => {
                     <option value="other">Other</option>
                 </select>
                 <Button text="User register" margin="25px 0 0 0" onClickHandler={registerHandler} />
+                <Button text="User login using predefined credentials" margin="25px 0 0 0" onClickHandler={credentialLoginHandler} />
                 <p>Already have a account? <Link to="/user/login" className="link"> Login here</Link></p>
                 <Button text="Go to driver register page" onClickHandler={() => navigate("/driver/register")} />
                 <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>

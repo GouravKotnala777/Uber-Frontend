@@ -6,7 +6,7 @@ import { RegisterBodyTypes } from "../utils/types";
 import { login } from "../api";
 import Button from "../components/Button";
 import { Toaster } from "react-hot-toast";
-import { redirectAfterToast } from "../utils/utilityFunctions";
+import { credentialLoginHandler, redirectAfterToast } from "../utils/utilityFunctions";
 
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState<Pick<RegisterBodyTypes, "email"|"password">>({email:"", password:""});
@@ -58,6 +58,7 @@ const Login = () => {
                 <label>Enter your password</label>
                 <input type="text" name="password" placeholder="Password" onChange={(e) => onChangeHandler(e)} />
                 <Button text="User login" margin="25px 0 0 0" onClickHandler={loginHandler} />
+                <Button text="User login using predefined credentials" margin="25px 0 0 0" onClickHandler={credentialLoginHandler} />
                 <p>Don't have a account? <Link to="/user/register" className="link"> Register here</Link></p>
                 <Button text="Go to driver login page" onClickHandler={() => navigate("/driver/login")} />
                 <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>

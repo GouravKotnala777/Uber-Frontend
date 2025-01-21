@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 import { RegisterBodyTypes, RegisterDriverBodyTypes } from "../utils/types";
 import { loginDriver } from "../api";
 import Button from "../components/Button";
-import { redirectAfterToast } from "../utils/utilityFunctions";
+import { credentialDriverLoginHandler, redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 
 const DriverLogin = () => {
@@ -62,6 +62,7 @@ const DriverLogin = () => {
                 <label>Enter your password</label>
                 <input type="text" name="password" placeholder="Password" onChange={(e) => onChangeHandler(e)} />
                 <Button text="Login as driver" margin="25px 0 0 0" onClickHandler={driverLoginHandler} />
+                <Button text="Login as driver using predefined credentials" margin="25px 0 0 0" onClickHandler={credentialDriverLoginHandler} />
                 <p>Don't have a account? <Link to="/driver/register" className="link"> Register here</Link></p>
                 <Button text="Go to user login page" margin="0 0 0 0" onClickHandler={() => navigate("/user/login")} />
                 <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>

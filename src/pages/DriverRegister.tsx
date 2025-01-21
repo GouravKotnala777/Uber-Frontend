@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 import { RegisterDriverBodyTypes } from "../utils/types";
 import { registerDriver } from "../api";
 import Button from "../components/Button";
-import { redirectAfterToast } from "../utils/utilityFunctions";
+import { credentialDriverLoginHandler, redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import { VEHICLE_TYPES_ARRAY } from "../utils/constants";
 
@@ -73,6 +73,7 @@ const DriverRegister = () => {
                 <label>Passenger capacity excluding driver</label>
                 <input type="text" name="vehicleCapacity" placeholder="Vehicle Capacity" onChange={(e) => onChangeHandler(e)} />
                 <Button text="Create driver account" margin="25px 0 0 0" onClickHandler={createDriverAccountHandler} />
+                <Button text="Login as driver using predefined credentials" margin="25px 0 0 0" onClickHandler={credentialDriverLoginHandler} />
                 <p>Already have a account? <Link to="/driver/login" className="link"> Login here</Link></p>
                 <Button text="Go to user register page" margin="0 0 0 0" onClickHandler={() => navigate("/user/register")} />
                 <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>
