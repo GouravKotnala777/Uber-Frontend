@@ -59,7 +59,7 @@ export const setScrollPositionHandler = (elementID:string) => {
     scrollingElement.scrollTop = scrollingElement.scrollHeight - scrollingElement.clientHeight;
 };
 export const credentialLoginHandler = async() => {
-    const res = await login({email:"user1@gmail.com", password:"uuuuuu"});
+    const res = await login({email:"gouravkotnala777@gmail.com", password:"Gourav123"});
     if (res.success) {
         if (res.message === "User login successful") {
             redirectAfterToast({res, redirectWithReload:"/user/home"});
@@ -73,7 +73,7 @@ export const credentialLoginHandler = async() => {
     }
 };
 export const credentialDriverLoginHandler = async() => {
-    const res = await loginDriver({email:"user4@gmail.com", password:"uuuuuu", licenseNumber:"licence00004", vehicleNumber:"hr00004"});
+    const res = await loginDriver({email:"user2gmail.com", password:"user2123", licenseNumber:"licence00001", vehicleNumber:"hr00001"});
     if (res.success) {
         if (res.message === "Driver login successful") {
             redirectAfterToast({res, redirectWithReload:"/driver/home"});
