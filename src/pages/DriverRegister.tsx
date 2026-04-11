@@ -1,10 +1,7 @@
-import "../styles/pages/login.scss";
-import logo from "/uber-logo-1.png";
 import { Link, useNavigate } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { RegisterDriverBodyTypes } from "../utils/types";
 import { registerDriver } from "../api";
-import Button from "../components/Button";
 import { credentialDriverLoginHandler, redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import { VEHICLE_TYPES_ARRAY } from "../utils/constants";
@@ -38,30 +35,21 @@ const DriverRegister = () => {
     };
 
     return(
-        <div className="register_page_bg">
+        <div className="max-w-xs min-h-screen mx-auto p-2">
             <Toaster />
-            <div className="logo_cont">
-                <img src={logo} alt={logo} />
-            </div>
-            <div className="form_cont">
-                {/*<label>What's your name</label>
-                <div className="fullname_cont">
-                    <input type="text" className="first_name" name="firstName" placeholder="First Name" />
-                    <input type="text" className="first_name" name="lastName" placeholder="Last Name" />
-                </div>
-                <label>What's your email</label>
-                <input type="text" name="email" placeholder="Email" />*/}
-                <label>What's your license number</label>
-                <input type="text" name="licenseNumber" placeholder="License Number" onChange={(e) => onChangeHandler(e)} />
-                <label>Enter your password</label>
-                <input type="text" name="password" placeholder="Password" onChange={(e) => onChangeHandler(e)} />
+            <div className="text-2xl font-semibold text-gray-700 mt-5">Uber Clone</div>
+            <div className="flex flex-col justify-between">
+                <label className="text-lg text-gray-700 py-1 mt-4">What's your license number</label>
+                <input className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" type="text" name="licenseNumber" placeholder="License Number" onChange={(e) => onChangeHandler(e)} />
+                <label className="text-lg text-gray-700 py-1 mt-4">Enter your password</label>
+                <input className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" type="text" name="password" placeholder="Password" onChange={(e) => onChangeHandler(e)} />
 
-                <label>Vehicle information</label>
-                <div className="vehicle_info_inps">
-                    <input type="text" name="vehicleColor" placeholder="Vehicle Color" onChange={(e) => onChangeHandler(e)} />
-                    <input type="text" name="vehicleNumber" placeholder="Vehicle Number" onChange={(e) => onChangeHandler(e)} />
-                    <input type="text" name="vehicleModel" placeholder="Vehicle Model" onChange={(e) => onChangeHandler(e)} />
-                    <select name="vehicleType" onChange={(e) => onChangeHandler(e)} >
+                <label className="text-lg text-gray-700 py-1 mt-4">Vehicle information</label>
+                <div className="grid grid-cols-2 gap-2">
+                    <input className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" type="text" name="vehicleColor" placeholder="Vehicle Color" onChange={(e) => onChangeHandler(e)} />
+                    <input className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" type="text" name="vehicleNumber" placeholder="Vehicle Number" onChange={(e) => onChangeHandler(e)} />
+                    <input className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" type="text" name="vehicleModel" placeholder="Vehicle Model" onChange={(e) => onChangeHandler(e)} />
+                    <select className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" name="vehicleType" onChange={(e) => onChangeHandler(e)} >
                         <option value="">--select type--</option>
                         {
                             VEHICLE_TYPES_ARRAY.map((vehicle) => (
@@ -70,13 +58,13 @@ const DriverRegister = () => {
                         }
                     </select>
                 </div>
-                <label>Passenger capacity excluding driver</label>
-                <input type="text" name="vehicleCapacity" placeholder="Vehicle Capacity" onChange={(e) => onChangeHandler(e)} />
-                <Button text="Create driver account" margin="25px 0 0 0" onClickHandler={createDriverAccountHandler} />
-                <Button text="Login as driver using predefined credentials" margin="25px 0 0 0" onClickHandler={credentialDriverLoginHandler} />
-                <p>Already have a account? <Link to="/driver/login" className="link"> Login here</Link></p>
-                <Button text="Go to user register page" margin="0 0 0 0" onClickHandler={() => navigate("/user/register")} />
-                <p className="bottom_line">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>
+                <label className="text-lg text-gray-700 py-1 mt-4">Passenger capacity excluding driver</label>
+                <input className="text-lg text-gray-700 py-2 px-2 bg-gray-100 rounded-xl" type="text" name="vehicleCapacity" placeholder="Vehicle Capacity" onChange={(e) => onChangeHandler(e)} />
+                <button className="bg-gray-800 text-gray-50 w-full mt-4 py-2 text-lg rounded-xl hover:opacity-85 cursor-pointer" onClick={createDriverAccountHandler}>Create driver account</button>
+                <button className="bg-gray-800 text-gray-50 w-full mt-4 py-2 text-lg rounded-xl hover:opacity-85 cursor-pointer" onClick={credentialDriverLoginHandler}>Login as driver using predefined credentials</button>
+                <p className="text-lg mt-5">Already have a account? <Link to="/driver/login" className="underline"> Login here</Link></p>
+                <button className="bg-gray-800 text-gray-50 w-full mt-4 py-2 text-lg rounded-xl hover:opacity-85 cursor-pointer" onClick={() => navigate("/user/register")}>Go to user register page</button>
+                <p className="text-xs mt-5">this site is protected by reCAPTCHA and the Google Policy and the Terms of Service apply </p>
                 
             </div>
         </div>

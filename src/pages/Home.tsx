@@ -1,4 +1,4 @@
-import "../styles/pages/home.scss";
+//import "../styles/pages/home.scss";
 import logo from "/uber-logo-1.png";
 import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
 //import { BiUser } from "react-icons/bi";

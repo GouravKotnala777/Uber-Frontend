@@ -1,8 +1,4 @@
-import "../styles/pages/start.scss";
 import bg from "/bg-3.jpg";
-import logo from "/uber-logo-1.png";
-import Heading from "../components/Heading";
-import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
 
@@ -11,14 +7,14 @@ const Start = () => {
 
 
     return(
-        <div className="start_page_bg">
-            <div className="bg_image_cont">
-                <img className="logo" src={logo} alt={logo} />
-                <img className="bg_img" src={bg} alt={bg} />
+        <div className="max-w-xs min-h-screen mx-auto flex flex-col justify-around">
+            <div className="relative">
+                <div className="absolute top-4 left-4 text-2xl font-semibold text-gray-200">Uber Clone</div>
+                <img className="h-90" src={bg} alt={bg} />
             </div>
-            <div className="continue_cont">
-                <Heading text="Get started with Uber" />
-                <Button text="Continue" margin="20px 0 0 0" onClickHandler={() => navigate("/user/home")} />
+            <h1 className="text-gray-800 text-xl font-semibold mb-10 mx-2">Get started with Uber</h1>
+            <div className="w-full px-2">
+                <button className="bg-gray-800 text-gray-50 w-full py-2 text-lg rounded-xl hover:opacity-85 cursor-pointer" onClick={() => navigate("/user/home")}>Continue</button>
             </div>
         </div>
     )
