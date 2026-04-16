@@ -1,4 +1,4 @@
-import "../styles/components/toggler.scss";
+//import "../styles/components/toggler.scss";
 
 const Toggler = ({state, onClickHandler, togglerID}:{state:boolean; onClickHandler:() => void; togglerID:string;}) => {
 

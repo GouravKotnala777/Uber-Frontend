@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import "../styles/components/input.scss";
+//import "../styles/components/input.scss";
 
 interface InputPropTypes {
     type?:string;
@@ -28,8 +28,8 @@ const Input = ({
 }:InputPropTypes) => {
 
     return(
-        <div className="input_cont">
-            <input type={type?type:"text"} name={name} className="input" placeholder={placeholder}
+        <div className="">
+            <input  className="text-md text-gray-700 w-full py-2 px-2 bg-gray-100 rounded-xl" type={type?type:"text"} name={name} placeholder={placeholder}
                 onChange={(e) => onChangeHandler(e)}
                 onClick={onClickHandler}
                 maxLength={maxLength}

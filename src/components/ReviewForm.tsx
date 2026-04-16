@@ -5,7 +5,7 @@ import { createReview } from "../api";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import Input from "./Input";
 import Button from "./Button";
-import "../styles/components/review_form.scss";
+//import "../styles/components/review_form.scss";
 import { ReviewTypesPopulated } from "../utils/types";
 
 

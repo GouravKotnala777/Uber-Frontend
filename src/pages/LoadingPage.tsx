@@ -1,4 +1,3 @@
-import "../styles/pages/loading_page.scss";
 
 const LoadingPage = () => {
 

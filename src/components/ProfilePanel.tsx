@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useState } from "react";
-import "../styles/components/profile_panel.scss";
+//import "../styles/components/profile_panel.scss";
 import { DriverTypes, DriverTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import Heading from "./Heading";
 import ShowHideToggler from "./ShowHideToggler";
@@ -111,22 +111,20 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
     };
 
     return(
-        <div className="profile_panel_cont" 
+        <div className="bg-gray-50 absolute transition-all duration-300 ease-in-out z-10 h-full w-full p-2" 
         style={{
-            top:isMyProfilePanelActive?"13px":"100%"
+            top:isMyProfilePanelActive?"0%":"100%"
         }}
         >
-            {/*<pre>{JSON.stringify(profile, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(updateDriverProfileForm, null, `\t`)}</pre>*/}
             <ShowHideToggler toggleHandler={() => setIsMyProfilePanelActive(false)} />
-            <Heading text="My profile" padding="0 0 10px 10px" />
-            <div className="scrollable_cont">
-                <div className="dp_cont">
+            <Heading text="My profile" fontSize="16px" fontWeight={600} />
+            <div className="overflow-y-scroll h-[85%] scrollbar-soft">
+                <div className="w-40 h-40 relative mx-auto">
                     <ImgWithFallback src={profile?.image as string} fallbackSrc="unknown_user.png" />
-                    <div className="choose_db_cont">
-                        <MdChangeCircle className="MdChangeCircle" />
+                    <div className="w-10 h-10 overflow-hidden absolute right-0 bottom-0">
+                        <MdChangeCircle className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-3xl" />
                         <form>
-                            <input type="file" className="choose_db_inp" name="image" onChange={(e) => fileChangeHandler(e)} />
+                            <input type="file" className="absolute top-0 left-0 w-full h-full opacity-0" name="image" onChange={(e) => fileChangeHandler(e)} />
                         </form>
                     </div>
                 </div>
@@ -136,9 +134,9 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                 }
                 {
                     profileFor === "passenger" ?
-                    <>
-                        <Heading text="My user details" fontSize="0.9rem" padding="10px 0 5px 0" />
-                        <div className="user_info_cont"> 
+                    <div className="">
+                        <Heading text="My user details" fontSize="16px" padding="10px 0 5px 0" fontWeight={400} />
+                        <div className=""> 
                             <ProfleSingleFiled 
                                 keyName="Name"
                                 valueName={(profile as UserTypes).name}
@@ -179,10 +177,10 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                             {
                                 selectedFieldsForUserUpdate.length !== 0 &&
                                 <>
-                                    <div className="key_value_cont">
-                                        <div className="key">Old password</div>
-                                        <div className="value_inp_icon_cont">
-                                            <input className="update_info_inp" type="text" name="oldPassword" placeholder="Your old password" onChange={(e) => updateUserFiledOnChangeHandler(e)} />
+                                    <div className="flex justify-between items-center text-gray-700 text-sm p-1">
+                                        <div className="text-gray-500">Old password</div>
+                                        <div className="">
+                                            <input className="border px-1" type="text" name="oldPassword" placeholder="Your old password" onChange={(e) => updateUserFiledOnChangeHandler(e)} />
                                         </div>
                                     </div>
                                     <Button text="Update my profile" margin="15px 0 0 0" onClickHandler={updateUserProfile} />
@@ -192,7 +190,7 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                         <span style={{display:"inline-block", margin:"15px 0"}}>Register as driver</span> &nbsp;
                         <Link to="/driver/register" style={{margin:"15px 0"}}>register</Link>
                         <Button text="Logout" onClickHandler={() => navigate("/logout", {state:{logoutFor:"user"}})} />
-                    </>
+                    </div>
                     :
                     <>
                         <Heading text="My user details" fontSize="0.9rem" padding="10px 0 5px 0" />
@@ -237,17 +235,17 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
                             {
                                 selectedFieldsForUserUpdate.length !== 0 &&
                                 <>
-                                    <div className="key_value_cont">
-                                        <div className="key">Old password</div>
-                                        <div className="value_inp_icon_cont">
-                                            <input className="update_info_inp" type="text" name="oldPassword" placeholder="Your old password" onChange={(e) => updateUserFiledOnChangeHandler(e)} />
+                                    <div className="flex justify-between items-center text-gray-700 text-sm p-1">
+                                        <div className="text-gray-500">Old password</div>
+                                        <div className="">
+                                            <input className="border px-1" type="text" name="oldPassword" placeholder="Your old password" onChange={(e) => updateUserFiledOnChangeHandler(e)} />
                                         </div>
                                     </div>
                                     <Button text="Update my profile" margin="15px 0 0 0" onClickHandler={updateUserProfile} />
                                 </>
                             }
                         </div>
-                        <Heading text="My driver details" fontSize="0.9rem" padding="10px 0 5px 0" />
+                        <Heading text="My driver details" fontSize="16px" padding="10px 0 5px 0" fontWeight={400} />
                         <div className="driver_info_cont"> 
                             <ProfleSingleFiled 
                                 keyName="License Number"
@@ -314,20 +312,20 @@ const ProfilePanel = ({isMyProfilePanelActive, setIsMyProfilePanelActive, profil
 const ProfleSingleFiled = ({keyName, valueName, fieldName, placeHolderValue, updateFiledOnChangeHandler, selectedFieldsForUpdate, includeExcludeFieldToUpdateHandler}:{keyName:string; valueName:string; fieldName:string; placeHolderValue:string; updateFiledOnChangeHandler:(e:ChangeEvent<HTMLInputElement>) => void; selectedFieldsForUpdate:string[]; includeExcludeFieldToUpdateHandler:(e:MouseEvent<SVGElement>) => void;}) => {
 
     return(
-        <div className="key_value_cont">
-            <div className="key">{keyName}</div>
-            <div className="value_inp_icon_cont">
+        <div className="flex justify-between items-center text-gray-700 text-sm p-1">
+            <div className="text-gray-500">{keyName}</div>
+            <div className="flex items-center">
                 {
                     selectedFieldsForUpdate.includes(fieldName) ?
                         <>
-                            <input className="update_info_inp" type="text" name={fieldName} placeholder={placeHolderValue} onChange={(e) => updateFiledOnChangeHandler(e)} />
+                            <input className="border px-1" type="text" name={fieldName} placeholder={placeHolderValue} onChange={(e) => updateFiledOnChangeHandler(e)} />
                             <GiCancel id={fieldName} className="GiCancel"
                                 onClick={(e) => includeExcludeFieldToUpdateHandler(e)}
                             />
                         </>
                         :
                         <>
-                            <div className="value">{valueName}</div>
+                            <div className="">{valueName}</div>
                             <BiEdit id={fieldName} className="BiEdit"
                                 onClick={(e) => includeExcludeFieldToUpdateHandler(e)}
                             />

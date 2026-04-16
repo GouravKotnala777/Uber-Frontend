@@ -1,4 +1,4 @@
-import "../styles/components/profile_short.scss";
+//import "../styles/components/profile_short.scss";
 import ImgWithFallback from "./ImgWithFallback";
 
 const ProfileShort = ({name, amount, distance, profileImg}:{name:string; amount:number; distance?:number; profileImg:string;}) => {

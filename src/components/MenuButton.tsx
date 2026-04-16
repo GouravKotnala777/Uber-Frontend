@@ -1,5 +1,5 @@
 import { TiMessages } from "react-icons/ti";
-import "../styles/components/menu_button.scss";
+//import "../styles/components/menu_button.scss";
 import { BiDownArrow, BiTrip, BiUser } from "react-icons/bi";
 import { Dispatch, SetStateAction } from "react";
 
@@ -10,46 +10,55 @@ const MenuButton = ({setIsChatPanelActive, setIsMyProfilePanelActive, setIsMyPas
 
 
     return(
-        <div className="menu_button_cont">
-            <div className="short_cut_menu_handler" style={{
-                top:isShortcutMenuActive?"0px":"0px",
-                transform:isShortcutMenuActive?"rotate(180deg)":"rotate(0deg)"
-                }} onClick={(e) => {e.stopPropagation(); setIsShortcutMenuActive(!isShortcutMenuActive);}}>
+        <div className="absolute top-27 right-3.5">
+            <div className="relative">
                 
-                <BiDownArrow className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
-            <div className="chat_short_cut" style={{top:isShortcutMenuActive?"60px":"0px"}} onClick={(e) => {e.stopPropagation(); setIsChatPanelActive(true);}}>
-                <TiMessages className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
-            <div className="my_profile_short_cut" style={{top:isShortcutMenuActive?"120px":"0px"}} onClick={(e) => {e.stopPropagation(); setIsMyProfilePanelActive(true);}}>
-                <BiUser className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
-            </div>
-            <div className="past_trips_short_cut" style={{top:isShortcutMenuActive?"180px":"0px"}} onClick={(e) => {e.stopPropagation(); setIsMyPastTripsPanelActive(true);}}>
-                <BiTrip className="TiMessages" />
-                {
-                    newChatNotification ?
-                        <div className="notification">{newChatNotification}</div>
-                        :
-                        ""
-                }
+                <button className="bg-white p-2 rounded-full absolute top-0 left-0 transition-normal duration-300 ease-in-out" style={{top:isShortcutMenuActive?"38px":"0px"}}
+                    onClick={(e) => {                        
+                        e.stopPropagation();
+                        setIsChatPanelActive(true);
+                        }}>
+                    <TiMessages className="TiMessages" />
+                    {
+                        newChatNotification ?
+                            <div className="notification">{newChatNotification}</div>
+                            :
+                            ""
+                    }
+                </button>
+                <button className="bg-white p-2 rounded-full absolute top-0 left-0 transition-normal duration-300 delay-100 ease-in-out" style={{top:isShortcutMenuActive?"76px":"0px"}}
+                    onClick={(e) => {e.stopPropagation(); setIsMyProfilePanelActive(true);}}>
+                    <BiUser className="TiMessages" />
+                    {
+                        newChatNotification ?
+                            <div className="notification">{newChatNotification}</div>
+                            :
+                            ""
+                    }
+                </button>
+                <button className="bg-white p-2 rounded-full absolute top-0 left-0 transition-normal duration-300 delay-200 ease-in-out" style={{top:isShortcutMenuActive?"114px":"0px"}}
+                    onClick={(e) => {e.stopPropagation(); setIsMyPastTripsPanelActive(true);}}>
+                    <BiTrip className="TiMessages" />
+                    {
+                        newChatNotification ?
+                            <div className="notification">{newChatNotification}</div>
+                            :
+                            ""
+                    }
+                </button>
+                <button className="bg-white p-2 rounded-full transition-transform duration-600 ease-in-out hover:bg-gray-100" style={{
+                    top:isShortcutMenuActive?"0px":"0px",
+                    transform:isShortcutMenuActive?"rotate(180deg)":"rotate(0deg)"
+                    }} onClick={(e) => {e.stopPropagation(); setIsShortcutMenuActive(!isShortcutMenuActive);}}>
+                    
+                    <BiDownArrow className="TiMessages" />
+                    {
+                        newChatNotification ?
+                            <div className="notification">{newChatNotification}</div>
+                            :
+                            ""
+                    }
+                </button>
             </div>
         </div>
     )

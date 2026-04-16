@@ -1,4 +1,4 @@
-import "../styles/components/short_cuts.scss";
+//import "../styles/components/short_cuts.scss";
 import { IconType } from "react-icons";
 
 export interface ShortcutTypes {
@@ -13,13 +13,13 @@ export interface ShortcutTypes {
 const ShortCuts = ({shortcuts}:{shortcuts:ShortcutTypes[]}) => {
 
     return(
-        <div className="short_cuts_cont">
+        <div className="flex flex-wrap justify-between bg-yellow-300 px-2 py-4 gap-4">
             {
                 shortcuts.map(item => (
-                    <div className="single_short_cut_cont">
-                        <div className="short_cut_icon" onClick={item.onClickHandler}><item.icon className="Icon" /> </div>
-                        <div className="short_cut_heading">{item.heading}</div>
-                        <div className="short_cut_sub_heading">{item.subHeading}</div>
+                    <div className="mt-2">
+                        <div className="mx-auto w-7 h-7 grid place-items-center rounded-full bg-gray-100 p-1 border-2 border-yellow-500" onClick={item.onClickHandler}><item.icon className="Icon" /> </div>
+                        <div className="text-center text-xs text-gray-800">{item.heading}</div>
+                        <div className="text-[10px] text-center text-gray-500">{item.subHeading}</div>
                     </div>
                 ))
             }

@@ -1,11 +1,9 @@
-//import "../styles/pages/home.scss";
-import logo from "/uber-logo-1.png";
 import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
 //import { BiUser } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
-import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myAllPastRidesPassenger, myAllUniqueRidesPassenger } from "../api";
+import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myAllUniqueRidesPassenger } from "../api";
 import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
@@ -34,11 +32,12 @@ import { TiMessages } from "react-icons/ti";
 import ChatPanel from "../components/ChatPanel";
 import LiveTracking from "../components/LiveTracking";
 import ProfilePanel from "../components/ProfilePanel";
-import {CenterContainer, InfiniteScroller, Panel, ScrollableContainer} from "../components/WrapperContainers";
+import {CenterContainer, Panel, ScrollableContainer} from "../components/WrapperContainers";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import MenuButton from "../components/MenuButton";
 import { JOIN, NEW_MESSAGE, RIDE_ACCEPTED, RIDE_CANCELLED, RIDE_STARTED, SEND_LOCATION_TO_PASSENGER, VEHICLE_TYPES_ARRAY, vehicleCapacity, vehicleDescription } from "../utils/constants";
+import PastTripsPanel from "../components/PastTripsPanel";
 
 
 
@@ -109,6 +108,7 @@ const Home = () => {
     const [isMySavedRidesActive, setIsMySavedRidesActive] = useState<boolean>(false);
     const [messages, setMessages] = useState<ChatTypes[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [timer, setTimer] = useState<number>(0);
 
     //const [newChatNotification, setNewChatNotification] = useState<number>(0);
     const driverContext = useContext<DriverContextTypes>(DriverInitialContextData);
@@ -279,82 +279,64 @@ const Home = () => {
             //setNewChatNotification((prev) => prev+1);
         });
     }, []);
-    //useEffect(() => {
-    //    myAllPastRidesPassenger(0)
-    //    .then((data) => {
-    //        if (data.success) {
-    //            setMyPastRides(data.jsonData);
-    //        }
-    //    })
-    //    .catch((err) => {
-    //        console.log(err);
-    //    })
-    //}, []);
 
     const fetchSavedRides = async() => {
         const savedRidesRes = await myAllUniqueRidesPassenger();
         setIsUniqueRides(savedRidesRes.jsonData);
     }
-    //useEffect(() => {
-    //    myAllUniqueRidesPassenger()
-    //    .then((data) => {
-    //        if (data.success) {
-    //            setIsUniqueRides(data.jsonData);
-    //        }
-    //        console.log("QQQQQQQQQQQQQQQQ");
-    //        console.log(data.jsonData);
-    //        console.log("QQQQQQQQQQQQQQQQ");
-    //    })
-    //    .catch((err) => {
-    //        console.log(err);
-    //    })
-    //}, []);
+    
+    useEffect(() => {
+        if (timer >= 50 || !isWaitingPanelActive) {
+            setTimer(0);
+            return;            
+        }
+        
+        let intervalID = setInterval(() => {
+            setTimer((prev) => prev+1);
+        }, 1000);
+
+        return() => clearInterval(intervalID);
+    }, [timer, isWaitingPanelActive]);
 
     return(
-        <div className="home_page_background">
+        <div className="relative max-w-xs h-screen max-h-screen mx-auto overflow-hidden">
             <Toaster />
-            {/*<pre>{JSON.stringify(pickupLocation, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(dropoffLocation, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(allNearByDrivers.map((item) => item.vehicleDetailes.vehicleType), null, `\t`)}</pre>*/}
-            <img className="logo" src={logo} alt={logo} />
-            <div className="map_cont" onClick={() => setIsShortcutMenuActive(false)}>
+            <div className="text-2xl font-semibold text-gray-700 mt-5">Uber Clone</div>
+
+            <div className="w-full h-[48%] overflow-hidden" onClick={() => setIsShortcutMenuActive(false)}>
                 <LiveTracking />
-                {/*<img src={map} alt={map} />*/}
             </div>
 
 
             <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
                 isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
              />
-            <div className="form_cont"
-            style={{bottom:isLocationPanelActive?"56%":"0"}}
-            onClick={() => setIsShortcutMenuActive(false)}
+            <div className="flex flex-col gap-1 bg-white absolute h-full w-full transition-all duration-300 ease-in-out"
+                style={{bottom:isLocationPanelActive?"0%":"-55%"}}
+                onClick={() => setIsShortcutMenuActive(false)}
             >
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
-                <div className="heading_and_btn">
-                    <Heading text="Find a trip" />
-                    <button className="show_saved_rides_btn" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>Saved rides</button>
+                <div className="flex justify-between">
+                    <Heading text="Find a trip" fontSize="18px" fontWeight={600} />
+                    <button className="bg-gray-200 text-gray-700 rounded-sm text-xs px-1 hover:opacity-80 cursor-pointer" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>Saved rides</button>
                 </div>
-                <Input placeholder="Add a pickup location"
-                    margin="15px 0 0 0"
+                <Input placeholder="Add a pickup location" margin="10px 0 0 0"
                     onChangeHandler={(e) => setPickupLocationInp(e.target.value)}
                     onClickHandler={() => setIsLocationPanelActive(true)}
                         />
-                <Input placeholder="Enter your destination"
-                    margin="15px 0 0 0"
+                <Input placeholder="Enter your destination" margin="10px 0 0 0"
                     onChangeHandler={(e) => setDropoffLocationInp(e.target.value)}
                     onClickHandler={() => setIsLocationPanelActive(true)}
                         />
-                <Button text="Create ride" isLoading={isLoading} margin="15px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
+                <Button text="Create ride" isLoading={isLoading} margin="10px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
             </div>
-            <div className="suggestion_list_cont"
+            <div className="overflow-y-scroll absolute bottom-0 -z-1"
             style={{bottom:isLocationPanelActive?"0":"-60%", zIndex:isLocationPanelActive?"1":"-1"}}
             onClick={() => setIsShortcutMenuActive(false)}
             >
                 {
                     !pickupLocation.address&&pickupLocationSuggestions.map((address) => (
-                        <div className="searched_pickup_location_cont" key={address} onClick={async() => {
+                        <div className="flex py-2" key={address} onClick={async() => {
                             //if(pickupLocation && dropoffLocation){
                             //}
                             //setIsLocationPanelActive(false);
@@ -362,21 +344,21 @@ const Home = () => {
                             const {ltd, lng} = await getCoordinatesByAddress({address});
                             setPickupLocation({latitude:ltd, longitude:lng, address});
                             }}>
-                            <div className="location_icon"><FaLocationDot /></div>
-                            <div className="location_detaile">{address}</div>
+                            <div className="p-2 bg-gray-800"><FaLocationDot /></div>
+                            <div className="text-sm px-1 bg-red-500">{address}</div>
                         </div>
                     ))
                 }
                 {
                     !dropoffLocation.address&&dropoffLocationSuggestions.map((address) => (
-                        <div className="searched_pickup_location_cont" key={address} onClick={async() => {
+                        <div className="flex py-2" key={address} onClick={async() => {
                             //if(pickupLocation && dropoffLocation){
                             //}
                             const {ltd, lng} = await getCoordinatesByAddress({address});
                             setDropoffLocation({latitude:ltd, longitude:lng, address});
                             }}>
-                            <div className="location_icon"><FaLocationDot /></div>
-                            <div className="location_detaile">{address}</div>
+                            <div className="p-2 bg-gray-800"><FaLocationDot /></div>
+                            <div className="text-sm px-1 bg-red-500">{address}</div>
                         </div>
                     ))
                 }
@@ -384,11 +366,12 @@ const Home = () => {
             </div>
             <Panel isPanelActive={isMySavedRidesActive}>
                 <ShowHideToggler toggleHandler={() => setIsMySavedRidesActive(false)} />
-                <Heading text="Saved rides" />
-                <ScrollableContainer height="80%">
-                    {
+                <Heading text="Saved rides" fontSize="18px" fontWeight={600} />
+                <ScrollableContainer>
+                    {   isUniqueRides && isUniqueRides.length !== 0 ?
+
                         isUniqueRides.map((ride) => (
-                            <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
+                            <div className="mt-4 py-2 rounded-sm" onClick={(e:MouseEvent<HTMLDivElement>) => {
                                     e.preventDefault();
                                     setIsMyPastTripsPanelActive(false);
                                     setSelectedVehicleType(ride?.vehicleDetailes.vehicleType);
@@ -404,63 +387,82 @@ const Home = () => {
                                     uberXL:ride.fare,
                                     uberScooty:ride.fare,
                                     uberX:ride.fare
-                                }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} border="1px solid transparent" />
+                                }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} />
                                 <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
                                 <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
                             </div>
 
                         ))
+                        :
+                        <div className="text-center mt-7">
+                            <div className="text-md text-gray-700 font-semibold">No Ride History</div>
+                            <div className="text-sm text-gray-600">
+                                it looks like you don't have any saved rides or they are removed.
+                            </div>
+                        </div>
                     }
                 </ScrollableContainer>
             </Panel>
+
             <Panel isPanelActive={isRidesPanelActive}>
                 <ShowHideToggler hide={!isRidesPanelActive} toggleHandler={() => setIsRidesPanelActive(false)} />
-                <Heading text="Choose vehicle type" />
-                <ScrollableContainer height="85%">
+                <Heading text="Choose vehicle type" fontSize="18px" fontWeight={600} />
+                <ScrollableContainer>
                         {
                             VEHICLE_TYPES_ARRAY.map((item) => (
-                                <div className="car_list_item_outer" onClick={() => {
+                                <div className="" onClick={() => {                                    
                                     setIsRidesPanelActive(false);
                                     setIsSelectedRidePanelActive(true);
                                     setSelectedVehicleType(item);
                                 }}>
                                     <CarListItem vehicleType={item} allFare={allFare} vehicleDescription={vehicleDescription[item]} vehicleCapacity={vehicleCapacity[item]} vehicleImg={vehicleImages[item]} />
-                                    {/*<CarListItem vehicleDetails={item} allFare={allFare} />*/}
                                 </div>
                             ))
                         }
-                        {
-                            //allNearByDrivers.map((item) => (
-                            //    <div className="car_list_item_outer" onClick={() => {
-                            //        setIsRidesPanelActive(false);
-                            //        setIsSelectedRidePanelActive(true);
-                            //        setSsss(item);
-                            //        setDriver(item);
-                            //    }}>
-                            //        <CarListItem vehicleDetails={item} allFare={allFare} />
-                            //    </div>
-                            //))
-                        }
                 </ScrollableContainer>
             </Panel>
+
             <Panel isPanelActive={isSelectedRidePanelActive} >
-                {/*<div className="selected_rides_detail_cont" style={{transform:isSelectedRidePanelActive?"translate(0, -210vh)":"translate(0, 0vh)", zIndex:isSelectedRidePanelActive?"1":"-1"}}>*/}
-                    <ShowHideToggler hide={!isSelectedRidePanelActive} toggleHandler={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} />
-                    <Heading text="Confirm your ride" />
-                    <ScrollableContainer height="60%">
-                        <CenterContainer>
-                            <img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} />
-                        </CenterContainer>
-                        <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
-                        <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
-                        <TripFee amount={allFare[selectedVehicleType]} />
-                    </ScrollableContainer>
-                    <Button text={`Confirm with ${selectedVehicleType}`} isLoading={isLoading} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
-                {/*</div>*/}
+                <ShowHideToggler hide={!isSelectedRidePanelActive} toggleHandler={() => {setIsRidesPanelActive(true); setIsSelectedRidePanelActive(false);}} />
+                <Heading text="Confirm your ride" fontSize="18px" fontWeight={600} />
+                <ScrollableContainer height="70%">
+                    <CenterContainer>
+                        <img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} />
+                    </CenterContainer>
+                    <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
+                    <Location highlightAddress="Shop No. 24" fullAddress={dropoffLocation.address} />
+                    <TripFee amount={allFare[selectedVehicleType]} />
+                </ScrollableContainer>
+                <Button text={`Confirm with ${selectedVehicleType}`} isLoading={isLoading} margin="10px 0 0 0" onClickHandler={confirmRideHandler} />
             </Panel>
             <Panel isPanelActive={isWaitingPanelActive}>
                 <ShowHideToggler hide={!isWaitingPanelActive} toggleHandler={() => setIsWaitingPanelActive(false)} />
-                <Heading text="Looking For Nearby Drivers..." />
+                <div className="relative"
+                    style={{
+                        //width:`${timer*2}%`,
+                        //width:"100%",
+                        height:"4px",
+
+                    }}
+                >
+                    <div className="absolute top-[50%] -translate-y-[50%] bg-sky-500 animate-ping transition-all rounded-r-full duration-500 ease-in-out"
+                        style={{
+                            width:`${timer*2}%`,
+                            //width:"100%",
+                            height:"2px",
+                        }}
+                    >
+                    </div>
+                    <div className="absolute top-[50%] -translate-y-[50%] bg-sky-500 animate-pulse rounded-r-full transition-all duration-500 ease-in-out"
+                        style={{
+                            width:`${timer*2}%`,
+                            //width:"100%",
+                            height:"2px",
+                        }}
+                    >
+                    </div>
+                </div>
+                <Heading text="Looking For Nearby Drivers..." fontSize="18px" fontWeight={600} />
                 <ScrollableContainer height="80%">
                     <CenterContainer>
                         <img src={vehicleImages[selectedVehicleType]} alt={vehicleImages[selectedVehicleType]} />
@@ -472,14 +474,14 @@ const Home = () => {
             </Panel>
             <Panel isPanelActive={isMeetAtPickupPanelActive} onClosePosition="-36%" onCloseZInd="1" hasRideAcceptedHide={isMeetAtPickupPanelActiveHide}>
                 <ShowHideToggler toggleHandler={() => setIsMeetAtPickupPanelActive(!isMeetAtPickupPanelActive)} />
-                <div className="first_part">
-                    <Heading padding="0 0 10px 0" text="Meet At The Pickup Point" />
-                    <div className="timer">
-                        <div className="value">2</div>
-                        <div className="unit">min</div>
+                <div className="flex justify-between items-center">
+                    <Heading fontSize="18px" text="Meet At The Pickup Point" fontWeight={600} />
+                    <div className="text-center px-2 py-1 bg-gray-800 text-gray-100 text-xs">
+                        <div className="">2</div>
+                        <div className="">min</div>
                     </div>
                 </div>
-                <ScrollableContainer height="81%">
+                <ScrollableContainer height="78%">
                     <ProfileLong driverDetails={activeDriver as RideAcceptedEventMessageType} />
                     <ShortCuts shortcuts={shortcuts} />
                     <Location highlightAddress="Ho.No.371" fullAddress={pickupLocation.address} />
@@ -508,14 +510,14 @@ const Home = () => {
                 }>>}
             />
 
-            <Panel isPanelActive={isMyPastTripsPanelActive}>
+            {/*<Panel isPanelActive={isMyPastTripsPanelActive}>
                 <ShowHideToggler toggleHandler={() => setIsMyPastTripsPanelActive(false)} />
                 <Heading text="Choose from past trips" padding="10px 0" />
                 <ScrollableContainer height="80%">
                     <InfiniteScroller api={myAllPastRidesPassenger} wholeArray={myPastRides} setWholeArray={setMyPastRides}>
                         {
                             myPastRides.map((ride) => (
-                                <div className="trip_cont" onClick={(e:MouseEvent<HTMLDivElement>) => {
+                                <div className="mt-5 py-2 bg-green-500 rounded-sm" onClick={(e:MouseEvent<HTMLDivElement>) => {
                                         e.preventDefault();
                                         setIsMyPastTripsPanelActive(false);
                                         setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
@@ -531,7 +533,7 @@ const Home = () => {
                                         uberXL:ride.fare,
                                         uberScooty:ride.fare,
                                         uberX:ride.fare
-                                    }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} border="1px solid transparent" />
+                                    }} vehicleCapacity={vehicleCapacity[ride.vehicleDetailes?.vehicleType]} vehicleDescription={vehicleDescription[ride.vehicleDetailes?.vehicleType]} vehicleImg={vehicleImages[ride.vehicleDetailes?.vehicleType]} vehicleType={ride.vehicleDetailes?.vehicleType} />
                                     <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
                                     <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
                                 </div>
@@ -540,7 +542,16 @@ const Home = () => {
                         }
                     </InfiniteScroller>
                 </ScrollableContainer>
-            </Panel>
+            </Panel>*/}
+
+            <PastTripsPanel
+                myPastRides={myPastRides}
+                setMyPastRides={setMyPastRides}
+                isMyPastTripsPanelActive={isMyPastTripsPanelActive}
+                setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
+                setIsWaitingPanelActive={setIsWaitingPanelActive}
+                setSelectedVehicleType={setSelectedVehicleType}
+            />
 
         </div>
     )

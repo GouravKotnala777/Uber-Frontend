@@ -1,4 +1,3 @@
-import "../styles/components/chat_panel.scss";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Heading from "./Heading";
 import ShowHideToggler from "./ShowHideToggler";
@@ -37,35 +36,35 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
         }
     }, [messages]);
     return(
-        <div className="chat_panel_cont" 
+        <div className="absolute w-full h-full bg-gray-50 transition-normal duration-300 ease-in-out p-2" 
         style={{
-            top:isChatPanelActive?"13px":"100%"
+            top:isChatPanelActive?"0%":"100%"
         }}
         >
             <ShowHideToggler toggleHandler={() => setIsChatPanelActive(false)} />
-            <Heading text={`Chat with ${senderType === "user"?"driver":"passenger"}`} />
-            <div className="messanger_cont">
-                <div id="messanger_screen_cont" className="messanger_screen_cont">
-                    <div className="messages_cont">
+            <Heading text={`Chat with ${senderType === "user"?"driver":"passenger"}`} fontSize="16px" fontWeight={600} />
+            <div className="h-[85%] relative">
+                <div id="messanger_screen_cont" className="h-[90%] overflow-y-scroll asbolute top-0 scrollbar-soft">
+                    <div className="">
                         {
                             messages.map((msg) => {
                                 if (msg.receiver === myUserID) {
                                     return(
-                                        <div className="incoming_message">
+                                        <div className="w-[50%] ml-2 mr-auto px-3 py-2 rounded-[0_15px_15px_15px] text-gray-700 text-xs shadow-[0.1px_0.1px_1px_0.1px_var(--color-gray-500)]">
                                             {msg.content}
                                         </div>
                                     )
                                 }
                                 else if (msg.sender === myUserID){
                                     return(
-                                        <div className="outgoing_message">
+                                        <div className="w-[50%]  ml-auto mr-2  px-3 py-2 rounded-[15px_0_15px_15px] text-gray-200 bg-gray-700 text-xs shadow-[0.1px_0.1px_1px_0.1px_var(--color-gray-500)]">
                                             {msg.content}
                                         </div>
                                     )
                                 }
                                 else{
                                     return(
-                                        <div className="outgoing_message">
+                                        <div className="w-[50%] mx-2 my-2 px-3 py-2 rounded-[15px_0_15px_15px] text-gray-200 bg-gray-700 text-xs shadow-[0.1px_0.1px_1px_0.1px_var(--color-gray-500)]">
                                             Pata nahi kuch gadbad ho gai
                                             receiver = {msg.receiver}
                                             sender = {msg.sender}
@@ -76,13 +75,18 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
                         }
                     </div>
                 </div>
-                <div className="messanger_controllers_cont">
-                    <div className="input_cont">
-                        <input type="text" className="message_inp" placeholder="Send a message..." onChange={(e) => setMessageInp(e.target.value)} />
-                        {
-                            messageInp &&
-                                <button className="send_message_btn" onClick={createChatHandler}><BiSend className="BiSend" /></button>
-                        }
+                <div className="h-[10%]">
+                    <div className="border-gray-800 bg-gray-800 flex justify-between items-center px-1 py-1 rounded-sm">
+                        <input type="text" className="bg-gray-100 w-full text-sm mr-1 px-1 py-1.5 text-gray-700 rounded-sm outline-none" placeholder="Send a message..." onChange={(e) => setMessageInp(e.target.value)} />
+                        <div className="w-9 h-8">
+                            <button className="w-full h-full grid place-items-center bg-gray-100 rounded-sm transition-opacity ease-in-out duration-300"
+                                style={{
+                                    opacity:messageInp?1:0.4,
+                                    filter:messageInp?"blur(0)":"blur(2px)",
+                                }}
+                                onClick={createChatHandler}
+                            ><BiSend className="text-xl text-gray-800" /></button>
+                        </div>
 
                     </div>
                 </div>

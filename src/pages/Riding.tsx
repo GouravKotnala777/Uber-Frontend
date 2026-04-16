@@ -1,4 +1,3 @@
-import "../styles/pages/riding.scss";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";

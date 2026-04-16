@@ -1,13 +1,12 @@
-import "../styles/components/trip_fee.scss";
 import { BsCash } from "react-icons/bs";
 
 
 const TripFee = ({amount}:{amount:number;}) => {
 
     return(
-        <div className="price_cont">
-            <BsCash className="BsCash" />
-            <div className="price">
+        <div className="flex items-center">
+            <BsCash className="ml-4" />
+            <div className="p-2 ml-4">
                 ₹ {amount}
             </div>
         </div>

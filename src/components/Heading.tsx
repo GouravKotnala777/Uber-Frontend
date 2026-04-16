@@ -1,4 +1,3 @@
-import "../styles/components/heading.scss";
 
 interface HeadingPropTypes{
     text:string;
@@ -10,8 +9,8 @@ interface HeadingPropTypes{
 const Heading = ({text, fontSize, fontWeight, padding}:HeadingPropTypes) => {
 
     return(
-        <div className="heading_cont">
-            <div className="heading" style={{
+        <div className="">
+            <div className="" style={{
                 fontSize:fontSize?fontSize:"1.3rem",
                 fontWeight:fontWeight?fontWeight:800,
                 padding:padding?padding:"0"

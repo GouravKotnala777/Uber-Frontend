@@ -1,14 +1,13 @@
 import { CiLocationOn } from "react-icons/ci";
-import "../styles/components/location.scss";
 
 const Location = ({highlightAddress, fullAddress}:{highlightAddress:string; fullAddress:string;}) => {
 
     return(
-        <div className="pickup_location_details_cont">
-            <CiLocationOn className="CiLocationOn" />
-            <div className="pickup_location_details">
-                <div className="highlight_info">{highlightAddress}</div>
-                <div className="full_info">{fullAddress}</div>
+        <div className="flex justify-between border-b border-gray-400">
+            <CiLocationOn className="mt-4 ml-4" />
+            <div className="ml-4 p-2 w-[85%]">
+                <div className="font-semibold">{highlightAddress}</div>
+                <div className="text-xs">{fullAddress}</div>
             </div>
         </div>
     )

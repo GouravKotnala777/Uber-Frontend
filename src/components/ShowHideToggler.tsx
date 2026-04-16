@@ -1,4 +1,4 @@
-import "../styles/components/show_hide_toggler.scss";
+//import "../styles/components/show_hide_toggler.scss";
 import { IoIosArrowDown } from "react-icons/io";
 
 interface ShowHideTogglerPropTypes{
@@ -9,14 +9,14 @@ interface ShowHideTogglerPropTypes{
 const ShowHideToggler = ({hide, toggleHandler}:ShowHideTogglerPropTypes) => {
 
     return(
-        <div className="show_hide_toggler_cont">
-            <button className="toggle_btn"
+        <div className="h-6">
+            <button className="outline-none text-[1.3rem] bg-gray-100 h-full w-full cursor-pointer"
                 onClick={toggleHandler}
                 style={{
                     display:hide?"none":"inline"
                 }}
             >
-                <IoIosArrowDown className="IoIosArrowDown" />
+                <IoIosArrowDown className="mx-auto" />
                 </button>
         </div>
     )

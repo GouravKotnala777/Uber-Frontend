@@ -56,9 +56,6 @@ const LiveTracking = () => {
                 <Marker position={currentPosition} />
             </GoogleMap>
         </LoadScript>
-        //<div className="live_tracking_cont">
-
-        //</div>
     )
 };
 

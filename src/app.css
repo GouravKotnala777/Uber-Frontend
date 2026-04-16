@@ -1,9 +1,22 @@
 @import "tailwindcss";
 
 
-/*body{
-    font-size: 18px;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}*/
+@utility scrollbar-soft{
+    &::-webkit-scrollbar{
+        width: 3px;
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-track{
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb{
+        background-color: var(--color-gray-300);
+        border-radius: 20px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover{
+        background-color: var(--color-gray-500);
+    }
+}

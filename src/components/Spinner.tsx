@@ -1,4 +1,4 @@
-import "../styles/components/spinner.scss";
+//import "../styles/components/spinner.scss";
 
 interface SpinnerPropTypes{
     width?:string;

@@ -1,4 +1,3 @@
-import "../styles/pages/login.scss";
 import { Toaster } from "react-hot-toast";
 import logo from "/public/uber-logo-1.png";
 import { useState } from "react";

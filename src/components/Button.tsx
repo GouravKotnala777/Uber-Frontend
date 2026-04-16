@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import "../styles/components/button.scss";
+//import "../styles/components/button.scss";
 import Spinner from "./Spinner";
 
 interface ButtonPropTypes {
@@ -15,8 +15,8 @@ interface ButtonPropTypes {
 const Button = ({text, color, background, border, margin, isLoading, onClickHandler}:ButtonPropTypes) => {
 
     return(
-        <div className="button_cont">
-            <button className="button" onClick={onClickHandler} disabled={isLoading} style={{
+        <div className="">
+            <button className="bg-gray-800 text-gray-50 w-full text-md rounded-xl py-2 hover:opacity-85 cursor-pointer" onClick={onClickHandler} disabled={isLoading} style={{
                 color:color?color:"white",
                 background:background?background:"black",
                 border:border?`1px solid ${color}`:"1px solid black",

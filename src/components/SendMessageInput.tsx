@@ -1,4 +1,4 @@
-import "../styles/components/send_message_input.scss";
+//import "../styles/components/send_message_input.scss";
 import { ChangeEvent } from "react";
 import { BiSend } from "react-icons/bi";
 

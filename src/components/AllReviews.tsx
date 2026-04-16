@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/components/review_form.scss";
+//import "../styles/components/review_form.scss";
 import { findDriverAllReviews } from "../api";
 import { ReviewTypesPopulated } from "../utils/types";
 import { showStarsForRating } from "../utils/utilityFunctions";

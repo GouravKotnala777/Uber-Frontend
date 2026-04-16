@@ -1,4 +1,3 @@
-import "../styles/pages/driver_riding.scss";
 import { useContext, useEffect, useState } from "react";
 import ProfileShort from "../components/ProfileShort";
 import { endRide } from "../api";

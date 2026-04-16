@@ -1,4 +1,3 @@
-import "../../styles/pages/dashboard/dashboard.scss";
 import Heading from "../../components/Heading";
 import { RideStatusTypes, RideTypes, RideTypesPopulated, VehicleTypeTypes } from "../../utils/types";
 import { StackedBarChart } from "../../components/charts/Charts";

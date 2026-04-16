@@ -1,4 +1,3 @@
-import "../styles/pages/driver_home.scss";
 import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { BiStopwatch } from "react-icons/bi";
 import { PiSpeedometer } from "react-icons/pi";
@@ -353,7 +352,7 @@ const DriverHome = () => {
                                     uberXL:ride.fare,
                                     uberScooty:ride.fare,
                                     uberX:ride.fare
-                                }} vehicleCapacity={vehicleCapacity[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleDescription={vehicleDescription[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleImg={vehicleImages[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleType={driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes} border="1px solid transparent" />
+                                }} vehicleCapacity={vehicleCapacity[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleDescription={vehicleDescription[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleImg={vehicleImages[driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes]} vehicleType={driverContextData.driver?.vehicleDetailes.vehicleType as VehicleTypeTypes} />
                                 <Location highlightAddress="Ho.No.371" fullAddress={ride.pickupLocation.address} />
                                 <Location highlightAddress="Shop No.22" fullAddress={ride.dropoffLocation.address} />
                             </div>
