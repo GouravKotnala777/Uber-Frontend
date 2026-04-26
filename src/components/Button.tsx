@@ -16,7 +16,7 @@ const Button = ({text, color, background, border, margin, isLoading, onClickHand
 
     return(
         <div className="">
-            <button className="bg-gray-800 text-gray-50 w-full text-md rounded-xl py-2 hover:opacity-85 cursor-pointer" onClick={onClickHandler} disabled={isLoading} style={{
+            <button className="bg-gray-800 text-gray-50 w-full h-10 text-md rounded-xl hover:opacity-85 cursor-pointer" onClick={onClickHandler} disabled={isLoading} style={{
                 color:color?color:"white",
                 background:background?background:"black",
                 border:border?`1px solid ${color}`:"1px solid black",
