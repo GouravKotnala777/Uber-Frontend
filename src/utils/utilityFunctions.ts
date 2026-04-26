@@ -73,7 +73,7 @@ export const credentialLoginHandler = async() => {
     }
 };
 export const credentialDriverLoginHandler = async() => {
-    const res = await loginDriver({email:"user2gmail.com", password:"user2123", licenseNumber:"licence00001", vehicleNumber:"hr00001"});
+    const res = await loginDriver({email:"user2@gmail.com", password:"User2123", licenseNumber:"licence00001", vehicleNumber:"hr00001"});
     if (res.success) {
         if (res.message === "Driver login successful") {
             redirectAfterToast({res, redirectWithReload:"/driver/home"});
