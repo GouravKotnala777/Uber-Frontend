@@ -9,13 +9,12 @@ interface SpinnerPropTypes{
 const Spinner = ({width, border, borderTop}:SpinnerPropTypes) => {
     
     return(
-        <div className="spinner_cont" style={{
+        <div className="mx-auto animate-spin rounded-full" style={{
             width:width?width:"10px",
             height:width?width:"10px",
             border:border?border:"2px solid #eeeeee",
             borderTop:borderTop?borderTop:"2px solid black",
             }}>
-
         </div>
     )
 };
