@@ -259,7 +259,7 @@ const DriverHome = () => {
             })
         }, []);
     return(
-        <div className="driver_home_page_bg">
+        <div className="relative max-w-xs h-screen max-h-screen mx-auto overflow-hidden">
             <Toaster />
             {/*<pre>{JSON.stringify(availabilityStatus, null, `\t`)}</pre>*/}
             {/*<pre>{JSON.stringify({curr:driverContextData.driver?.availabilityStatus}, null, `\t`)}</pre>*/}
@@ -275,7 +275,6 @@ const DriverHome = () => {
              />
              <Panel isPanelActive={homePanelActive} hasRideAcceptedHide={true} onClosePosition="-55%" onCloseZInd="1">
                     <ShowHideToggler toggleHandler={() => setHomePanelActive(!homePanelActive)} />
-
                     <Toggler state={driverContextData.driver?.availabilityStatus as boolean} onClickHandler={updateDriverAvailablityStatusHandler} togglerID="availability_status_inp" />
                     <ProfileShort name={driverContextData.driver?.userID.name as string} amount={(driverContextData.driver?.revenue as number)+newRevenue} profileImg={driverContextData.driver?.image as string} />
                     <ShortCuts shortcuts={shortcuts} />
@@ -300,10 +299,10 @@ const DriverHome = () => {
             }
             <Panel isPanelActive={hasRideAccepted} onClosePosition="-70%" onCloseZInd="1" hasRideAcceptedHide={hasRideAcceptedHide}>
                 <ShowHideToggler toggleHandler={() => setHasRideAccepted(!hasRideAccepted)} />
-                <Heading text="Start ride by OTP" />
+                <Heading text="Start ride by OTP" fontSize="16px" fontWeight={600} />
                 <ScrollableContainer height="60%">
                     <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} distance={acceptedRide?.distance as number} profileImg={acceptedRide?.passengerImg as string} />
-                    <SendMessageInput onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
+                    <SendMessageInput text={otpInp} onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
                     <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
                     <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
                 </ScrollableContainer>
@@ -338,7 +337,7 @@ const DriverHome = () => {
 
             <Panel isPanelActive={isMyPastTripsPanelActive}>
                 <ShowHideToggler toggleHandler={() => setIsMyPastTripsPanelActive(false)} />
-                <Heading text="Choose from past trips" padding="10px 0" />
+                <Heading text="Choose from past trips" fontSize="16px" fontWeight={600} padding="10px 0" />
                 <ScrollableContainer height="80%">
                     {
                         myPastRides.map((ride) => (
@@ -361,8 +360,6 @@ const DriverHome = () => {
                     }
                 </ScrollableContainer>
             </Panel>
-            
-
 
         </div>
     )

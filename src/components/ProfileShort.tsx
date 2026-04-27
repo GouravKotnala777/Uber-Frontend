@@ -4,19 +4,23 @@ import ImgWithFallback from "./ImgWithFallback";
 const ProfileShort = ({name, amount, distance, profileImg}:{name:string; amount:number; distance?:number; profileImg:string;}) => {
 
     return(
-        <div className="profile_short_cont">
-            <div className="driver_image"><ImgWithFallback src={profileImg} fallbackSrc="unknown_user.png" /></div>
-            <div className="driver_name">
-                <div className="value">{name}</div>
-                <div className="heading">distance</div>
+        <div className="my-4">
+            <div className="flex justify-between">
+                <div className="w-20 h-20">
+                    <ImgWithFallback src={profileImg} fallbackSrc="unknown_user.png" />
+                </div>
+                <div className="">
+                    <div className="text-sm text-gray-700">{name}</div>
+                    <div className="text-sm text-gray-600 text-right">{distance}km</div>
+                </div>
             </div>
-            <div className="daily_earning">
-                <div className="value">₹ {amount}.00</div>
+            <div className="text-right">
+                <div className="text-gray-800 font-semibold text-sm">₹ {amount}.00</div>
                 {
                     distance ?
-                        <div className="heading">{((distance as number)/1000).toFixed(1)} km</div>
+                        <div className="text-gray-700 text-sm">{((distance as number)/1000).toFixed(1)} km</div>
                         :
-                        <div className="heading">earned</div>
+                        <div className="text-gray-700 text-sm">earned</div>
 
                 }
             </div>

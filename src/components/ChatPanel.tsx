@@ -36,7 +36,7 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
         }
     }, [messages]);
     return(
-        <div className="absolute w-full h-full bg-gray-50 transition-normal duration-300 ease-in-out p-2" 
+        <div className="absolute w-full h-full bg-gray-50 transition-normal duration-300 ease-in-out p-2 z-1" 
         style={{
             top:isChatPanelActive?"0%":"100%"
         }}
@@ -81,8 +81,8 @@ const ChatPanel = ({isChatPanelActive, setIsChatPanelActive, receiver, senderTyp
                         <div className="w-9 h-8">
                             <button className="w-full h-full grid place-items-center bg-gray-100 rounded-sm transition-opacity ease-in-out duration-300"
                                 style={{
-                                    opacity:messageInp?1:0.4,
-                                    filter:messageInp?"blur(0)":"blur(2px)",
+                                    opacity:messageInp.trim()?1:0.4,
+                                    filter:messageInp.trim()?"blur(0)":"blur(2px)",
                                 }}
                                 onClick={createChatHandler}
                             ><BiSend className="text-xl text-gray-800" /></button>
