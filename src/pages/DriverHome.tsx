@@ -7,7 +7,7 @@ import { acceptRideRequest, cancelRide, myAllPastRidesDriver, startRide, updateM
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
-import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
+import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes } from "../utils/types";
 import Location from "../components/Location";
 import ProfileShort from "../components/ProfileShort";
 import ShortCuts from "../components/ShortCuts";
@@ -22,7 +22,6 @@ import ShowHideToggler from "../components/ShowHideToggler";
 import { redirectAfterToast } from "../utils/utilityFunctions";
 import { Toaster } from "react-hot-toast";
 import MenuButton from "../components/MenuButton";
-import CarListItem from "../components/CarListItem";
 
 import uberX from "/uber-x.png";
 import uberAuto from "/uber-tuktuk.png";
@@ -33,7 +32,8 @@ import uberHCV from "/uber-hcv.png";
 import uberPool from "/uber-pool.png";
 import uberXL from "/uber-xl.png";
 import Toggler from "../components/Toggler";
-import { JOIN, NEW_MESSAGE, NEW_RIDE, PAYMENT_DONE, SEND_LOCATION_TO_PASSENGER, UPDATE_DRIVER_LOCATION, vehicleCapacity, vehicleDescription } from "../utils/constants";
+import { JOIN, NEW_MESSAGE, NEW_RIDE, PAYMENT_DONE, SEND_LOCATION_TO_PASSENGER, UPDATE_DRIVER_LOCATION } from "../utils/constants";
+import PastTripsPanel from "../components/PastTripsPanel";
 
 export interface NewRideNotificationTypes {
     _id:string;
@@ -70,8 +70,71 @@ const DriverHome = () => {
     
     
     const [isRideRequestPoppedUp, setIsRideRequestPoppedUp] = useState<string[]>([]);
-    const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([]);
-    const [myPastRides, setMyPastRides] = useState<RideTypesPopulated[]>([]);
+    const [newRidesNotifications, setNewRidesNotifications] = useState<NewRideNotificationTypes[]>([
+        //{
+        //    _id:"123456776543",
+        //    distance:100,
+        //    dropoffLocation:{address:"", longitude:124321, latitude:1245321},
+        //    duration:10,
+        //    fare:100,
+        //    otp:"998290",
+        //    passengerEmail:"gouravkotnala@gmail.com",
+        //    passengerGender:"male",
+        //    passengerID:"1345676542221",
+        //    passengerMobile:"8882732859",
+        //    passengerName:"Gourav Kotnala",
+        //    passengerSocketID:"asadabfdsds",
+        //    pickupLocation:{address:"", longitude:1234532, latitude:1234332},
+        //    status:"requested",
+        //    passengerImg:""
+        //}
+    ]);
+    const [myPastRides, setMyPastRides] = useState<RideTypesPopulated[]>([
+        //{
+        //    _id:"123456776543",
+        //    distance:100,
+        //    dropoffLocation:{address:"", longitude:124321, latitude:1245321},
+        //    duration:10,
+        //    fare:100,
+        //    otp:"998290",
+        //    passengerID:"1345676542221",
+        //    pickupLocation:{address:"", longitude:1234532, latitude:1234332},
+        //    status:"requested",
+        //    createdAt:new Date(),
+        //    updatedAt:new Date(),
+        //    driverID:{
+        //        _id:"tluytrtyuijkhb",
+        //        availabilityStatus:true,
+        //        licenseNumber:"license00001",
+        //        rating:4,
+        //        revenue:1000,
+        //        userID:{
+        //            _id:"aasdfdsfafsda",
+        //            email:"gouravkotnala@gmail.com",
+        //            gender:"male",
+        //            mobile:"8882732859",
+        //            name:"Gourav Kotnala",
+        //            role:"user",
+        //            socketID:"iuytfdchjklkj",
+        //            image:""
+        //        },
+        //        vehicleDetailes:"asgdsfadsdf",
+        //        createdAt:new Date(),
+        //        updatedAt:new Date(),
+        //    },
+        //    orderID:"asdjhgsd",
+        //    paymentID:"asdrewqeweg",
+        //    signature:"adgfdsa",
+        //    vehicleDetailes:{
+        //        _id:"asddsadf",
+        //        vehicleCapacity:4,
+        //        vehicleColor:"red",
+        //        vehicleModel:"model00001",
+        //        vehicleNumber:"hr00001",
+        //        vehicleType:"uberXL"
+        //    }
+        //}
+    ]);
     const [isMyPastTripsPanelActive, setIsMyPastTripsPanelActive] = useState<boolean>(false);
     const [isShortcutMenuActive, setIsShortcutMenuActive] = useState<boolean>(false);
 
@@ -261,12 +324,7 @@ const DriverHome = () => {
     return(
         <div className="relative max-w-xs h-screen max-h-screen mx-auto overflow-hidden">
             <Toaster />
-            {/*<pre>{JSON.stringify(availabilityStatus, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify({curr:driverContextData.driver?.availabilityStatus}, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify({next:!driverContextData.driver?.availabilityStatus}, null, `\t`)}</pre>*/}
-            {/*<pre>{JSON.stringify(isChatPanelActive, null, `\t`)}</pre>*/}
-            {/*<img className="logo" src={logo} alt={logo} />*/}
-            
+
             <div className="map_cont" onClick={() => setIsShortcutMenuActive(false)}>
                 <LiveTracking />
             </div>
@@ -281,31 +339,41 @@ const DriverHome = () => {
              </Panel>
             {
                 newRidesNotifications.map((requestPopup) => (
-                    <Panel isPanelActive={isRideRequestPoppedUp.includes(requestPopup._id)}>
-                        <Heading text="New ride available" padding="10px" />
-                        <ScrollableContainer height="58%">
-                            <ProfileShort name={requestPopup.passengerMobile} 
-                            //amount={Math.ceil(requestPopup.distance/1000)}
-                            amount={requestPopup.fare}
-                            distance={requestPopup.distance}
-                            profileImg={requestPopup?.passengerImg as string} />
-                            <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
-                            <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
-                        </ScrollableContainer>
-                        <Button text="Accept" margin="10px 0" onClickHandler={() => acceptRequestHandler(requestPopup)} />
-                        <Button text="Ignore" background="transparent" color="#717171" border={true} onClickHandler={() => ignoreRequestHandler(requestPopup._id)} />
+                    <Panel key={requestPopup._id} isPanelActive={isRideRequestPoppedUp.includes(requestPopup._id)}>
+                        <Heading text="New ride available" fontSize="16px" fontWeight={600} padding="10px" />
+                        <div className="h-[58%] relative">
+                            <ScrollableContainer height="100%">
+                                <ProfileShort name={requestPopup.passengerMobile}
+                                //amount={Math.ceil(requestPopup.distance/1000)}
+                                amount={requestPopup.fare}
+                                distance={requestPopup.distance}
+                                profileImg={requestPopup?.passengerImg as string} />
+                                <Location highlightAddress="Ho.No.371" fullAddress={requestPopup.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
+                                <Location highlightAddress="Shop No.24" fullAddress={requestPopup.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, cupiditate officiis repudiandae beatae veritatis consequatur alias optio fugiat incidunt voluptates debitis necessitatibus ipsa ea natus a facere nulla error eum!"} />
+                            </ScrollableContainer>
+                            <div className="absolute top-0 left-0 w-full h-15 bg-linear-180 from-white to-transparent pointer-events-none"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-15 bg-linear-0 from-white to-transparent pointer-events-none"></div>
+                        </div>
+                        <div >
+                            <Button text="Accept" margin="10px 0" onClickHandler={() => acceptRequestHandler(requestPopup)} />
+                            <Button text="Ignore" background="transparent" color="#717171" border={true} onClickHandler={() => ignoreRequestHandler(requestPopup._id)} />
+                        </div>
                     </Panel>
                 ))
             }
             <Panel isPanelActive={hasRideAccepted} onClosePosition="-70%" onCloseZInd="1" hasRideAcceptedHide={hasRideAcceptedHide}>
                 <ShowHideToggler toggleHandler={() => setHasRideAccepted(!hasRideAccepted)} />
                 <Heading text="Start ride by OTP" fontSize="16px" fontWeight={600} />
-                <ScrollableContainer height="60%">
-                    <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} distance={acceptedRide?.distance as number} profileImg={acceptedRide?.passengerImg as string} />
-                    <SendMessageInput text={otpInp} onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
-                    <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
-                    <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
-                </ScrollableContainer>
+                <div className="h-[60%] relative">
+                    <ScrollableContainer height="100%">
+                        <ProfileShort name={acceptedRide?.passengerName as string} amount={acceptedRide?.fare as number} distance={acceptedRide?.distance as number} profileImg={acceptedRide?.passengerImg as string} />
+                        <SendMessageInput text={otpInp} onChangeHandler={(e:ChangeEvent<HTMLInputElement>) => setOtpInp(e.target.value)} onClickHandler={startedRideHandler} />
+                        <Location highlightAddress="Ho.No.371" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.pickupLocation.address as string} />
+                        <Location highlightAddress="Shop No.24" fullAddress={"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit nostrum accusantium minus quisquam ipsa error ex fugiat ratione, quas amet, perspiciatis distinctio ea at tempore provident nemo rem quo dignissimos"+acceptedRide?.dropoffLocation.address as string} />
+                    </ScrollableContainer>
+                    <div className="absolute top-0 left-0 w-full h-15 bg-linear-180 from-white to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-15 bg-linear-0 from-white to-transparent pointer-events-none"></div>
+                </div>
                 {
                     isOtpValid &&
                         <>
@@ -335,13 +403,21 @@ const DriverHome = () => {
                 }>>}
             />
 
-            <Panel isPanelActive={isMyPastTripsPanelActive}>
+            {/*<Panel isPanelActive={isMyPastTripsPanelActive||true}>
                 <ShowHideToggler toggleHandler={() => setIsMyPastTripsPanelActive(false)} />
                 <Heading text="Choose from past trips" fontSize="16px" fontWeight={600} padding="10px 0" />
                 <ScrollableContainer height="80%">
                     {
                         myPastRides.map((ride) => (
-                            <div className="trip_cont">
+                            <div className="mt-5 py-2 bg-green-500 rounded-sm"
+                                 onClick={(e:MouseEvent<HTMLDivElement>) => {
+                                        e.preventDefault();
+                                        setIsMyPastTripsPanelActive(false);
+                                        //setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
+                                        //setIsWaitingPanelActive(true);
+                                        //createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.vehicleDetailes.vehicleType});                        
+                                }}
+                            >
                                 <CarListItem allFare={{
                                     uberAuto:ride.fare,
                                     uberComfort:ride.fare,
@@ -359,7 +435,15 @@ const DriverHome = () => {
                         ))
                     }
                 </ScrollableContainer>
-            </Panel>
+            </Panel>*/}
+
+
+            <PastTripsPanel
+                myPastRides={myPastRides}
+                setMyPastRides={setMyPastRides}
+                isMyPastTripsPanelActive={isMyPastTripsPanelActive}
+                setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
+            />
 
         </div>
     )

@@ -15,8 +15,8 @@ interface PastTripsPanelPropTypes{
     setMyPastRides:Dispatch<SetStateAction<RideTypesPopulated[]>>;
     isMyPastTripsPanelActive:boolean;
     setIsMyPastTripsPanelActive:Dispatch<SetStateAction<boolean>>;
-    setIsWaitingPanelActive:Dispatch<SetStateAction<boolean>>;
-    setSelectedVehicleType:Dispatch<SetStateAction<VehicleTypeTypes>>;
+    setIsWaitingPanelActive?:Dispatch<SetStateAction<boolean>>;
+    setSelectedVehicleType?:Dispatch<SetStateAction<VehicleTypeTypes>>;
 };
 
 
@@ -40,11 +40,13 @@ const PastTripsPanel = ({myPastRides, setMyPastRides, isMyPastTripsPanelActive, 
                     <InfiniteScroller api={myAllPastRidesPassenger} wholeArray={myPastRides} setWholeArray={setMyPastRides}>
                         {
                             myPastRides.map((ride) => (
-                                <div className="mt-5 py-2 bg-green-500 rounded-sm" onClick={(e:MouseEvent<HTMLDivElement>) => {
+                                <div className="mt-5 py-2 rounded-sm" onClick={(e:MouseEvent<HTMLDivElement>) => {
                                         e.preventDefault();
                                         setIsMyPastTripsPanelActive(false);
-                                        setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
-                                        setIsWaitingPanelActive(true);
+                                        if (setSelectedVehicleType && setIsWaitingPanelActive) {
+                                            setSelectedVehicleType(ride.vehicleDetailes.vehicleType);
+                                            setIsWaitingPanelActive(true);
+                                        }
                                         createRideRequest({passengerID:ride.passengerID as string, pickupLocation:ride.pickupLocation, dropoffLocation:ride.dropoffLocation, vehicleType:ride.vehicleDetailes.vehicleType});
                                 }}>
                                     <CarListItem allFare={{

@@ -6,8 +6,8 @@ const Location = ({highlightAddress, fullAddress}:{highlightAddress:string; full
         <div className="flex justify-between border-b border-gray-400 mt-2">
             <CiLocationOn className="mt-4 ml-4" />
             <div className="ml-4 p-2 w-[85%]">
-                <div className="font-semibold">{highlightAddress}</div>
-                <div className="text-xs">{fullAddress}</div>
+                <div className="text-sm font-semibold">{highlightAddress}</div>
+                <div className="text-xs tracking-wider">{fullAddress}</div>
             </div>
         </div>
     )
