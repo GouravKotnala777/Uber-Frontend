@@ -6,23 +6,26 @@ import ImgWithFallback from "./ImgWithFallback";
 const ProfileLong = ({driverDetails}:{driverDetails:RideAcceptedEventMessageType}) => {
 
     return(
-        <div className="flex justify-between">
-            <div className="h-25 w-25 flex">
+        <div className="flex justify-between px-2 py-2">
+            <div className="h-25 w-25">
                 <ImgWithFallback src={driverDetails?.driverImg as string} fallbackSrc="unknown_user.png" />
                 {
                     driverDetails?.otp &&
-                        <div className="otp">
-                            <div className="heading">OTP :</div>
-                            <div className="value">&nbsp;{driverDetails?.otp}</div>
+                        <div className="ml-2 flex">
+                            <div className="text-xs text-gray-600">OTP :</div>
+                            <div className="text-xs font-semibold">&nbsp;{driverDetails?.otp}</div>
                         </div>
                 }
             </div>
-            <div className="w-[50%] text-sm">
-                <div className="text-lg font-medium">{driverDetails?.driverName}</div>
+            <div className="flex flex-col gap-1 w-[50%] text-sm text-right">
+                <div className="text-md font-medium">{driverDetails?.driverName}</div>
                 <div className="">{driverDetails?.vehicleDetailes.vehicleNumber}</div>
                 <div className="text-gray-600">{driverDetails?.vehicleDetailes.vehicleColor}</div>
                 <div className="text-gray-600">{driverDetails?.vehicleDetailes.vehicleModel}</div>
-                <div className=""><BsStarFill className="BsStarFill" /><div className="">{driverDetails?.rating}</div></div>
+                <div className="flex items-center gap-1 text-xs ml-auto w-min">
+                    <BsStarFill className="" />
+                    <div className="">{driverDetails?.rating}</div>
+                </div>
             </div>
         </div>
     )

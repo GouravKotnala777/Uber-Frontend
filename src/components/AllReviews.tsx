@@ -32,7 +32,7 @@ const AllReviews = ({driverID, rideID}:{driverID:string; rideID:string;}) => {
     
     return(
         <>
-            <div className="all_reviews_cont">
+            <div className="px-2">
                 {
                     hasAlreadyReviewed ?
                         (newReview &&
@@ -55,9 +55,7 @@ const AllReviews = ({driverID, rideID}:{driverID:string; rideID:string;}) => {
                             setComment={setComment}
                         />
                 }
-                {/*<pre>{JSON.stringify({allReviews}, null, `\t`)}</pre>*/}
-                {/*<pre>{JSON.stringify({newReview}, null, `\t`)}</pre>*/}
-                {/*<pre>{JSON.stringify({hasAlreadyReviewed}, null, `\t`)}</pre>*/}
+
                 {
                     allReviews.map((revw) => (
                         <div className="review_cont">

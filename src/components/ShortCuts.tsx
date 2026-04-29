@@ -13,7 +13,7 @@ export interface ShortcutTypes {
 const ShortCuts = ({shortcuts}:{shortcuts:ShortcutTypes[]}) => {
 
     return(
-        <div className="flex flex-wrap justify-between bg-yellow-300 px-2 py-4 gap-4">
+        <div className="flex flex-wrap justify-between bg-yellow-300 px-2 py-4 gap-4 mt-2">
             {
                 shortcuts.map(item => (
                     <div className="mt-2">

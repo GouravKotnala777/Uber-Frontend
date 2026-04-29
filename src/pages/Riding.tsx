@@ -26,6 +26,48 @@ const shortcuts = [
     {icon:MdOutlineLocationOn, heading:"Share my trip", subHeading:"heading"},
     {icon:IoCallOutline, heading:"Call driver", subHeading:"heading"}
 ];
+//const {activeDriver, dropoffLocation, amount}:{activeDriver:RideAcceptedEventMessageType|undefined; dropoffLocation:LocationTypes|undefined; amount:number;} = {
+//    activeDriver:{
+//        //{
+//        rideID:"69d8b7fca9a71e0d8d1d4587",
+//        driverEmail:"user2@gmail.com",
+//        driverGender:"male",
+//        driverMobile:"098765456789",
+//        driverName:"User2 Kumar",
+//        driverSocketID:"iuhgfcvhjklkj",
+//        driverImg:"",
+//            //_id:"123456776543",
+//            //distance:100,
+//            //dropoffLocation:{address:"", longitude:124321, latitude:1245321},
+//            //duration:10,
+//            //fare:100,
+//            otp:"998290",
+//            //passengerID:"1345676542221",
+//            //pickupLocation:{address:"", longitude:1234532, latitude:1234332},
+//            status:"requested",
+//            //createdAt:new Date(),
+//            //updatedAt:new Date(),
+//            driverID:"69d8b7fca9a71e0d8d1d4587",
+//            licenseNumber:"license00001",
+//            rating:"4",
+//            //orderID:"asdjhgsd",
+//            //paymentID:"asdrewqeweg",
+//            //signature:"adgfdsa",
+//            vehicleDetailes:{
+//                vehicleColor:"red",
+//                vehicleModel:"model00001",
+//                vehicleNumber:"hr00001",
+//                vehicleType:"uberXL"
+//            }
+//        //}
+//    },
+//    amount:101,
+//    dropoffLocation:{
+//        latitude:12345321,
+//        longitude:12345321,
+//        address:"mera ghar patoni kaha hai",
+//    }
+//};
 
 const Riding = () => {
     const [isRideDetailsActive, setisRideDetailsActive] = useState<boolean>(true);
@@ -59,7 +101,7 @@ const Riding = () => {
     }, []);
 
     return(
-        <div className="riding_page_bg">
+        <div className="relative max-w-xs h-screen max-h-screen mx-auto overflow-hidden">
             <Toaster />
             {/*<pre>{JSON.stringify(activeDriver, null, `\t`)}</pre>*/}
             <div className="map_cont">
@@ -69,9 +111,9 @@ const Riding = () => {
             <Panel isPanelActive={isRideDetailsActive} onClosePosition="-67%" onCloseZInd="2" hasRideAcceptedHide={true}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsActive(!isRideDetailsActive)} />
                 <ScrollableContainer height="80%">
-                    <div className="first_part">
-                        <Heading text="You are currently riding" />
-                        <div className="timer">
+                    <div className="flex justify-between items-center px-2 my-2">
+                        <Heading text="You are currently riding" fontSize="16px" fontWeight={600} />
+                        <div className="text-center px-2 py-1 bg-gray-800 text-gray-100 text-xs">
                             <div className="value">2</div>
                             <div className="unit">min</div>
                         </div>

@@ -3,7 +3,7 @@
 const Toggler = ({state, onClickHandler, togglerID}:{state:boolean; onClickHandler:() => void; togglerID:string;}) => {
 
     return(
-        <div className="w-14 mt-4">
+        <div className="w-14 mt-4 mx-2">
             <div className="flex justify-between items-center border relative rounded-full px-0.5 py-1" style={{
                 border:state?"2px solid #1880dc":"2px solid #aaaaaa"
             }}>

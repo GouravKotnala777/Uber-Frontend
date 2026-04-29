@@ -4,7 +4,7 @@ import ImgWithFallback from "./ImgWithFallback";
 const ProfileShort = ({name, amount, distance, profileImg}:{name:string; amount:number; distance?:number; profileImg:string;}) => {
 
     return(
-        <div className="my-4">
+        <div className="my-4 px-2">
             <div className="flex justify-between">
                 <div className="w-20 h-20">
                     <ImgWithFallback src={profileImg} fallbackSrc="unknown_user.png" />

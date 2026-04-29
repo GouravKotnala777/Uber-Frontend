@@ -13,6 +13,23 @@ import { Toaster } from "react-hot-toast";
 import { PAYMENT_DONE } from "../utils/constants";
 import { SocketContextTypes, SocketDataContext } from "../contexts/SocketContext";
 
+//const acceptedRide = {
+//    _id:"",
+//    distance:16,
+//    fare:102,
+//    passengerName:"gourav Kotnala",
+//    pickupLocation:{
+//        latitude:123456543,
+//        longitude:123456432,
+//        address:"saldkaskdj sadlkjasdk askdljk kasjdkl"
+//    },
+//    dropoffLocation:{
+//        latitude:123456543,
+//        longitude:123456432,
+//        address:"saldkaskdj sadlkjasdk askdljk kasjdkl"
+//    },
+//    passengerImg:""
+//}
 
 const DriverRiding = () => {
     const [isRideDetailsHide, setisRideDetailsHide] = useState<boolean>(true);
@@ -38,33 +55,39 @@ const DriverRiding = () => {
     }, []);
 
     return(
-        <div className="driver_riding_page_bg">
+        <div className="relative max-w-xs h-screen max-h-screen mx-auto overflow-hidden">
             <Toaster />
             {/*<pre>{JSON.stringify(acceptedRide, null, `\t`)}</pre>*/}
             <div className="map_cont">
                 <LiveTracking />
             </div>
-            <div className="riding_detail_panel_cont">
+            <div className="border absolute bottom-0 w-full bg-white">
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(false)} />
-                <Heading text="You are riding now" />
-                <div className="riding_distance_cont">
-                    <div className="heading">Total Distance</div>
-                    <div className="value">{((acceptedRide.distance as number)/1000).toFixed(1)}km</div>
-                    <div className="heading">Remaining</div>
-                    <div className="value">0.7km</div>
+                <Heading text="You are riding now" fontSize="16px" fontWeight={600} />
+                <div className="flex gap-4 mt-2 ml-2">
+                    <div className="text-sm">Total Distance</div>
+                    <div className="text-sm font-semibold text-gray-700">{((acceptedRide.distance as number)/1000).toFixed(1)}km</div>
                 </div>
-                <div className="riding_duration_cont">
-                    <div className="heading">Duration</div>
-                    <div className="value">{acceptedRide.fare}min</div>
+                <div className="flex gap-4 mt-2 ml-2">
+                    <div className="text-sm">Remaining</div>
+                    <div className="text-sm font-semibold text-gray-700">0.7km</div>
+                </div>
+                <div className="flex gap-4 mt-2 ml-2">
+                    <div className="text-sm">Duration</div>
+                    <div className="text-sm font-semibold text-gray-700">{acceptedRide.fare}min</div>
                 </div>
             </div>
             <Panel isPanelActive={!isRideDetailsHide}>
                 <ShowHideToggler toggleHandler={() => setisRideDetailsHide(true)} />
-                <ScrollableContainer height="66%">
-                    <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} distance={acceptedRide.distance as number} profileImg={acceptedRide?.passengerImg as string} />
-                    <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
-                    <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
-                </ScrollableContainer>
+                <div className="h-[66%] relative">
+                    <ScrollableContainer height="100%">
+                        <ProfileShort name={acceptedRide.passengerName} amount={acceptedRide.fare} distance={acceptedRide.distance as number} profileImg={acceptedRide?.passengerImg as string} />
+                        <Location highlightAddress="Ho.No.371" fullAddress={acceptedRide?.pickupLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
+                        <Location highlightAddress="ShopNo.23" fullAddress={acceptedRide?.dropoffLocation.address + "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, earum totam. Odit earum cupiditate tempore dolorem vero cumque quibusdam suscipit dicta incidunt hic omnis dignissimos nihil, optio sed id sunt?"} />
+                    </ScrollableContainer>
+                    <div className="absolute top-0 left-0 w-full h-15 bg-linear-180 from-white to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-15 bg-linear-0 from-white to-transparent pointer-events-none"></div>
+                </div>
                 <Button text="End ride" margin="10px 0" onClickHandler={endRideHandler} />
                 <Button text="Hide" background="transparent" color="#717171" border={true} onClickHandler={hideRideHandler} />
             </Panel>

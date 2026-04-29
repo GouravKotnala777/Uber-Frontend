@@ -59,8 +59,8 @@ const ReviewForm = ({driverID, rideID, setAllReviews, setNewReview, setHasAlread
 
     return(
         <div className="rating_cont">
-            <Heading text="Rate the driver" fontSize="1.1rem" />
-            <div className="stars_cont">
+            <Heading text="Rate the driver" fontSize="16px" fontWeight={600} />
+            <div className="flex justify-center gap-6 py-4">
                 <BsStarFill id="BsStarFill-1" className="BsStarFill" onClick={(e) => adjustRatingHandler(e)} />
                 <BsStarFill id="BsStarFill-2" className="BsStarFill" onClick={(e) => adjustRatingHandler(e)} />
                 <BsStarFill id="BsStarFill-3" className="BsStarFill" onClick={(e) => adjustRatingHandler(e)} />
