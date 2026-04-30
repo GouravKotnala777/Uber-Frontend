@@ -9,7 +9,7 @@ interface HeadingPropTypes{
 const Heading = ({text, fontSize, fontWeight, padding}:HeadingPropTypes) => {
 
     return(
-        <div className="">
+        <div className="mx-2">
             <div className="" style={{
                 fontSize:fontSize?fontSize:"1.3rem",
                 fontWeight:fontWeight?fontWeight:800,

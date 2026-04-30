@@ -234,6 +234,8 @@ const Home = () => {
             sendMessage(JOIN, {userID:userContextData.user?._id as string, userType:userContextData.user?.role as "user"|"driver"|"admin"});
         }
     }, [userContextData.user]);
+
+    // Send location to passenger event
     useEffect(() => {
         receiveMessage(SEND_LOCATION_TO_PASSENGER, (data) => {
             console.log("SSSSSSSSSSSSSSSSSSSSSSSS (1)");
@@ -241,6 +243,8 @@ const Home = () => {
             console.log("SSSSSSSSSSSSSSSSSSSSSSSS (2)");
         });
     }, []);
+
+    // Ride accepted event
     useEffect(() => {
         receiveMessage(RIDE_ACCEPTED, (data) => {
             console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (1)");
@@ -252,6 +256,8 @@ const Home = () => {
             console.log("DDDDDDDDDDDDDDDDDDDDDDDDDD (2)");
         });
     }, []);
+
+    // Ride started event
     useEffect(() => {
         if (activeDriver) {
             receiveMessage(RIDE_STARTED, (data) => {
@@ -262,6 +268,8 @@ const Home = () => {
             });
         }
     }, [activeDriver]);
+
+    // Ride cancelled event
     useEffect(() => {
         receiveMessage(RIDE_CANCELLED, (data) => {
             console.log("RIDE cancelled Ride cancelled (1)");
@@ -272,6 +280,8 @@ const Home = () => {
             redirectAfterToast({res:{success:false, message:"Driver cancelled ride", jsonData:{}}, redirectWithReload:"/user/home"});
         })
     }, []);
+
+    // New message event
     useEffect(() => {
         receiveMessage(NEW_MESSAGE, (data) => {
             console.log(data);
@@ -316,9 +326,9 @@ const Home = () => {
                 onClick={() => setIsShortcutMenuActive(false)}
             >
                 <ShowHideToggler hide={!isLocationPanelActive} toggleHandler={() => setIsLocationPanelActive(false)} />
-                <div className="flex justify-between">
+                <div className="flex justify-between mt-2">
                     <Heading text="Find a trip" fontSize="18px" fontWeight={600} />
-                    <button className="bg-gray-200 text-gray-700 rounded-sm text-xs px-1 hover:opacity-80 cursor-pointer" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>Saved rides</button>
+                    <button className="bg-gray-200 text-gray-700 rounded-sm text-xs px-1 hover:opacity-80 cursor-pointer mx-2" onClick={() => {setIsMySavedRidesActive(true); fetchSavedRides();}}>Saved rides</button>
                 </div>
                 <Input placeholder="Add a pickup location" margin="10px 0 0 0"
                     onChangeHandler={(e) => setPickupLocationInp(e.target.value)}
@@ -330,11 +340,12 @@ const Home = () => {
                         />
                 <Button text="Create ride" isLoading={isLoading} margin="10px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
             </div>
-            <div className="overflow-y-scroll absolute bottom-0 -z-1"
+            <div className="overflow-y-scroll absolute bottom-0 w-full h-80 transition-all duration-300 ease-in-out"
             style={{bottom:isLocationPanelActive?"0":"-60%", zIndex:isLocationPanelActive?"1":"-1"}}
             onClick={() => setIsShortcutMenuActive(false)}
             >
                 {
+                    // not working because i think gomapspro is not providing this service and google console is asking for payment method
                     !pickupLocation.address&&pickupLocationSuggestions.map((address) => (
                         <div className="flex py-2" key={address} onClick={async() => {
                             //if(pickupLocation && dropoffLocation){
@@ -350,6 +361,7 @@ const Home = () => {
                     ))
                 }
                 {
+                    // not working because i think gomapspro is not providing this service and google console is asking for payment method
                     !dropoffLocation.address&&dropoffLocationSuggestions.map((address) => (
                         <div className="flex py-2" key={address} onClick={async() => {
                             //if(pickupLocation && dropoffLocation){

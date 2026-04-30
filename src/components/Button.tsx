@@ -15,7 +15,7 @@ interface ButtonPropTypes {
 const Button = ({text, color, background, border, margin, isLoading, onClickHandler}:ButtonPropTypes) => {
 
     return(
-        <div className="">
+        <div className="px-2">
             <button className="bg-gray-800 text-gray-50 w-full h-10 text-md rounded-xl hover:opacity-85 cursor-pointer" onClick={onClickHandler} disabled={isLoading} style={{
                 color:color?color:"white",
                 background:background?background:"black",
