@@ -713,19 +713,20 @@ export const cancelRide = async({rideID}:{rideID:string}) => {
     }
 };
 // Function for get fare of trip
-export const getFareOfTrip = async(getFareFormData:{dropoffLocation:string; pickupLocation:string;}) => {
+export const getFareOfTrip = async({pickupLocation, dropoffLocation}:{dropoffLocation:string; pickupLocation:string;}) => {
     try {
-        if (!getFareFormData.pickupLocation || !getFareFormData.dropoffLocation) {
+        console.log({pickupLocation, dropoffLocation});
+        
+        if (!pickupLocation || !dropoffLocation) {
             redirectAfterToast({res:{success:false, message:"Bad request", jsonData:{}}})
-            throw new Error(JSON.stringify(getFareFormData));
+            throw new Error(JSON.stringify({pickupLocation, dropoffLocation}));
         }
-        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/get-fare`, {
-            method:"POST",
+        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/ride/get-fare?pickupLocation=${pickupLocation}&dropoffLocation=${dropoffLocation}`, {
+            method:"GET",
             headers:{
                 "Content-Type":"application/json"
             },
-            credentials:"include",
-            body:JSON.stringify(getFareFormData)
+            credentials:"include"
         });
         const resolvedData = await res.json();
         console.log("::::::::::::::::::::: 1");

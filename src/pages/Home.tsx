@@ -3,7 +3,7 @@ import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState }
 import { FaLocationDot } from "react-icons/fa6";
 import CarListItem from "../components/CarListItem";
 import { IoCallOutline } from "react-icons/io5";
-import { createRideRequest, getCoordinates, getFareOfTrip, getSuggestions, myAllUniqueRidesPassenger } from "../api";
+import { createRideRequest, getFareOfTrip, getSuggestions, myAllUniqueRidesPassenger } from "../api";
 import { ChatTypes, DriverTypesPopulated, LocationTypes, RideStatusTypes, RideTypesPopulated, UserTypes, VehicleTypeTypes } from "../utils/types";
 import { DriverContextTypes, DriverInitialContextData } from "../contexts/DriverContext";
 import { UserContextTypes, UserInitialDataContext } from "../contexts/UserContext";
@@ -40,6 +40,24 @@ import { JOIN, NEW_MESSAGE, RIDE_ACCEPTED, RIDE_CANCELLED, RIDE_STARTED, SEND_LO
 import PastTripsPanel from "../components/PastTripsPanel";
 
 
+interface GeoapifyResTypes{
+    features:{
+        properties:{
+            address_line1:string;
+            address_line2:string;
+            category:string;
+            city:string;
+            country:string;
+            country_code:string;
+            county_district:string;
+            formatted:string;
+            lat:number;
+            lon:number;
+            postcode:string;
+            state:string;
+        };
+    }[];
+}
 
 export interface RideAcceptedEventMessageType {
     rideID:string;
@@ -86,20 +104,28 @@ const Home = () => {
     const [isMyPastTripsPanelActive, setIsMyPastTripsPanelActive] = useState<boolean>(false);
     const [pickupLocationInp, setPickupLocationInp] = useState<string>("");
     const [dropoffLocationInp, setDropoffLocationInp] = useState<string>("");
-    const [pickupLocation, setPickupLocation] = useState<LocationTypes>({
-        latitude: 28.4339049,
-        longitude: 77.3223915,
-        address: "Sector 29, Faridabad, Haryana, India"
-    });
-    const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({
-        latitude:28.4354267,
-        longitude:77.3143303,
-        address:"Sector 28, Faridabad, Haryana, India"
-    });
-    //const [pickupLocation, setPickupLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
-    //const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
-    const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<string[]>([]);
-    const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<string[]>([]);
+    //const [pickupLocation, setPickupLocation] = useState<LocationTypes>({
+    //    latitude: 28.4339049,
+    //    longitude: 77.3223915,
+    //    address: "Sector 29, Faridabad, Haryana, India"
+    //});
+    //const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({
+    //    latitude:28.4354267,
+    //    longitude:77.3143303,
+    //    address:"Sector 28, Faridabad, Haryana, India"
+    //});
+    const [pickupLocation, setPickupLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
+    const [dropoffLocation, setDropoffLocation] = useState<LocationTypes>({latitude:0, longitude:0, address:""});
+    const [pickupLocationSuggestions, setPickupLocationSuggestions] = useState<{address:string; lon:number; lat:number;}[]>([
+        //"sec 12, faridabad, haryana",
+        //"sec 19, noida, haryana, 121007",
+        //"sec 49, gurugram, haryana",
+        //"sec 12, faridabad, haryana",
+        //"sec 58, jajru, ballabhgarh, haryana",
+        //"satpuli, uttrakhand",
+        //"spring field, sec 31, faridabad, haryana, 121003"
+    ]);
+    const [dropoffLocationSuggestions, setDropoffLocationSuggestions] = useState<{address:string; lon:number; lat:number;}[]>([]);
     const [allFare, setAllFare] = useState<{[P in VehicleTypeTypes]:number;}>({uberAuto:0 ,uberX:0 ,uberMoto:0 ,uberScooty:0 ,uberComfort:0 ,uberHCV:0 ,uberPool:0 , uberXL:0});
     const [selectedVehicleType, setSelectedVehicleType] = useState<VehicleTypeTypes>("uberX");
     const [activeDriver, setActiveDriver] = useState<RideAcceptedEventMessageType|null>(null);
@@ -143,19 +169,23 @@ const Home = () => {
     const {userContextData, setUserContextData} = userContext;
     const {sendMessage, receiveMessage} = socketContext;
 
-    const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
-        const res = await getCoordinates({address});
+    // now i am not using this untill i use geoapify place api service
+    //const getCoordinatesByAddress = async({address}:{address:string}):Promise<{ltd:number; lng:number;}> => {
+    //    const res = await getCoordinates({address});
 
-        console.log("====================== (1)");
-        console.log({res});
-        console.log("====================== (2)");
-        return res.jsonData;
-    };
+    //    console.log("====================== (1)");
+    //    console.log({res});
+    //    console.log("====================== (2)");
+    //    return res.jsonData;
+    //};
 
     const createRideHandler = (e:MouseEvent<HTMLButtonElement>) => {
         setIsLoading(true);
         e.preventDefault();
-        getFareOfTrip({pickupLocation:pickupLocation.address, dropoffLocation:dropoffLocation.address})
+        getFareOfTrip({
+            pickupLocation:pickupLocation.latitude.toString()+","+pickupLocation.longitude.toString(),
+            dropoffLocation:dropoffLocation.latitude.toString()+","+dropoffLocation.longitude.toString()
+        })
         .then((res) => {
             setAllFare(res.jsonData.fare);
             setIsLoading(false);
@@ -188,9 +218,10 @@ const Home = () => {
             if (pickupLocationInp.trim() !== "") {                
                 getSuggestions(pickupLocationInp)
                 .then((res) => {
-                    if (res.success) {                    
-                        setPickupLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                    if (res.success) {
+                        setPickupLocationSuggestions((res.jsonData as GeoapifyResTypes).features.map(({properties}) => ({address:properties.formatted, lon:properties.lon, lat:properties.lat})));
                         setPickupLocationInp("");
+
                         //allNearbyDrivers({radius:"10", address:"Sector 29, Faridabad, Haryana, India"})
                         //.then((allNearDriversRes) => {
                         //    setAllNearByDrivers(allNearDriversRes.jsonData);
@@ -216,7 +247,7 @@ const Home = () => {
                 getSuggestions(dropoffLocationInp)
                 .then((res) => {
                     if (res.success) {                    
-                    setDropoffLocationSuggestions(res.jsonData.map((q:{description:string}) => q.description));
+                    setDropoffLocationSuggestions((res.jsonData as GeoapifyResTypes).features.map(({properties}) => ({address:properties.formatted, lon:properties.lon, lat:properties.lat})));
                     setDropoffLocationInp("");
                 }
                 })
@@ -316,8 +347,7 @@ const Home = () => {
             <div className="w-full h-[48%] overflow-hidden" onClick={() => setIsShortcutMenuActive(false)}>
                 <LiveTracking />
             </div>
-
-
+            
             <MenuButton setIsChatPanelActive={setIsChatPanelActive} setIsMyProfilePanelActive={setIsMyProfilePanelActive} setIsMyPastTripsPanelActive={setIsMyPastTripsPanelActive}
                 isShortcutMenuActive={isShortcutMenuActive} setIsShortcutMenuActive={setIsShortcutMenuActive}
              />
@@ -340,37 +370,31 @@ const Home = () => {
                         />
                 <Button text="Create ride" isLoading={isLoading} margin="10px 0 0 0" onClickHandler={(e) => createRideHandler(e)} />
             </div>
-            <div className="overflow-y-scroll absolute bottom-0 w-full h-80 transition-all duration-300 ease-in-out"
+            <div className="bg-white overflow-y-scroll absolute bottom-0 w-full h-65 transition-all duration-300 ease-in-out"
             style={{bottom:isLocationPanelActive?"0":"-60%", zIndex:isLocationPanelActive?"1":"-1"}}
             onClick={() => setIsShortcutMenuActive(false)}
             >
                 {
-                    // not working because i think gomapspro is not providing this service and google console is asking for payment method
-                    !pickupLocation.address&&pickupLocationSuggestions.map((address) => (
-                        <div className="flex py-2" key={address} onClick={async() => {
-                            //if(pickupLocation && dropoffLocation){
-                            //}
-                            //setIsLocationPanelActive(false);
-                            //setIsRidesPanelActive(true);
-                            const {ltd, lng} = await getCoordinatesByAddress({address});
-                            setPickupLocation({latitude:ltd, longitude:lng, address});
+                    // it might possible that it will not work after sometimes, i am using geoapify not google console directly because google console is asking for payment method
+                    !pickupLocation.address&&pickupLocationSuggestions.map(({address, lat, lon}, index) => (
+                        <div className="flex items-center border-b border-gray-200 text-gray-600 py-2 hover:bg-gray-100 cursor-pointer" key={index} onClick={async() => {
+                            //const {ltd, lng} = await getCoordinatesByAddress({address});
+                            setPickupLocation({latitude:lat, longitude:lon, address});
                             }}>
-                            <div className="p-2 bg-gray-800"><FaLocationDot /></div>
-                            <div className="text-sm px-1 bg-red-500">{address}</div>
+                            <div className="p-2"><FaLocationDot /></div>
+                            <div className="text-sm px-1">{address}</div>
                         </div>
                     ))
                 }
                 {
-                    // not working because i think gomapspro is not providing this service and google console is asking for payment method
-                    !dropoffLocation.address&&dropoffLocationSuggestions.map((address) => (
-                        <div className="flex py-2" key={address} onClick={async() => {
-                            //if(pickupLocation && dropoffLocation){
-                            //}
-                            const {ltd, lng} = await getCoordinatesByAddress({address});
-                            setDropoffLocation({latitude:ltd, longitude:lng, address});
+                    // it might possible that it will not work after sometimes, i am using geoapify not google console directly because google console is asking for payment method
+                    !dropoffLocation.address&&dropoffLocationSuggestions.map(({address, lat, lon}, index) => (
+                        <div className="flex items-center border-b border-gray-200 text-gray-600 py-2 hover:bg-gray-100 cursor-pointer" key={index} onClick={async() => {
+                            //const {ltd, lng} = await getCoordinatesByAddress({address});
+                            setDropoffLocation({latitude:lat, longitude:lon, address});
                             }}>
-                            <div className="p-2 bg-gray-800"><FaLocationDot /></div>
-                            <div className="text-sm px-1 bg-red-500">{address}</div>
+                            <div className="p-2"><FaLocationDot /></div>
+                            <div className="text-sm px-1">{address}</div>
                         </div>
                     ))
                 }
